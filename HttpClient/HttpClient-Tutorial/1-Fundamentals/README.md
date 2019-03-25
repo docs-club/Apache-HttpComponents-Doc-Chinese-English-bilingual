@@ -314,8 +314,10 @@ The connection will not be reused, but all level resources held by it will be co
 
 连接将不会被重用，但它所持有的所有层级的资源将被正确释放。
 
-### 1.1.6 Consuming entity content
+### 1.1.6 Consuming entity content（消费实体内容）
 The recommended way to consume the content of an entity is by using its `HttpEntity#getContent()` or `HttpEntity#writeTo(OutputStream)` methods. HttpClient also comes with the `EntityUtils` class, which exposes several static methods to more easily read the content or information from an entity. Instead of reading the `java.io.InputStream` directly, one can retrieve the whole content body in a string / byte array by using the methods from this class. However, the use of `EntityUtils` is strongly discouraged unless the response entities originate from a trusted HTTP server and are known to be of limited length.
+
+推荐使用实体内容的方法是使用它的 `HttpEntity#getContent()` 或 `HttpEntity#writeTo(OutputStream)` 方法。HttpClient 还附带了 `EntityUtils` 类，它公开了几个静态方法，以便更容易地从实体中读取内容或信息。你可以直接使用这个类的方法在一个字符串 / 字节数组中检索整个内容体，而不是阅读 `java.io.InputStream`。但是，强烈反对使用 `EntityUtils`，除非响应实体来自可信的 HTTP 服务器，并且已知其长度有限。
 
 ```
 CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -338,6 +340,8 @@ try {
 
 In some situations it may be necessary to be able to read entity content more than once. In this case entity content must be buffered in some way, either in memory or on disk. The simplest way to accomplish that is by wrapping the original entity with the `BufferedHttpEntity` class. This will cause the content of the original entity to be read into a in-memory buffer. In all other ways the entity wrapper will be have the original one.
 
+在某些情况下，可能需要多次读取实体内容。在这种情况下，必须以某种方式缓冲实体内容，要么在内存中，要么在磁盘上。最简单的方法是使用 `BufferedHttpEntity` 类包装原始实体。这将导致将原始实体的内容读入内存缓冲区。**在所有其他方式中，实体包装器将具有原始包装器。**
+
 ```
 CloseableHttpResponse response = <...>
 HttpEntity entity = response.getEntity();
@@ -346,8 +350,10 @@ if (entity != null) {
 }
 ```
 
-### 1.1.7 Producing entity content
+### 1.1.7 Producing entity content（生产实体内容）
 HttpClient provides several classes that can be used to efficiently stream out content throught HTTP connections. Instances of those classes can be associated with entity enclosing requests such as `POST` and `PUT` in order to enclose entity content into outgoing HTTP requests. HttpClient provides several classes for most common data containers such as string, byte array, input stream, and file: `StringEntity`, `ByteArrayEntity`, `InputStreamEntity`, and `FileEntity`.
+
+HttpClient 提供了几个类，可用于通过 HTTP 连接高效地输出内容。这些类的实例可以与包含 `POST` 和 `PUT` 等请求的实体相关联，以便将实体内容包含到传出 HTTP 请求中。HttpClient 为最常见的数据容器提供了几个类，如字符串、字节数组、输入流和文件：`StringEntity`、`ByteArrayEntity`、`InputStreamEntity` 和 `FileEntity`。
 
 ```
 File file = new File("somefile.txt");
@@ -357,15 +363,20 @@ HttpPost httppost = new HttpPost("http://localhost/action.do");
 httppost.setEntity(entity);
 ```
 
-Please note `InputStreamEntity` is not repeatable, because it can only read from the underlying data stream once. Generally it is recommended to implement a custom `HttpEntity` class which is self-contained instead of using the generic `InputStreamEntity.FileEntity` can be a good starting point.
+Please note `InputStreamEntity` is not repeatable, because it can only read from the underlying data stream once. Generally it is recommended to implement a custom `HttpEntity` class which is self-contained instead of using the generic `InputStreamEntity`. `FileEntity` can be a good starting point.
 
-#### 1.1.7.1 HTML forms
+请注意 `InputStreamEntity` 是不可重复的，因为它只能从底层数据流读取一次。通常建议实现自定义的 `HttpEntity` 类，该类是自包含的，而不是使用通用的 `InputStreamEntity`。`FileEntity` 可以作为一个很好的起点。
+
+#### 1.1.7.1 HTML forms（HTML 表单）
 Many applications need to simulate the process of submitting an HTML form, for instance, in order to log in to a web application or submit input data. HttpClient provides the entity class `UrlEncodedFormEntity` to facilitate the process.
+
+许多应用程序需要模拟提交 HTML 表单的过程，以便登录到 web 应用程序或提交输入数据。HttpClient 提供了实体类 `UrlEncodedFormEntity` 来简化这个过程。
 
 ```
 List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 formparams.add(new BasicNameValuePair("param1", "value1"));
 formparams.add(new BasicNameValuePair("param2", "value2"));
+
 UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, Consts.UTF_8);
 HttpPost httppost = new HttpPost("http://localhost/handler.do");
 httppost.setEntity(entity);
@@ -373,23 +384,28 @@ httppost.setEntity(entity);
 
 The `UrlEncodedFormEntity` instance will use the so called URL encoding to encode parameters and produce the following content:
 
+`UrlEncodedFormEntity` 实例将使用所谓的 URL 编码对参数进行编码，并生成以下内容：
+
 ```
 param1=value1&param2=value2
 ```
 
-#### 1.1.7.2. Content chunking
+#### 1.1.7.2. Content chunking（内容分块）
 Generally it is recommended to let HttpClient choose the most appropriate transfer encoding based on the properties of the HTTP message being transferred. It is possible, however, to inform HttpClient that chunk coding is preferred by setting `HttpEntity#setChunked()` to true. Please note that HttpClient will use this flag as a hint only. This value will be ignored when using HTTP protocol versions that do not support chunk coding, such as HTTP/1.0.
 
+通常建议让 HttpClient 根据正在传输的 HTTP 消息的属性选择最合适的传输编码。但是，可以通过将 `HttpEntity#setChunked()` 设置为 true 来通知 HttpClient，块编码是首选的。请注意 HttpClient 将只使用此标志作为提示。当使用不支持块编码的 HTTP 协议版本（如 HTTP/1.0）时，此值将被忽略。
+
 ```
-StringEntity entity = new StringEntity("important message",
-        ContentType.create("plain/text", Consts.UTF_8));
+StringEntity entity = new StringEntity("important message", ContentType.create("plain/text", Consts.UTF_8));
 entity.setChunked(true);
 HttpPost httppost = new HttpPost("http://localhost/acrtion.do");
 httppost.setEntity(entity);
 ```
 
-#### 1.1.8. Response handlers
+#### 1.1.8. Response handlers（响应处理程序）
 The simplest and the most convenient way to handle responses is by using the `ResponseHandler` interface, which includes the `handleResponse(HttpResponse response)` method. This method completely relieves the user from having to worry about connection management. When using a `ResponseHandler`, HttpClient will automatically take care of ensuring release of the connection back to the connection manager regardless whether the request execution succeeds or causes an exception.
+
+处理响应最简单和最方便的方法是使用 `ResponseHandler` 接口，其中包括 `handleResponse(HttpResponse response)` 方法。这种方法完全让用户不必担心连接管理。当使用 `ResponseHandler` 时，HttpClient 将确保连接释放回连接管理器，无论请求执行是否成功或导致异常。
 
 ```
 CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -398,14 +414,11 @@ HttpGet httpget = new HttpGet("http://localhost/json");
 ResponseHandler<MyJsonObject> rh = new ResponseHandler<MyJsonObject>() {
 
     @Override
-    public JsonObject handleResponse(
-            final HttpResponse response) throws IOException {
+    public JsonObject handleResponse(final HttpResponse response) throws IOException {
         StatusLine statusLine = response.getStatusLine();
         HttpEntity entity = response.getEntity();
         if (statusLine.getStatusCode() >= 300) {
-            throw new HttpResponseException(
-                    statusLine.getStatusCode(),
-                    statusLine.getReasonPhrase());
+            throw new HttpResponseException(statusLine.getStatusCode(), statusLine.getReasonPhrase());
         }
         if (entity == null) {
             throw new ClientProtocolException("Response contains no content");
