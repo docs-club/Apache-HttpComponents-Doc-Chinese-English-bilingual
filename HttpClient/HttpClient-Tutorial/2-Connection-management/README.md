@@ -3,17 +3,29 @@
 ## 2.1 Connection persistence（连接的持久性）
 The process of establishing a connection from one host to another is quite complex and involves multiple packet exchanges between two endpoints, which can be quite time consuming. The overhead of connection handshaking can be significant, especially for small HTTP messages. One can achieve a much higher data throughput if open connections can be re-used to execute multiple requests.
 
+从一台主机到另一台主机建立连接的过程相当复杂，涉及两个端点之间的多个包交换，这可能非常耗时。连接握手的开销非常大，尤其是对于小的 HTTP 消息而言。如果可以重用打开的连接来执行多个请求，则可以获得更高的数据吞吐量。
+
 HTTP/1.1 states that HTTP connections can be re-used for multiple requests per default. HTTP/1.0 compliant endpoints can also use a mechanism to explicitly communicate their preference to keep connection alive and use it for multiple requests. HTTP agents can also keep idle connections alive for a certain period time in case a connection to the same target host is needed for subsequent requests. The ability to keep connections alive is usually refered to as connection persistence. HttpClient fully supports connection persistence.
 
-## 2.2 HTTP connection routing
+HTTP/1.1 声明每个默认情况下，HTTP 连接可以被多个请求重用。符合 HTTP/1.0 的端点还可以使用一种机制显式地通信它们的首选项，以保持连接活动，并将其用于多个请求。HTTP 代理还可以将空闲连接保持一定时间的活动状态，以防后续请求需要连接到相同的目标主机。保持连接活动的能力通常称为连接持久性。HttpClient 完全支持连接持久性。
+
+## 2.2 HTTP connection routing（HTTP 连接路由）
 HttpClient is capable of establishing connections to the target host either directly or via a route that may involve multiple intermediate connections - also referred to as hops. HttpClient differentiates connections of a route into plain, tunneled and layered. The use of multiple intermediate proxies to tunnel connections to the target host is referred to as proxy chaining.
+
+HttpClient 能够直接建立到目标主机的连接，或通过路由来达到目的，但这种方式可能涉及多个中间连接（也称为 hop）。HttpClient 将路由的连接分为普通连接、隧道连接和分层连接。使用多个中间代理来进行到目标主机的隧道连接称为代理链接。
 
 Plain routes are established by connecting to the target or the first and only proxy. Tunnelled routes are established by connecting to the first and tunnelling through a chain of proxies to the target. Routes without a proxy cannot be tunnelled. Layered routes are established by layering a protocol over an existing connection. Protocols can only be layered over a tunnel to the target, or over a direct connection without proxies.
 
-### 2.2.1 Route computation
+普通路由是通过连接到目标或代理（它是第一个也是唯一一个）来建立的。隧道路由是通过连接到第一个代理，并通过代理链隧道连接至目标来建立的。没有代理的路由不能被隧道化。分层路由是通过在现有连接上分层协议来建立的。协议只能在连接至目标的隧道上分层，或者在没有代理的直接连接上分层。
+
+### 2.2.1 Route computation（路由计算）
 The `RouteInfo` interface represents information about a definitive route to a target host involving one or more intermediate steps or hops. `HttpRoute` is a concrete implementation of the `RouteInfo`, which cannot be changed (is immutable). `HttpTracker` is a mutable `RouteInfo` implementation used internally by HttpClient to track the remaining hops to the ultimate route target. `HttpTracker` can be updated after a successful execution of the next hop towards the route target. `HttpRouteDirector` is a helper class that can be used to compute the next step in a route. This class is used internally by HttpClient.
 
+`RouteInfo` 接口表示关于到目标主机的最终路由的信息，该路由涉及一个或多个中间步骤或跃点。`HttpRoute` 是 `RouteInfo` 的一个具体实现，它不能被更改（不可变类）。`HttpTracker` 是一个可变的 `RouteInfo` 实现，HttpClient 内部使用它来跟踪剩余的跳转到最终路由目标。`HttpTracker` 可以在成功执行下一个跳转到路由目标后更新。`HttpRouteDirector` 是一个助手类，可以用来计算路由的下一步。这个类由 HttpClient 在内部使用。
+
 `HttpRoutePlanner` is an interface representing a strategy to compute a complete route to a given target based on the execution context. HttpClient ships with two default `HttpRoutePlanner` implementations. `SystemDefaultRoutePlanner` is based on `java.net.ProxySelector`. By default, it will pick up the proxy settings of the JVM, either from system properties or from the browser running the application. The `DefaultProxyRoutePlanner` implementation does not make use of any Java system properties, nor any system or browser proxy settings. It always computes routes via the same default proxy.
+
+`HttpRoutePlanner` 是一个接口，它表示根据执行上下文计算到给定目标的完整路由的策略。HttpClient 附带两个默认的 `HttpRoutePlanner` 实现。`SystemDefaultRoutePlanner` 基于 `java.net.ProxySelector`。默认情况下，它将从系统属性或运行应用程序的浏览器获取 JVM 的代理设置。`DefaultProxyRoutePlanner` 实现不使用任何 Java 系统属性，也不使用任何系统或浏览器代理设置。它总是通过相同的默认代理计算路由。
 
 ### 2.2.2 Secure HTTP connections
 HTTP connections can be considered secure if information transmitted between two connection endpoints cannot be read or tampered with by an unauthorized third party. The SSL/TLS protocol is the most widely used technique to ensure HTTP transport security. However, other encryption techniques could be employed as well. Usually, HTTP transport is layered over the SSL/TLS encrypted connection.
