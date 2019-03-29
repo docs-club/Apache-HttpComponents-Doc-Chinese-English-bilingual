@@ -1,18 +1,32 @@
-## Chapter 3. HTTP state management
+## Chapter 3. HTTP state management（HTTP 状态管理）
 Originally HTTP was designed as a stateless, request / response oriented protocol that made no special provisions for stateful sessions spanning across several logically related request / response exchanges. As HTTP protocol grew in popularity and adoption more and more systems began to use it for applications it was never intended for, for instance as a transport for e-commerce applications. Thus, the support for state management became a necessity.
 
+最初，HTTP 被设计为一种无状态的、面向请求/响应的协议，它没有为跨越几个逻辑相关的请求/响应交换的有状态会话做出特殊规定。随着 HTTP 协议的流行和广泛使用，越来越多的系统开始将其用于前所未有的应用程序，例如作为电子商务应用程序的传输。因此，支持状态管理成为必要。
+
 Netscape Communications, at that time a leading developer of web client and server software, implemented support for HTTP state management in their products based on a proprietary specification. Later, Netscape tried to standardise the mechanism by publishing a specification draft. Those efforts contributed to the formal specification defined through the RFC standard track. However, state management in a significant number of applications is still largely based on the Netscape draft and is incompatible with the official specification. All major developers of web browsers felt compelled to retain compatibility with those applications greatly contributing to the fragmentation of standards compliance.
+
+Netscape Communications 当时是 web 客户端和服务器软件的引领者，在其产品中基于专有规范实现了对 HTTP 状态管理的支持。后来，Netscape 试图通过发布规范草案来标准化该机制。这些工作促成了通过 RFC 标准跟踪定义的正式规范。然而，大量应用程序中的状态管理仍然主要基于 Netscape 草案，并且与官方规范不兼容。web 浏览器的所有主要开发人员都感到必须保持与这些应用程序的兼容性，这大大加剧了标准遵从性的碎片化。
 
 ### 3.1 HTTP cookies
 An HTTP cookie is a token or short packet of state information that the HTTP agent and the target server can exchange to maintain a session. Netscape engineers used to refer to it as a "magic cookie" and the name stuck.
 
-HttpClient uses the Cookie interface to represent an abstract cookie token. In its simplest form an HTTP cookie is merely a name / value pair. Usually an HTTP cookie also contains a number of attributes such a domain for which is valid, a path that specifies the subset of URLs on the origin server to which this cookie applies, and the maximum period of time for which the cookie is valid.
+HTTP cookie 是 HTTP 代理和目标服务器可以交换的状态信息的令牌或短包，用于维护会话。网景（Netscape）的工程师曾把它称为「魔法饼干」（magic cookie），并沿用了这个名字。
 
-The SetCookie interface represents a `Set-Cookie` response header sent by the origin server to the HTTP agent in order to maintain a conversational state.
+HttpClient uses the `Cookie` interface to represent an abstract cookie token. In its simplest form an HTTP cookie is merely a name / value pair. Usually an HTTP cookie also contains a number of attributes such a domain for which is valid, a path that specifies the subset of URLs on the origin server to which this cookie applies, and the maximum period of time for which the cookie is valid.
 
-The ClientCookie interface extends Cookie interface with additional client specific functionality such as the ability to retrieve original cookie attributes exactly as they were specified by the origin server. This is important for generating the Cookie header because some cookie specifications require that the Cookie header should include certain attributes only if they were specified in the `Set-Cookie` header.
+HttpClient 使用 `Cookie` 接口来表示抽象的 Cookie 令牌。HTTP cookie 最简单的形式就是一个名称/值对。通常，HTTP cookie 还包含许多属性，比如一个有效的域、一个指定该 cookie 应用于的源服务器上 URL 子集的路径，以及该 cookie 有效的最大时间段。
+
+The `SetCookie` interface represents a `Set-Cookie` response header sent by the origin server to the HTTP agent in order to maintain a conversational state.
+
+`SetCookie` 接口表示源服务器发送给 HTTP 代理的一个 `Set-Cookie` 响应头，用于维护会话状态。
+
+The `ClientCookie` interface extends `Cookie` interface with additional client specific functionality such as the ability to retrieve original cookie attributes exactly as they were specified by the origin server. This is important for generating the Cookie header because some cookie specifications require that the Cookie header should include certain attributes only if they were specified in the `Set-Cookie` header.
+
+`ClientCookie` 接口使用附加的客户端特定功能扩展了 `Cookie` 接口，比如能够按照原始服务器指定的方式检索原始 Cookie 属性。这对于生成 Cookie 头非常重要，因为一些 Cookie 规范要求只有在 `Set-Cookie` 头中指定某些属性时，Cookie 头才应该包含这些属性。
 
 Here is an example of creating a client-side cookie object:
+
+下面是一个创建客户端 cookie 对象的例子：
 
 ```
 BasicClientCookie cookie = new BasicClientCookie("name", "value");
@@ -24,8 +38,10 @@ cookie.setAttribute(ClientCookie.PATH_ATTR, "/");
 cookie.setAttribute(ClientCookie.DOMAIN_ATTR, ".mycompany.com");
 ```
 
-### 3.2 Cookie specifications
+### 3.2 Cookie specifications（Cookie 规范）
 The `CookieSpec` interface represents a cookie management specification. The cookie management specification is expected to enforce:
+
+`CookieSpec` 接口表示一个 cookie 管理规范。要求 cookie 管理规范强制执行：
 
 - rules of parsing `Set-Cookie` headers.
 
