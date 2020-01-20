@@ -1,4 +1,5 @@
-## Chapter 3. HTTP state management（HTTP 状态管理）
+# Chapter 3. HTTP state management（HTTP 状态管理）
+
 Originally HTTP was designed as a stateless, request / response oriented protocol that made no special provisions for stateful sessions spanning across several logically related request / response exchanges. As HTTP protocol grew in popularity and adoption more and more systems began to use it for applications it was never intended for, for instance as a transport for e-commerce applications. Thus, the support for state management became a necessity.
 
 最初，HTTP 被设计为一种无状态的、面向请求/响应的协议，它没有为跨越几个逻辑相关的请求/响应交换的有状态会话做出特殊规定。随着 HTTP 协议的流行和广泛使用，越来越多的系统开始将其用于前所未有的应用程序，例如作为电子商务应用程序的传输。因此，支持状态管理成为必要。
@@ -7,7 +8,8 @@ Netscape Communications, at that time a leading developer of web client and serv
 
 Netscape Communications 当时是 web 客户端和服务器软件的引领者，在其产品中基于专有规范实现了对 HTTP 状态管理的支持。后来，Netscape 试图通过发布规范草案来标准化该机制。这些工作促成了通过 RFC 标准跟踪定义的正式规范。然而，大量应用程序中的状态管理仍然主要基于 Netscape 草案，并且与官方规范不兼容。web 浏览器的所有主要开发人员都感到必须保持与这些应用程序的兼容性，这大大加剧了标准遵从性的碎片化。
 
-### 3.1 HTTP cookies
+## 3.1 HTTP cookies
+
 An HTTP cookie is a token or short packet of state information that the HTTP agent and the target server can exchange to maintain a session. Netscape engineers used to refer to it as a "magic cookie" and the name stuck.
 
 HTTP cookie 是 HTTP 代理和目标服务器可以交换的状态信息的令牌或短包，用于维护会话。网景（Netscape）的工程师曾把它称为「魔法饼干」（magic cookie），并沿用了这个名字。
@@ -38,7 +40,8 @@ cookie.setAttribute(ClientCookie.PATH_ATTR, "/");
 cookie.setAttribute(ClientCookie.DOMAIN_ATTR, ".mycompany.com");
 ```
 
-### 3.2 Cookie specifications（Cookie 规范）
+## 3.2 Cookie specifications（Cookie 规范）
+
 The `CookieSpec` interface represents a cookie management specification. The cookie management specification is expected to enforce:
 
 `CookieSpec` 接口表示一个 cookie 管理规范。要求 cookie 管理规范强制执行：
@@ -59,35 +62,35 @@ HttpClient ships with several `CookieSpec` implementations:
 
 HttpClient 附带了几个 `CookieSpec` 实现：
 
-- **Standard strict:**  State management policy compliant with the syntax and semantics of the well-behaved profile defined by RFC 6265, section 4.
+- **Standard strict:** State management policy compliant with the syntax and semantics of the well-behaved profile defined by RFC 6265, section 4.
 
 Standard strict：符合 RFC 6265 第 4 节定义，并且行为良好的概要文件的语法和语义的状态管理策略。
 
-- **Standard:**  State management policy compliant with a more relaxed profile defined by RFC 6265, section 4 intended for interoperability with existing servers that do not conform to the well behaved profile.
+- **Standard:** State management policy compliant with a more relaxed profile defined by RFC 6265, section 4 intended for interoperability with existing servers that do not conform to the well behaved profile.
 
 Standard：符合 RFC 6265 定义的更宽松概要文件的状态管理策略，第 4 节旨在与不符合行为良好概要文件的现有服务器进行互操作性。
 
-- **Netscape draft (obsolete):**  This policy conforms to the original draft specification published by Netscape Communications. It should be avoided unless absolutely necessary for compatibility with legacy code.
+- **Netscape draft (obsolete):** This policy conforms to the original draft specification published by Netscape Communications. It should be avoided unless absolutely necessary for compatibility with legacy code.
 
 Netscape draft（已过时）：此策略符合 Netscape Communications 发布的原始规范草案。除非绝对需要与遗留代码兼容，否则应该避免使用它。
 
-- **RFC 2965 (obsolete):**  State management policy compliant with the obsolete state management specification defined by RFC 2965. Please do not use in new applications.
+- **RFC 2965 (obsolete):** State management policy compliant with the obsolete state management specification defined by RFC 2965. Please do not use in new applications.
 
 RFC 2965（过时）：符合 RFC 2965 定义的过时状态管理规范的状态管理策略。请不要在新的应用程序中使用。
 
-- **RFC 2109 (obsolete):**  State management policy compliant with the obsolete state management specification defined by RFC 2109. Please do not use in new applications.
+- **RFC 2109 (obsolete):** State management policy compliant with the obsolete state management specification defined by RFC 2109. Please do not use in new applications.
 
 RFC 2109（过时）：符合 RFC 2109 定义的过时状态管理规范的状态管理策略。请不要在新的应用程序中使用。
 
-- **Browser compatibility (obsolete):**  This policy strives to closely mimic the (mis)behavior of older versions of browser applications such as Microsoft Internet Explorer and Mozilla FireFox. Please do not use in new applications.
+- **Browser compatibility (obsolete):** This policy strives to closely mimic the (mis)behavior of older versions of browser applications such as Microsoft Internet Explorer and Mozilla FireFox. Please do not use in new applications.
 
 浏览器兼容性（已过时）：此策略力求紧密模仿旧版本浏览器应用程序（mis）的行为，如 Microsoft Internet Explorer 和 Mozilla FireFox。请不要在新的应用程序中使用。
 
-- **Default:**  Default cookie policy is a synthetic policy that picks up either RFC 2965, RFC 2109 or Netscape draft compliant implementation based on properties of cookies sent with the HTTP response (such as version attribute, now obsolete). This policy will be deprecated in favor of the standard (RFC 6265 compliant) implementation in the next minor release of HttpClient.
+- **Default:** Default cookie policy is a synthetic policy that picks up either RFC 2965, RFC 2109 or Netscape draft compliant implementation based on properties of cookies sent with the HTTP response (such as version attribute, now obsolete). This policy will be deprecated in favor of the standard (RFC 6265 compliant) implementation in the next minor release of HttpClient.
 
 默认：默认 cookie 策略是一种综合策略，它根据 HTTP 响应发送的 cookie 的属性（例如 version 属性，现在已经过时）选择 RFC 2965、RFC 2109 或符合 Netscape draft 的实现。此策略将在 HttpClient 的下一个小版本中被弃用，取而代之的是标准（RFC 6265 兼容）实现。
 
-- **Ignore cookies:**  All cookies are ignored.
+- **Ignore cookies:** All cookies are ignored.
 
 忽略 cookie：忽略所有 cookie。
 
@@ -95,7 +98,8 @@ It is strongly recommended to use either `Standard` or `Standard strict` policy 
 
 强烈建议在新应用程序中使用 `Standard` 或 `Standard strict` 策略。过时的规范应该只用于与遗留系统兼容。对过时规范的支持将在 HttpClient 的下一个主要版本中删除。
 
-### 3.3 Choosing cookie policy（选择 cookie 策略）
+## 3.3 Choosing cookie policy（选择 cookie 策略）
+
 Cookie policy can be set at the HTTP client and overridden on the HTTP request level if required.
 
 Cookie 策略可以在 HTTP 客户端上设置，如果需要，还可以在 HTTP 请求级别上重写。
@@ -114,7 +118,8 @@ HttpGet httpGet = new HttpGet("/");
 httpGet.setConfig(localConfig);
 ```
 
-### 3.4 Custom cookie policy（自定义 cookie 策略）
+## 3.4 Custom cookie policy（自定义 cookie 策略）
+
 In order to implement a custom cookie policy one should create a custom implementation of the `CookieSpec` interface, create a `CookieSpecProvider` implementation to create and initialize instances of the custom specification and register the factory with HttpClient. Once the custom specification has been registered, it can be activated the same way as a standard cookie specification.
 
 为了实现自定义 cookie 策略，应该创建一个 `CookieSpec` 接口的自定义实现，创建一个 `CookieSpecProvider` 实现来创建和初始化自定义规范的实例，并将工厂注册到 HttpClient。一旦注册了自定义规范，就可以像标准 cookie 规范一样激活它。
@@ -140,7 +145,8 @@ CloseableHttpClient httpclient = HttpClients.custom()
         .build();
 ```
 
-### 3.5 Cookie persistence（Cookie 持久性）
+## 3.5 Cookie persistence（Cookie 持久性）
+
 HttpClient can work with any physical representation of a persistent cookie store that implements the `CookieStore` interface. The default `CookieStore` implementation called `BasicCookieStore` is a simple implementation backed by a `java.util.ArrayList`. Cookies stored in an `BasicClientCookie` object are lost when the container object get garbage collected. Users can provide more complex implementations if necessary.
 
 HttpClient 可以处理实现 `CookieStore` 接口的持久 cookie 存储的任何物理表示。默认的 `CookieStore` 实现名为 `BasicCookieStore`，是一个由 `java.util.ArrayList` 支持的简单实现。当容器对象被垃圾收集时，存储在 `BasicClientCookie` 对象中的 cookie 将丢失。如果需要，用户可以提供更复杂的实现。
@@ -159,7 +165,8 @@ CloseableHttpClient httpclient = HttpClients.custom()
         .build();
 ```
 
-### 3.6 HTTP state management and execution context（HTTP 状态管理和执行 context）
+## 3.6 HTTP state management and execution context（HTTP 状态管理和执行 context）
+
 In the course of HTTP request execution HttpClient adds the following state management related objects to the execution context:
 
 在 HTTP 请求执行过程中，HttpClient 将以下状态管理相关对象添加到执行 context 中：

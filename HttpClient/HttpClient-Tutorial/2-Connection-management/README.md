@@ -1,15 +1,15 @@
-## Chapter 2. Connection management（连接管理）
+# Chapter 2. Connection management（连接管理）
 
-### 2.1 Connection persistence（连接的持久性）
+## 2.1 Connection persistence（连接的持久性）
 The process of establishing a connection from one host to another is quite complex and involves multiple packet exchanges between two endpoints, which can be quite time consuming. The overhead of connection handshaking can be significant, especially for small HTTP messages. One can achieve a much higher data throughput if open connections can be re-used to execute multiple requests.
 
 从一台主机到另一台主机建立连接的过程相当复杂，涉及两个端点之间的多个包交换，这可能非常耗时。连接握手的开销非常大，尤其是对于小的 HTTP 消息而言。如果可以重用打开的连接来执行多个请求，则可以获得更高的数据吞吐量。
 
 HTTP/1.1 states that HTTP connections can be re-used for multiple requests per default. HTTP/1.0 compliant endpoints can also use a mechanism to explicitly communicate their preference to keep connection alive and use it for multiple requests. HTTP agents can also keep idle connections alive for a certain period time in case a connection to the same target host is needed for subsequent requests. The ability to keep connections alive is usually refered to as connection persistence. HttpClient fully supports connection persistence.
 
-HTTP/1.1 声明每个默认情况下，HTTP 连接可以被多个请求重用。符合 HTTP/1.0 的端点还可以使用一种机制显式地通信它们的首选项，以保持连接活动，并将其用于多个请求。HTTP 代理还可以将空闲连接保持一定时间的活动状态，以防后续请求需要连接到相同的目标主机。保持连接活动的能力通常称为连接持久性。HttpClient 完全支持连接持久性。
+HTTP/1.1 声明的 HTTP 连接默认情况下可以被多个请求重用。符合 HTTP/1.0 的端点还可以使用一种机制显式地通信它们的首选项，以保持连接活动，并将其用于多个请求。HTTP 代理还可以将空闲连接保持一定时间的活动状态，以防后续请求需要连接到相同的目标主机。保持连接活动的能力通常称为连接持久性。HttpClient 完全支持连接持久性。
 
-### 2.2 HTTP connection routing（HTTP 连接路由）
+## 2.2 HTTP connection routing（HTTP 连接路由）
 HttpClient is capable of establishing connections to the target host either directly or via a route that may involve multiple intermediate connections - also referred to as hops. HttpClient differentiates connections of a route into plain, tunneled and layered. The use of multiple intermediate proxies to tunnel connections to the target host is referred to as proxy chaining.
 
 HttpClient 能够直接建立到目标主机的连接，或通过路由来达到目的，但这种方式可能涉及多个中间连接（也称为 hop）。HttpClient 将路由的连接分为普通连接、隧道连接和分层连接。使用多个中间代理来进行到目标主机的隧道连接称为代理链接。
@@ -18,7 +18,7 @@ Plain routes are established by connecting to the target or the first and only p
 
 普通路由是通过连接到目标或代理（它是第一个也是唯一一个）来建立的。隧道路由是通过连接到第一个代理，并通过代理链隧道连接至目标来建立的。没有代理的路由不能被隧道化。分层路由是通过在现有连接上分层协议来建立的。协议只能在连接至目标的隧道上分层，或者在没有代理的直接连接上分层。
 
-#### 2.2.1 Route computation（路由计算）
+### 2.2.1 Route computation（路由计算）
 The `RouteInfo` interface represents information about a definitive route to a target host involving one or more intermediate steps or hops. `HttpRoute` is a concrete implementation of the `RouteInfo`, which cannot be changed (is immutable). `HttpTracker` is a mutable `RouteInfo` implementation used internally by HttpClient to track the remaining hops to the ultimate route target. `HttpTracker` can be updated after a successful execution of the next hop towards the route target. `HttpRouteDirector` is a helper class that can be used to compute the next step in a route. This class is used internally by HttpClient.
 
 `RouteInfo` 接口表示关于到目标主机的最终路由的信息，该路由涉及一个或多个中间步骤或跃点。`HttpRoute` 是 `RouteInfo` 的一个具体实现，它不能被更改（不可变类）。`HttpTracker` 是一个可变的 `RouteInfo` 实现，HttpClient 内部使用它来跟踪剩余的跳转到最终路由目标。`HttpTracker` 可以在成功执行下一个跳转到路由目标后更新。`HttpRouteDirector` 是一个助手类，可以用来计算路由的下一步。这个类由 HttpClient 在内部使用。
@@ -27,13 +27,13 @@ The `RouteInfo` interface represents information about a definitive route to a t
 
 `HttpRoutePlanner` 是一个接口，它表示根据执行上下文计算到给定目标的完整路由的策略。HttpClient 附带两个默认的 `HttpRoutePlanner` 实现。`SystemDefaultRoutePlanner` 基于 `java.net.ProxySelector`。默认情况下，它将从系统属性或运行应用程序的浏览器获取 JVM 的代理设置。`DefaultProxyRoutePlanner` 实现不使用任何 Java 系统属性，也不使用任何系统或浏览器代理设置。它总是通过相同的默认代理计算路由。
 
-#### 2.2.2 Secure HTTP connections（安全的 HTTP 连接）
+### 2.2.2 Secure HTTP connections（安全的 HTTP 连接）
 HTTP connections can be considered secure if information transmitted between two connection endpoints cannot be read or tampered with by an unauthorized third party. The SSL/TLS protocol is the most widely used technique to ensure HTTP transport security. However, other encryption techniques could be employed as well. Usually, HTTP transport is layered over the SSL/TLS encrypted connection.
 
 如果两个连接端点之间传输的信息不能被未经授权的第三方读取或篡改，则可以认为 HTTP 连接是安全的。SSL/TLS 协议是最广泛使用的技术，用于确保 HTTP 传输安全。不过，也可以使用其他加密技术。通常，HTTP 传输层位于 SSL/TLS 加密连接之上。
 
-### 2.3 HTTP connection managers（HTTP 连接管理器）
-#### 2.3.1 Managed connections and connection managers（托管连接和连接管理器）
+## 2.3 HTTP connection managers（HTTP 连接管理器）
+### 2.3.1 Managed connections and connection managers（托管连接和连接管理器）
 HTTP connections are complex, stateful, thread-unsafe objects which need to be properly managed to function correctly. HTTP connections can only be used by one execution thread at a time. HttpClient employs a special entity to manage access to HTTP connections called HTTP connection manager and represented by the `HttpClientConnectionManager` interface. The purpose of an HTTP connection manager is to serve as a factory for new HTTP connections, to manage life cycle of persistent connections and to synchronize access to persistent connections making sure that only one thread can have access to a connection at a time. Internally HTTP connection managers work with instances of `ManagedHttpClientConnection` acting as a proxy for a real connection that manages connection state and controls execution of I/O operations. If a managed connection is released or get explicitly closed by its consumer the underlying connection gets detached from its proxy and is returned back to the manager. Even though the service consumer still holds a reference to the proxy instance, it is no longer able to execute any I/O operations or change the state of the real connection either intentionally or unintentionally.
 
 HTTP 连接是复杂的、有状态的、线程不安全的对象，需要正确地管理它们才能确保程序正确地工作。HTTP 连接一次只能由一个执行线程使用。HttpClient 使用一个特殊的实体来管理对 HTTP 连接的访问，该实体称为 HTTP 连接管理器，由 `HttpClientConnectionManager` 接口表示。HTTP 连接管理器的目的是充当新 HTTP 连接的工厂，管理持久连接的生命周期，并同步对持久连接的访问，确保一次只能有一个线程访问连接。在内部，HTTP 连接管理器使用 `ManagedHttpClientConnection` 实例作为一个实际连接的代理，管理连接状态并控制 I/O 操作的执行。如果托管连接被其使用者释放或显式关闭，则底层连接将从其代理分离并返回给管理器。即使服务使用者仍然持有对代理实例的引用，它也不再能够执行任何 I/O 操作，也不能更改实际连接的状态。
@@ -68,7 +68,7 @@ The connection request can be terminated prematurely by calling `ConnectionReque
 
 如果需要，可以通过调用 `ConnectionRequest#cancel()` 提前终止连接请求。这将解除 `ConnectionRequest#get()` 方法中线程的阻塞状态。
 
-#### 2.3.2 Simple connection manager（简单的连接管理器）
+### 2.3.2 Simple connection manager（简单的连接管理器）
 `BasicHttpClientConnectionManager` is a simple connection manager that maintains only one connection at a time. Even though this class is thread-safe it ought to be used by one execution thread only. `BasicHttpClientConnectionManager` will make an effort to reuse the connection for subsequent requests with the same route. It will, however, close the existing connection and re-open it for the given route, if the route of the persistent connection does not match that of the connection request. If the connection has been already been allocated, then `java.lang.IllegalStateException` is thrown.
 
 `BasicHttpClientConnectionManager` 是一个简单的连接管理器，一次只维护一个连接。即使这个类是线程安全的，它也应该只被一个执行线程使用。`BasicHttpClientConnectionManager` 将努力重用连接，为后续请求与相同的路由。但是，如果持久连接的路由与连接请求的路由不匹配，则它将关闭现有连接并为给定路由重新打开它。如果已经分配了连接，则将 `java.lang.IllegalStateException` 抛出。
@@ -77,7 +77,7 @@ This connection manager implementation should be used inside an EJB container.
 
 这个连接管理器实现应该在 EJB 容器中使用。
 
-#### 2.3.3 Pooling connection manager（连接池管理器）
+### 2.3.3 Pooling connection manager（连接池管理器）
 `PoolingHttpClientConnectionManager` is a more complex implementation that manages a pool of client connections and is able to service connection requests from multiple execution threads. Connections are pooled on a per route basis. A request for a route for which the manager already has a persistent connection available in the pool will be serviced by leasing a connection from the pool rather than creating a brand new connection.
 
 `PoolingHttpClientConnectionManager` 是一个更复杂的实现，它管理一个客户端连接池，能够为来自多个执行线程的连接请求提供服务。连接按每个路由汇集。对于一个路由的请求，如果管理器已经在池中拥有一个可用的持久连接，那么将通过从池中分配一个连接而不是创建一个全新的连接来满足该请求。
@@ -105,7 +105,7 @@ CloseableHttpClient httpClient = HttpClients.custom()
         .build();
 ```
 
-#### 2.3.4 Connection manager shutdown（连接管理器的关闭）
+### 2.3.4 Connection manager shutdown（连接管理器的关闭）
 When an HttpClient instance is no longer needed and is about to go out of scope it is important to shut down its connection manager to ensure that all connections kept alive by the manager get closed and system resources allocated by those connections are released.
 
 当不再需要 HttpClient 实例并即将超出作用域时，应关闭它的连接管理器以确保所有由管理器保持活动的连接都被关闭，并释放由这些连接分配的系统资源，这一点非常重要。
@@ -115,7 +115,7 @@ CloseableHttpClient httpClient = <...>
 httpClient.close();
 ```
 
-### 2.4 Multithreaded request execution（多线程的请求执行）
+## 2.4 Multithreaded request execution（多线程的请求执行）
 When equipped with a pooling connection manager such as `PoolingClientConnectionManager`, HttpClient can be used to execute multiple requests simultaneously using multiple threads of execution.
 
 当配置池连接管理器（如 `PoolingClientConnectionManager`）时，HttpClient 可以使用多个执行线程同时执行多个请求。
@@ -193,7 +193,7 @@ static class GetThread extends Thread {
 }
 ```
 
-#### 2.5 Connection eviction policy（连接回收策略）
+### 2.5 Connection eviction policy（连接回收策略）
 One of the major shortcomings of the classic blocking I/O model is that the network socket can react to I/O events only when blocked in an I/O operation. When a connection is released back to the manager, it can be kept alive however it is unable to monitor the status of the socket and react to any I/O events. If the connection gets closed on the server side, the client side connection is unable to detect the change in the connection state (and react appropriately by closing the socket on its end).
 
 经典阻塞 I/O 模型的一个主要缺点是，只有在 I/O 操作中阻塞时，网络 socket 才能对 I/O 事件作出反应。当一个连接被释放回管理器时，它可以保持活动状态，但是它不能监视 socket 的状态并对任何 I/O 事件作出反应。如果在服务器端关闭连接，则客户端连接无法检测连接状态中的更改（并通过关闭连接端上的 socket 做出适当的反应）。
@@ -241,7 +241,7 @@ public static class IdleConnectionMonitorThread extends Thread {
 }
 ```
 
-### 2.6 Connection keep alive strategy（保持连接策略）
+## 2.6 Connection keep alive strategy（保持连接策略）
 The HTTP specification does not specify how long a persistent connection may be and should be kept alive. Some HTTP servers use a non-standard `Keep-Alive` header to communicate to the client the period of time in seconds they intend to keep the connection alive on the server side. HttpClient makes use of this information if available. If the `Keep-Alive` header is not present in the response, HttpClient assumes the connection can be kept alive indefinitely. However, many HTTP servers in general use are configured to drop persistent connections after a certain period of inactivity in order to conserve system resources, quite often without informing the client. In case the default strategy turns out to be too optimistic, one may want to provide a custom `keep-alive` strategy.
 
 HTTP 规范没有指定持久性连接可能存在多长时间，并且应该保持活动状态。一些 HTTP 服务器使用非标准的 `Keep-Alive` 头与客户端通信，并希望在服务器端保持连接活动的时间（以秒为单位）。如果可用，HttpClient 将使用这些信息。如果响应中没有 `Keep-Alive` 头，HttpClient 假定连接可以无限期地保持活动状态。然而，通常使用的许多 HTTP 服务器都被配置为在一段时间不活动之后删除持久连接，以便节省系统资源，而且常常不通知客户端。如果默认策略过于乐观，可能需要提供一个定制的 `keep-alive` 策略。
@@ -281,7 +281,7 @@ CloseableHttpClient client = HttpClients.custom()
         .build();
 ```
 
-### 2.7 Connection socket factories（连接 socket 工厂）
+## 2.7 Connection socket factories（连接 socket 工厂）
 HTTP connections make use of a `java.net.Socket` object internally to handle transmission of data across the wire. However they rely on the `ConnectionSocketFactory` interface to create, initialize and connect sockets. This enables the users of HttpClient to provide application specific socket initialization code at runtime. `PlainConnectionSocketFactory` is the default factory for creating and initializing plain (unencrypted) sockets.
 
 HTTP 连接在内部使用一个 `java.net.Socket` 对象来处理跨线路的数据传输。然而，它们依赖于 `ConnectionSocketFactory` 接口来创建、初始化和连接 socket。这允许 HttpClient 的用户在运行时提供特定于应用程序的 socket 初始化代码。`PlainConnectionSocketFactory` 是创建和初始化普通（未加密）socket 的默认工厂。
@@ -301,12 +301,12 @@ InetSocketAddress remoteAddress = new InetSocketAddress(
 sf.connectSocket(timeout, socket, target, remoteAddress, null, clientContext);
 ```
 
-#### 2.7.1 Secure socket layering（安全 socket 层）
+### 2.7.1 Secure socket layering（安全 socket 层）
 `LayeredConnectionSocketFactory` is an extension of the `ConnectionSocketFactory` interface. Layered socket factories are capable of creating sockets layered over an existing plain socket. Socket layering is used primarily for creating secure sockets through proxies. HttpClient ships with `SSLSocketFactory` that implements SSL/TLS layering. Please note HttpClient does not use any custom encryption functionality. It is fully reliant on standard Java Cryptography (JCE) and Secure Sockets (JSEE) extensions.
 
 `LayeredConnectionSocketFactory` 继承了 `ConnectionSocketFactory` 接口。分层 socket 工厂能够在现有的普通 socket 上创建分层的 socket。socket 分层主要用于通过代理创建安全 socket。HttpClient 附带实现 SSL/TLS 分层的 `SSLSocketFactory`。请注意 HttpClient 不使用任何自定义加密功能。它完全依赖于标准 Java 密码学（JCE）和安全 socket（JSEE）扩展。
 
-#### 2.7.2 Integration with connection manager（与连接管理器集成）
+### 2.7.2 Integration with connection manager（与连接管理器集成）
 Custom connection socket factories can be associated with a particular protocol scheme as as HTTP or HTTPS and then used to create a custom connection manager.
 
 自定义连接 socket 工厂可以与特定的协议方案（如 HTTP 或 HTTPS）相关联，然后用于创建自定义连接管理器。
@@ -325,7 +325,7 @@ HttpClients.custom()
         .build();
 ```
 
-#### 2.7.3 SSL/TLS customization（定制 SSL/TLS）
+### 2.7.3 SSL/TLS customization（定制 SSL/TLS）
 HttpClient makes use of `SSLConnectionSocketFactory` to create SSL connections. `SSLConnectionSocketFactory` allows for a high degree of customization. It can take an instance of `javax.net.ssl.SSLContext` as a parameter and use it to create custom configured SSL connections.
 
 HttpClient 使用 `SSLConnectionSocketFactory` 来创建 SSL 连接。`SSLConnectionSocketFactory` 允许高度定制。它可以将 `javax.net.ssl.SSLContext` 的实例作为参数，并使用它创建自定义配置的 SSL 连接。
@@ -342,7 +342,7 @@ Customization of `SSLConnectionSocketFactory` implies a certain degree of famili
 
 `SSLConnectionSocketFactory` 的自定义意味着对 SSL/TLS 协议的概念有一定程度的熟悉，详细的解释超出了本文的范围。有关 `javax.net.ssl.SSLContext` 和相关工具的详细描述，请参阅 `Java™ Secure Socket Extension (JSSE) Reference Guide`。
 
-#### 2.7.4 Hostname verification（主机名验证）
+### 2.7.4 Hostname verification（主机名验证）
 In addition to the trust verification and the client authentication performed on the SSL/TLS protocol level, HttpClient can optionally verify whether the target hostname matches the names stored inside the server's X.509 certificate, once the connection has been established. This verification can provide additional guarantees of authenticity of the server trust material. The `javax.net.ssl.HostnameVerifier` interface represents a strategy for hostname verification. HttpClient ships with two `javax.net.ssl.HostnameVerifier` implementations. Important: hostname verification should not be confused with SSL trust verification.
 
 除了在 SSL/TLS 协议级别上执行的信任验证和客户端身份验证之外，一旦建立了连接，HttpClient 还可以选择性地验证目标主机名是否与存储在服务器的 X.509 证书中的名称匹配。这种验证可以为服务器信任材料的真实性提供额外的保证。接口 `javax.net.ssl.HostnameVerifier` 表示一种验证主机名的策略。HttpClient 附带两个 `javax.net.ssl.HostnameVerifier` 实现。重要提示：主机名验证不应与 SSL 信任验证混淆。
@@ -382,7 +382,7 @@ One can disable verification against the public suffic list by using null matche
 DefaultHostnameVerifier hostnameVerifier = new DefaultHostnameVerifier(null);
 ```
 
-### 2.8 HttpClient proxy configuration（HttpClient 代理配置）
+## 2.8 HttpClient proxy configuration（HttpClient 代理配置）
 Even though HttpClient is aware of complex routing schemes and proxy chaining, it supports only simple direct or one hop proxy connections out of the box.
 
 尽管 HttpClient 知道复杂的路由方案和代理链接，但它只支持简单的直接或单跳代理连接。
