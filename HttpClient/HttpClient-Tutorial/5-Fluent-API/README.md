@@ -4,7 +4,11 @@
 
 As of version of 4.2 HttpClient comes with an easy to use facade API based on the concept of a fluent interface. Fluent facade API exposes only the most fundamental functions of HttpClient and is intended for simple use cases that do not require the full flexibility of HttpClient. For instance, fluent facade API relieves the users from having to deal with connection management and resource deallocation.
 
+从 4.2 版本开始，HttpClient 提供了一个易于使用的基于连贯接口概念的 facade API。Fluent facade API 只公开 HttpClient 的最基本的功能，用于不需要 HttpClient 的全部灵活性的简单用例。例如，fluent facade API 使用户不必处理连接管理和资源分配。
+
 Here are several examples of HTTP requests executed through the HC fluent API
+
+以下是通过 HC fluent API 执行的几个 HTTP 请求示例
 
 ```
 // Execute a GET with timeout settings and return response content as String.
@@ -36,6 +40,8 @@ Request.Post("http://somehost/some-form")
 
 One can also use `Executor` directly in order to execute requests in a specific security context whereby authentication details are cached and re-used for subsequent requests.
 
+还可以直接使用 `Executor` 在特定的安全上下文中执行请求，从而缓存身份验证细节并为后续请求重用。
+
 ```
 Executor executor = Executor.newInstance()
         .auth(new HttpHost("somehost"), "username", "password")
@@ -51,9 +57,11 @@ executor.execute(Request.Post("http://somehost/do-stuff")
         .returnContent().asString();
 ```
 
-### 5.1.1. Response handling
+### 5.1.1. Response handling（响应处理）
 
 The fluent facade API generally relieves the users from having to deal with connection management and resource deallocation. In most cases, though, this comes at a price of having to buffer content of response messages in memory. It is highly recommended to use `ResponseHandler` for HTTP response processing in order to avoid having to buffer content in memory.
+
+连贯外观 API 通常使用户不必处理连接管理和资源分配。但是，在大多数情况下，这样做的代价是必须在内存中缓冲响应消息的内容。强烈建议使用 `ResponseHandler` 进行 HTTP 响应处理，以避免在内存中缓冲内容。
 
 ```
 Document result = Request.Get("http://somehost/content")

@@ -37,7 +37,7 @@ HttpClient 支持 HTTP/1.1 规范中定义的所有 HTTP 方法：GET、HEAD、P
 
 The Request-URI is a Uniform Resource Identifier that identifies the resource upon which to apply the request. HTTP request URIs consist of a protocol scheme, host name, optional port, resource path, optional query, and optional fragment.
 
-Request-URI 是统一的资源标识符，它标识要应用请求的资源。HTTP Request-URI 由协议方案、主机名、可选端口、资源路径、可选查询和可选片段组成。
+Request-URI 是统一的资源标识符，它标识要应用请求的资源。HTTP Request-URI 由协议方案、主机名、端口（可选）、资源路径、查询条件（可选）和 fragment 标识（可选）组成。
 
 ```
 HttpGet httpget = new HttpGet(
@@ -74,7 +74,7 @@ http://www.google.com/search?q=httpclient&btnG=Google+Search&aq=f&oq=
 
 HTTP response is a message sent by the server back to the client after having received and interpreted a request message. The first line of that message consists of the protocol version followed by a numeric status code and its associated textual phrase.
 
-HTTP 响应是服务器在接收并解释请求消息之后发送回客户端的消息。该消息的第一行由协议版本、数字状态代码及其相关的文本短语组成。
+HTTP 响应是服务器在接收并解析请求消息之后发送回客户端的消息。该消息的第一行由协议版本、数字状态代码及其相关的文本短语组成。
 
 ```
 HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
@@ -124,9 +124,9 @@ Set-Cookie: c2=b; path="/", c3=c; domain="localhost"
 2
 ```
 
-The most efficient way to obtain all headers of a given type is by using the `HeaderIterator` interface.
+The most efficient way to obtain all headers of a given type is by using the HeaderIterator interface.
 
-获取给定类型的所有消息头，最有效方法是使用 `HeaderIterator` 接口。
+获取给定类型的所有消息头，最有效方法是使用 HeaderIterator 接口。
 
 ```
 HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
@@ -151,7 +151,7 @@ Set-Cookie: c2=b; path="/", c3=c; domain="localhost"
 
 It also provides convenience methods to parse HTTP messages into individual header elements.
 
-HttpClient 还提供了便捷的方法来将 HTTP 消息解析为单独的消息头元素。
+HttpClient 还提供了便捷的方法来将 HTTP 消息解析为独立的消息头元素。
 
 ```
 HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
@@ -186,43 +186,41 @@ domain=localhost
 
 ### 1.1.4 HTTP entity（HTTP 实体）
 
-HTTP messages can carry a content entity associated with the request or response. Entities can be found in some requests and in some responses, as they are optional. Requests that use entities are referred to as entity enclosing requests. The HTTP specification defines two entity enclosing request methods: `POST` and `PUT`. Responses are usually expected to enclose a content entity. There are exceptions to this rule such as responses to `HEAD` method and `204 No Content, 304 Not Modified, 205 Reset Content` responses.
+HTTP messages can carry a content entity associated with the request or response. Entities can be found in some requests and in some responses, as they are optional. Requests that use entities are referred to as entity enclosing requests. The HTTP specification defines two entity enclosing request methods: POST and PUT. Responses are usually expected to enclose a content entity. There are exceptions to this rule such as responses to HEAD method and 204 No Content, 304 Not Modified, 205 Reset Content responses.
 
-HTTP 消息可以携带与请求或响应相关联的内容实体。实体可以在一些请求和响应中找到，因为它们是可选的。**使用实体的请求称为包含请求的实体。** HTTP 规范定义了两个包含请求方法的实体：`POST` 和 `PUT`。通常认为响应包含一个内容实体。这个规则也有例外，比如对 `HEAD` 方法的响应和几种常见的响应：`204 No Content`、`304 Not Modified`、`205 Reset Content`。
+HTTP 消息可以携带与请求或响应相关联的内容实体。实体可以在一些请求和响应中找到，因为它们是可选的。使用实体的请求称为包含请求的实体。HTTP 规范定义了两个包含请求方法的实体：POST 和 PUT。通常认为响应包含一个内容实体。这个规则也有例外，比如对 HEAD 方法的响应和几种常见的响应：204 No Content、304 Not Modified、205 Reset Content。
 
 HttpClient distinguishes three kinds of entities, depending on where their content originates:
 
 HttpClient 根据内容的来源将实体分为三种：
 
-- streamed: The content is received from a stream, or generated on the fly. In particular, this category includes entities being received from HTTP responses. Streamed entities are generally not repeatable.
+- **streamed**: The content is received from a stream, or generated on the fly. In particular, this category includes entities being received from HTTP responses. Streamed entities are generally not repeatable.
 
-流：内容从流中接收，或动态生成。特别地，这个类别包括从 HTTP 响应接收的实体。流实体通常是不可重复的。
+streamed：内容从流中接收，或动态生成。特别地，这个类别包括从 HTTP 响应接收的实体。流实体通常是不可重复的。
 
-- self-contained: The content is in memory or obtained by means that are independent from a connection or other entity. Self-contained entities are generally repeatable. This type of entities will be mostly used for entity enclosing HTTP requests.
+- **self-contained**: The content is in memory or obtained by means that are independent from a connection or other entity. Self-contained entities are generally repeatable. This type of entities will be mostly used for entity enclosing HTTP requests.
 
-自包含的：这些内容在内存中，或者通过独立于连接或其他实体的方式获取。自包含实体通常是可重复的。这种类型的实体主要用于封装 HTTP 请求的实体。
+self-contained：这些内容在内存中，或者通过独立于连接或其他实体的方式获取。自包含实体通常是可重复的。这种类型的实体主要用于封装 HTTP 请求的实体。
 
-**译注：此处需要例子说明。**
+- **wrapping**: The content is obtained from another entity.
 
-- wrapping: The content is obtained from another entity.
-
-包装：内容从另一个实体获得。
+wrapping：内容从另一个实体获得。
 
 This distinction is important for connection management when streaming out content from an HTTP response. For request entities that are created by an application and only sent using HttpClient, the difference between streamed and self-contained is of little importance. In that case, it is suggested to consider non-repeatable entities as streamed, and those that are repeatable as self-contained.
 
-当从 HTTP 响应中输出内容时，这些区别对于连接管理非常重要。对于由应用程序创建且仅使用 HttpClient 发送的请求实体，流和自包含的区别并不重要。在这种情况下，建议将不可重复的实体视为流，将可重复的实体视为自包含的。
+当从 HTTP 响应中输出内容时，这些区别对于连接管理非常重要。对于由应用程序创建且仅使用 HttpClient 发送的请求实体，streamed 和 self-contained 的区别并不重要。在这种情况下，建议将不可重复的实体视为 streamed，将可重复的实体视为 self-contained。
 
 #### 1.1.4.1 Repeatable entities（可重复的实体）
 
 An entity can be repeatable, meaning its content can be read more than once. This is only possible with self contained entities (like `ByteArrayEntity` or `StringEntity`)
 
-一个实体可重复，这意味着它的内容可以被多次读取。**这只可能与自包含实体**（如 `ByteArrayEntity` 或 `StringEntity`）
+一个实体可重复，这意味着它的内容可以被多次读取。这只可能是 self-contained 实体（如 `ByteArrayEntity` 或 `StringEntity`）
 
 #### 1.1.4.2 Using HTTP entities（使用 HTTP 实体）
 
 Since an entity can represent both binary and character content, it has support for character encodings (to support the latter, ie. character content).
 
-由于实体既可以表示二进制内容，也可以表示字符内容，所以它支持字符编码（**支持后者，那就是字符内容**)。
+由于实体既可以表示二进制内容，也可以表示字符内容，所以它支持字符编码（to support the latter, ie. character content)。
 
 The entity is created when executing a request with enclosed content or when the request was successful and the response body is used to send the result back to the client.
 
@@ -234,7 +232,7 @@ To read the content from the entity, one can either retrieve the input stream vi
 
 When the entity has been received with an incoming message, the methods `HttpEntity#getContentType()` and `HttpEntity#getContentLength()` methods can be used for reading the common metadata such as `Content-Type` and `Content-Length` headers (if they are available). Since the `Content-Type` header can contain a character encoding for text mime-types like text/plain or text/html, the `HttpEntity#getContentEncoding()` method is used to read this information. If the headers aren't available, a length of -1 will be returned, and NULL for the content type. If the `Content-Type` header is available, a `Header` object will be returned.
 
-当接收到带有传入消息的实体时，方法 `HttpEntity#getContentType()` 和 `HttpEntity#getContentLength()` 可用于读取公共元数据，如 `Content-Type` 和 `Content-Length` 头信息（如果它们可用）。由于 `Content-Type` 头可以包含文本的媒体类型（如 text/plain 或 text/html）的字符编码，因此使用 `HttpEntity#getContentEncoding()` 方法来读取此信息。如果头不可用，则返回长度 -1，内容类型为 NULL。如果 `Content-Type` 头可用，则返回一个 `Header` 对象。
+当接收到带有传入消息的实体时，方法 `HttpEntity#getContentType()` 和 `HttpEntity#getContentLength()` 可用于读取公共元数据，如 `Content-Type` 和 `Content-Length` 头信息（如果它们可用）。由于 `Content-Type` 头可以包含文本的 mime-type（如 text/plain 或 text/html）的字符编码，因此使用 `HttpEntity#getContentEncoding()` 方法来读取此信息。如果头不可用，则返回长度 -1，内容类型为 NULL。如果 `Content-Type` 头可用，则返回一个 `Header` 对象。
 
 When creating an entity for a outgoing message, this meta data has to be supplied by the creator of the entity.
 
@@ -264,7 +262,7 @@ important message
 
 In order to ensure proper release of system resources one must close either the content stream associated with the entity or the response itself
 
-为了确保正确释放系统资源，必须关闭与实体或响应本身关联的内容流。
+为了确保正确释放系统资源，必须关闭与实体关联的内容流或响应本身。
 
 ```
 CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -287,7 +285,7 @@ try {
 
 The difference between closing the content stream and closing the response is that the former will attempt to keep the underlying connection alive by consuming the entity content while the latter immediately shuts down and discards the connection.
 
-关闭内容流和关闭响应之间的区别在于，前者将尝试通过使用实体内容来保持底层连接的活动，而后者将立即关闭并丢弃连接。
+关闭内容流和关闭响应之间的区别在于，前者使用实体内容后，能保持底层连接，而后者将立即关闭并丢弃连接。
 
 Please note that the `HttpEntity#writeTo(OutputStream)` method is also required to ensure proper release of system resources once the entity has been fully written out. If this method obtains an instance of `java.io.InputStream` by calling `HttpEntity#getContent()`, it is also expected to close the stream in a finally clause.
 
@@ -320,13 +318,13 @@ try {
 
 The connection will not be reused, but all level resources held by it will be correctly deallocated.
 
-连接将不会被重用，但它所持有的所有层级的资源将被正确释放。
+连接将不会被重用，它所覆盖的所有层级的资源都将被正确释放。
 
 ### 1.1.6 Consuming entity content（消费实体内容）
 
 The recommended way to consume the content of an entity is by using its `HttpEntity#getContent()` or `HttpEntity#writeTo(OutputStream)` methods. HttpClient also comes with the `EntityUtils` class, which exposes several static methods to more easily read the content or information from an entity. Instead of reading the `java.io.InputStream` directly, one can retrieve the whole content body in a string / byte array by using the methods from this class. However, the use of `EntityUtils` is strongly discouraged unless the response entities originate from a trusted HTTP server and are known to be of limited length.
 
-推荐使用实体内容的方法是使用它的 `HttpEntity#getContent()` 或 `HttpEntity#writeTo(OutputStream)` 方法。HttpClient 还附带了 `EntityUtils` 类，它公开了几个静态方法，以便更容易地从实体中读取内容或信息。你可以直接使用这个类的方法在一个字符串或字节数组中检索整个内容体，而不是阅读 `java.io.InputStream`。但是，强烈反对使用 `EntityUtils`，除非响应实体来自可信的 HTTP 服务器，并且已知其长度有限。
+推荐使用实体内容的方法是使用它的 `HttpEntity#getContent()` 或 `HttpEntity#writeTo(OutputStream)` 方法。HttpClient 还附带了 `EntityUtils` 类，它公开了几个静态方法，以便更容易地从实体中读取内容或信息。你可以直接使用这个类的方法在一个字符串或字节数组中检索整个内容体，而不是读取 `java.io.InputStream`。但是，强烈反对使用 `EntityUtils`，除非响应实体来自可信的 HTTP 服务器，并且已知其长度有限。
 
 ```
 CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -349,7 +347,7 @@ try {
 
 In some situations it may be necessary to be able to read entity content more than once. In this case entity content must be buffered in some way, either in memory or on disk. The simplest way to accomplish that is by wrapping the original entity with the `BufferedHttpEntity` class. This will cause the content of the original entity to be read into a in-memory buffer. In all other ways the entity wrapper will be have the original one.
 
-在某些情况下，可能需要多次读取实体内容。在这种情况下，必须以某种方式缓冲实体内容，要么在内存中，要么在磁盘上。最简单的方法是使用 `BufferedHttpEntity` 类包装原始实体。这将导致将原始实体的内容被读入内存缓冲区。在所有其他方式中，实体包装器将具有原始包装器。
+在某些情况下，可能需要多次读取实体内容。在这种情况下，必须以某种方式缓冲实体内容，要么在内存中，要么在磁盘上。最简单的方法是使用 `BufferedHttpEntity` 类包装原始实体。这将导致原始实体的内容被读入内存缓冲区。In all other ways the entity wrapper will be have the original one.
 
 ```
 CloseableHttpResponse response = <...>
@@ -375,7 +373,7 @@ httppost.setEntity(entity);
 
 Please note `InputStreamEntity` is not repeatable, because it can only read from the underlying data stream once. Generally it is recommended to implement a custom `HttpEntity` class which is self-contained instead of using the generic `InputStreamEntity`. `FileEntity` can be a good starting point.
 
-请注意 `InputStreamEntity` 是不可重复的，因为它只能从底层数据流读取一次。通常建议实现自定义的 `HttpEntity` 类，该类是自包含的，而不是使用通用的 `InputStreamEntity`。`FileEntity` 可以作为一个很好的起点。
+请注意 `InputStreamEntity` 是不可重复的，因为它只能从底层数据流读取一次。通常建议实现自定义的 `HttpEntity` 类，该类是 self-contained 的，而不是使用通用的 `InputStreamEntity`。`FileEntity` 可以作为一个很好的参考。
 
 #### 1.1.7.1 HTML forms（HTML 表单）
 
@@ -405,7 +403,7 @@ param1=value1&param2=value2
 
 Generally it is recommended to let HttpClient choose the most appropriate transfer encoding based on the properties of the HTTP message being transferred. It is possible, however, to inform HttpClient that chunk coding is preferred by setting `HttpEntity#setChunked()` to true. Please note that HttpClient will use this flag as a hint only. This value will be ignored when using HTTP protocol versions that do not support chunk coding, such as HTTP/1.0.
 
-通常建议让 HttpClient 根据正在传输的 HTTP 消息的属性选择最合适的传输编码。但是，可以通过将 `HttpEntity#setChunked()` 设置为 true 来通知 HttpClient，块编码是首选的。请注意 HttpClient 将只使用此标志作为提示。当使用不支持块编码的 HTTP 协议版本（如 HTTP/1.0）时，此值将被忽略。
+通常建议让 HttpClient 根据正在传输的 HTTP 消息的属性选择最合适的传输编码。但是，可以通过将 `HttpEntity#setChunked()` 设置为 true 来通知 HttpClient，Chunked 编码是首选的。请注意 HttpClient 将只使用此标志作为提示。当使用不支持 Chunked 编码的 HTTP 协议版本（如 HTTP/1.0）时，此值将被忽略。
 
 ```
 StringEntity entity = new StringEntity("important message", ContentType.create("plain/text", Consts.UTF_8));

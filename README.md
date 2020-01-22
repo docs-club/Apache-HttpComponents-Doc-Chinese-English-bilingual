@@ -1,12 +1,12 @@
 # Apache-HttpComponents-Doc-Chinese-English-bilingual
 
-link to：http://hc.apache.org/httpclient-3.x/
+转译自：http://hc.apache.org/httpclient-3.x/
 
 ## End of life（生命结束）
 
-The Commons HttpClient project is now end of life, and is no longer being developed. It has been replaced by the [Apache HttpComponents](/Apache-HttpComponents/README.md) project in its HttpClient and HttpCore modules, which offer better performance and more flexibility.
+The Commons HttpClient project is now end of life, and is no longer being developed. It has been replaced by the Apache HttpComponents project in its HttpClient and HttpCore modules, which offer better performance and more flexibility.
 
-Commons HttpClient 项目已经终结了，并且不再开发。它已经被 Apache HttpComponents 项目中的 [HttpClient](/HttpClient/README.md) 和 [HttpCore](/HttpCore/README.md) 模块取代，这些模块提供了更好的性能和更强的灵活性。
+Commons HttpClient 项目已经终结了，并且不再开发。它已经被 [Apache HttpComponents](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/Apache-HttpComponents) 项目中的 [HttpClient](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient) 和 [HttpCore](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpCore) 模块取代，这些模块提供了更好的性能和更强的灵活性。
 
 ## Introduction（介绍）
 

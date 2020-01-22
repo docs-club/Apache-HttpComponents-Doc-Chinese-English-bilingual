@@ -1,8 +1,10 @@
-# Chapter 6. HTTP Caching
+# Chapter 6. HTTP Caching（HTTP 缓存）
 
-## 6.1. General Concepts
+## 6.1. General Concepts（一般概念）
 
 HttpClient Cache provides an HTTP/1.1-compliant caching layer to be used with HttpClient--the Java equivalent of a browser cache. The implementation follows the Chain of Responsibility design pattern, where the caching HttpClient implementation can serve a drop-in replacement for the default non-caching HttpClient implementation; requests that can be satisfied entirely from the cache will not result in actual origin requests. Stale cache entries are automatically validated with the origin where possible, using conditional GETs and the If-Modified-Since and/or If-None-Match request headers.
+
+HttpClient Cache 提供了一个 HTTP/1.1 兼容的缓存层，用于 HttpClient（相当于浏览器缓存的 Java 版本）。实现遵循责任链设计模式，其中缓存 HttpClient 实现可以作为缺省无缓存 HttpClient 实现的替代；完全可以从缓存中满足的请求不会产生实际的原始请求。旧的缓存条目在可能的情况下使用条件 GET 和 If-Modified-Since和/或If-None-Match 请求头自动验证原始数据。
 
 HTTP/1.1 caching in general is designed to be **_semantically transparent_**; that is, a cache should not change the meaning of the request-response exchange between client and server. As such, it should be safe to drop a caching HttpClient into an existing compliant client-server relationship. Although the caching module is part of the client from an HTTP protocol point of view, the implementation aims to be compatible with the requirements placed on a transparent caching proxy.
 
