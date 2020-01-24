@@ -90,7 +90,11 @@ Kerberos：Kerberos 身份验证实现。
 
 Credentials providers are intended to maintain a set of user credentials and to be able to produce user credentials for a particular authentication scope. Authentication scope consists of a host name, a port number, a realm name and an authentication scheme name. When registering credentials with the credentials provider one can provide a wild card (any host, any port, any realm, any scheme) instead of a concrete attribute value. The credentials provider is then expected to be able to find the closest match for a particular scope if the direct match cannot be found.
 
+Credentials provider 旨在维护一组用户凭据，并能够为特定的身份验证范围生成用户凭据。身份验证范围由主机名、端口号、域名和身份验证方案名组成。向 Credentials provider 提供注册凭据时，可以提供通配符（任何主机、任何端口、任何域、任何方案），而不是具体的属性值。然后，如果无法找到直接匹配，则 Credentials provider 将能够为特定范围找到最接近的匹配。
+
 HttpClient can work with any physical representation of a credentials provider that implements the `CredentialsProvider` interface. The default `CredentialsProvider` implementation called `BasicCredentialsProvider` is a simple implementation backed by a `java.util.HashMap`.
+
+HttpClient 可以处理实现 `CredentialsProvider` 接口的凭据提供者的任何物理表示。默认的 `CredentialsProvider` 实现名为 `BasicCredentialsProvider`，它是一个由 `java.util.HashMap` 支持的简单实现。
 
 ```
 CredentialsProvider credsProvider = new BasicCredentialsProvider();
@@ -123,23 +127,39 @@ null
 [principal: u3]
 ```
 
-## 4.4 HTTP authentication and execution context
+## 4.4 HTTP authentication and execution context（HTTP 身份验证和执行上下文）
 
 HttpClient relies on the `AuthState` class to keep track of detailed information about the state of the authentication process. HttpClient creates two instances of `AuthState` in the course of HTTP request execution: one for target host authentication and another one for proxy authentication. In case the target server or the proxy require user authentication the respective `AuthScope` instance will be populated with the `AuthScope`, `AuthScheme` and `Crednetials` used during the authentication process. The `AuthState` can be examined in order to find out what kind of authentication was requested, whether a matching `AuthScheme` implementation was found and whether the credentials provider managed to find user credentials for the given authentication scope.
 
+HttpClient 依赖于 `AuthState` 类来跟踪关于身份验证过程状态的详细信息。HttpClient 在 HTTP 请求执行过程中创建两个 `AuthState` 实例：一个用于目标主机身份验证，另一个用于代理身份验证。如果目标服务器或代理需要用户身份验证，则在验证过程中使用 `AuthScope`、`AuthScheme` 和 `Crednetials` 填充相应的 `AuthScope` 实例。可以检查 `AuthState`，以确定请求的是哪种身份验证、是否找到了匹配的 `AuthScheme` 实现，以及凭据提供者是否设法找到了给定身份验证范围的用户凭据。
+
 In the course of HTTP request execution HttpClient adds the following authentication related objects to the execution context:
+
+在 HTTP 请求执行过程中，HttpClient 将以下认证相关对象添加到执行上下文：
 
 - `Lookup` instance representing the actual authentication scheme registry. The value of this attribute set in the local context takes precedence over the default one.
 
+`Lookup` 实例，表示实际的认证方案注册表。此属性在本地上下文中设置的值优先于默认值。
+
 - `CredentialsProvider` instance representing the actual credentials provider. The value of this attribute set in the local context takes precedence over the default one.
+
+`CredentialsProvider` 实例，表示实际的 credentials provider。此属性在本地上下文中设置的值优先于默认值。
 
 - `AuthState` instance representing the actual target authentication state. The value of this attribute set in the local context takes precedence over the default one.
 
+`AuthState` 实例，表示实际的目标身份验证状态。此属性在本地上下文中设置的值优先于默认值。
+
 - `AuthState` instance representing the actual proxy authentication state. The value of this attribute set in the local context takes precedence over the default one.
+
+`AuthState` 实例，表示实际的代理身份验证状态。此属性在本地上下文中设置的值优先于默认值。
 
 - `AuthCache` instance representing the actual authentication data cache. The value of this attribute set in the local context takes precedence over the default one.
 
+`AuthCache` 实例，表示实际的身份验证数据缓存。此属性在本地上下文中设置的值优先于默认值。
+
 The local `HttpContext` object can be used to customize the HTTP authentication context prior to request execution, or to examine its state after the request has been executed:
+
+本地的 `HttpContext` 对象可用于在请求执行前定制 HTTP 认证上下文，或在请求执行后检查其状态：
 
 ```
 CloseableHttpClient httpclient = <...>
@@ -166,15 +186,21 @@ System.out.println("Target auth scheme: " + targetAuthState.getAuthScheme());
 System.out.println("Target auth credentials: " + targetAuthState.getCredentials());
 ```
 
-## 4.5 Caching of authentication data
+## 4.5 Caching of authentication data（身份验证数据的缓存）
 
 As of version 4.1 HttpClient automatically caches information about hosts it has successfully authenticated with. Please note that one must use the same execution context to execute logically related requests in order for cached authentication data to propagate from one request to another. Authentication data will be lost as soon as the execution context goes out of scope.
+
+从版本 4.1 开始，HttpClient 自动缓存它已成功认证的主机信息。请注意，必须使用相同的执行上下文来执行逻辑相关的请求，以便缓存的身份验证数据从一个请求传播到另一个请求。一旦执行上下文超出范围，身份验证数据就会丢失。
 
 ## 4.6 Preemptive authentication
 
 HttpClient does not support preemptive authentication out of the box, because if misused or used incorrectly the preemptive authentication can lead to significant security issues, such as sending user credentials in clear text to an unauthorized third party. Therefore, users are expected to evaluate potential benefits of preemptive authentication versus security risks in the context of their specific application environment.
 
+HttpClient 不支持开箱即用的 Preemptive authentication，因为如果误用或使用不正确，Preemptive authentication 可能会导致严重的安全问题，例如将用户凭证以明文发送给未授权的第三方。因此，期望用户在其特定应用程序环境的上下文中评估 Preemptive authentication 与安全风险的潜在好处。
+
 Nonetheless one can configure HttpClient to authenticate preemptively by prepopulating the authentication data cache.
+
+尽管如此，可以通过预填充身份验证数据缓存来配置 HttpClient，to authenticate preemptively
 
 ```
 CloseableHttpClient httpclient = <...>
@@ -213,11 +239,17 @@ for (int i = 0; i < 3; i++) {
 
 As of version 4.1 HttpClient provides full support for NTLMv1, NTLMv2, and NTLM2 Session authentication out of the box. One can still continue using an external `NTLM` engine such as JCIFS library developed by the Samba project as a part of their Windows interoperability suite of programs.
 
+从版本 4.1 开始，HttpClient 提供了对 NTLMv1、NTLMv2 和 NTLM2 会话身份验证的完全支持。您仍然可以继续使用外部 `NTLM` 引擎，如 Samba 项目开发的 JCIFS 库，作为其 Windows 互操作性程序套件的一部分。
+
 ### 4.7.1 NTLM connection persistence
 
 The `NTLM` authentication scheme is significantly more expensive in terms of computational overhead and performance impact than the standard `Basic` and `Digest` schemes. This is likely to be one of the main reasons why Microsoft chose to make `NTLM` authentication scheme stateful. That is, once authenticated, the user identity is associated with that connection for its entire life span. The stateful nature of `NTLM` connections makes connection persistence more complex, as for the obvious reason persistent `NTLM` connections may not be re-used by users with a different user identity. The standard connection managers shipped with HttpClient are fully capable of managing stateful connections. However, it is critically important that logically related requests within the same session use the same execution context in order to make them aware of the current user identity. Otherwise, HttpClient will end up creating a new HTTP connection for each HTTP request against NTLM protected resources. For detailed discussion on stateful HTTP connections please refer to this section.
 
+就计算开销和性能影响而言，`NTLM` 身份验证方案比标准的 `Basic` 和 `Digest` 身份验证方案要昂贵得多。这可能是微软选择“NTLM”身份验证方案有状态的主要原因之一。也就是说，一旦通过身份验证，用户身份就在其整个生命周期内与该连接相关联。“NTLM”连接的有状态特性使连接持久性变得更加复杂，原因很明显，具有不同用户身份的用户可能不会重用持久的 `NTLM` 连接。HttpClient 附带的标准连接管理器完全能够管理有状态连接。但是，为了使相同会话中的逻辑相关请求能够识别当前的用户标识，使用相同的执行上下文是非常重要的。否则，HttpClient 将最终为针对 NTLM 受保护资源的每个 HTTP 请求创建一个新的HTTP连接。有关有状态 HTTP 连接的详细讨论，请参阅本节。
+
 As `NTLM` connections are stateful it is generally recommended to trigger NTLM authentication using a relatively cheap method, such as `GET` or `HEAD`, and re-use the same connection to execute more expensive methods, especially those enclose a request entity, such as `POST` or `PUT`.
+
+由于 `NTLM` 连接是有状态的，因此通常建议使用相对便宜的方法（如 `GET` 或 `HEAD`）触发 NTLM 身份验证，并重用相同的连接来执行更昂贵的方法，特别是那些包含请求实体的方法，如 `POST` 或 `PUT`。
 
 ```
 CloseableHttpClient httpclient = <...>
