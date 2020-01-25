@@ -38,9 +38,9 @@ Request.Post("http://somehost/some-form")
         .execute().saveContent(new File("result.dump"));
 ```
 
-One can also use `Executor` directly in order to execute requests in a specific security context whereby authentication details are cached and re-used for subsequent requests.
+One can also use Executor directly in order to execute requests in a specific security context whereby authentication details are cached and re-used for subsequent requests.
 
-还可以直接使用 `Executor` 在特定的安全上下文中执行请求，从而缓存身份验证细节并为后续请求重用。
+还可以直接使用 Executor 在特定的安全上下文中执行请求，从而缓存身份验证细节并为后续请求重用。
 
 ```
 Executor executor = Executor.newInstance()
@@ -59,9 +59,9 @@ executor.execute(Request.Post("http://somehost/do-stuff")
 
 ### 5.1.1. Response handling（响应处理）
 
-The fluent facade API generally relieves the users from having to deal with connection management and resource deallocation. In most cases, though, this comes at a price of having to buffer content of response messages in memory. It is highly recommended to use `ResponseHandler` for HTTP response processing in order to avoid having to buffer content in memory.
+The fluent facade API generally relieves the users from having to deal with connection management and resource deallocation. In most cases, though, this comes at a price of having to buffer content of response messages in memory. It is highly recommended to use ResponseHandler for HTTP response processing in order to avoid having to buffer content in memory.
 
-连贯外观 API 通常使用户不必处理连接管理和资源分配。但是，在大多数情况下，这样做的代价是必须在内存中缓冲响应消息的内容。强烈建议使用 `ResponseHandler` 进行 HTTP 响应处理，以避免在内存中缓冲内容。
+连贯外观 API 通常使用户不必处理连接管理和资源分配。但是，在大多数情况下，这样做的代价是必须在内存中缓冲响应消息的内容。强烈建议使用 ResponseHandler 进行 HTTP 响应处理，以避免在内存中缓冲内容。
 
 ```
 Document result = Request.Get("http://somehost/content")
