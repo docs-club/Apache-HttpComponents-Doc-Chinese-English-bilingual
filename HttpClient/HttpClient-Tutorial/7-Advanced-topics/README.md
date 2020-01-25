@@ -1,12 +1,18 @@
-# Chapter 7. Advanced topics
+# Chapter 7. Advanced topics（进阶主题）
 
-## 7.1. Custom client connections
+## 7.1. Custom client connections（自定义客户端连接）
 
 In certain situations it may be necessary to customize the way HTTP messages get transmitted across the wire beyond what is possible using HTTP parameters in order to be able to deal non-standard, non-compliant behaviours. For instance, for web crawlers it may be necessary to force HttpClient into accepting malformed response heads in order to salvage the content of the messages.
 
+在某些情况下，为了能够处理非标准的、不兼容的行为，可能需要定制 HTTP 消息通过网络传输的方式，而不是使用 HTTP 参数。例如，对于 web 爬虫程序，可能需要强制 HttpClient 接受格式不正确的响应头，以便回收消息的内容。
+
 Usually the process of plugging in a custom message parser or a custom connection implementation involves several steps:
 
+通常，插入自定义消息解析器或自定义连接实现的过程包括几个步骤：
+
 - Provide a custom LineParser / LineFormatter interface implementation. Implement message parsing / formatting logic as required.
+
+提供自定义 LineParser/LineFormatter 接口实现。根据需要实现消息解析/格式化逻辑。
 
 ```
 class MyLineParser extends BasicLineParser {
@@ -27,6 +33,8 @@ class MyLineParser extends BasicLineParser {
 
 - Provide a custom HttpConnectionFactory implementation. Replace default request writer and / or response parser with custom ones as required.
 
+提供一个自定义的 HttpConnectionFactory 实现。根据需要用定制的请求编写器和/或响应解析器替换默认的请求编写器和/或响应解析器。
+
 ```
 HttpConnectionFactory<HttpRoute, ManagedHttpClientConnection> connFactory =
         new ManagedHttpClientConnectionFactory(
@@ -37,6 +45,8 @@ HttpConnectionFactory<HttpRoute, ManagedHttpClientConnection> connFactory =
 
 - Configure HttpClient to use the custom connection factory.
 
+配置 HttpClient 以使用自定义连接工厂。
+
 ```
 PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(
     connFactory);
@@ -45,9 +55,11 @@ CloseableHttpClient httpclient = HttpClients.custom()
         .build();
 ```
 
-## 7.2. Stateful HTTP connections
+## 7.2. Stateful HTTP connections（有状态的 HTTP 连接）
 
 While HTTP specification assumes that session state information is always embedded in HTTP messages in the form of HTTP cookies and therefore HTTP connections are always stateless, this assumption does not always hold true in real life. There are cases when HTTP connections are created with a particular user identity or within a particular security context and therefore cannot be shared with other users and can be reused by the same user only. Examples of such stateful HTTP connections are NTLM authenticated connections and SSL connections with client certificate authentication.
+
+虽然 HTTP 规范假设会话状态信息总是以 HTTP cookie 的形式嵌入到 HTTP 消息中，因此 HTTP 连接总是无状态的，但这种假设在实际生活中并不总是成立。在某些情况下，HTTP连接是使用特定的用户标识或在特定的安全上下文中创建的，因此不能与其他用户共享，只能由同一用户重用。这种有状态HTTP连接的例子有NTLM认证连接和客户端证书认证的SSL连接。
 
 ### 7.2.1. User token handler
 
