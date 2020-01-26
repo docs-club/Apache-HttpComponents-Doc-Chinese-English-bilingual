@@ -1,6 +1,6 @@
 # Apache-HttpComponents-Doc-Chinese-English-bilingual
 
-转译自：http://hc.apache.org/httpclient-3.x/
+文档地址：http://hc.apache.org/httpclient-3.x/
 
 ## End of life（生命结束）
 

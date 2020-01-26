@@ -6,13 +6,19 @@
 
 A HTTP message consists of a header and an optional body. The message header of an HTTP request consists of a request line and a collection of header fields. The message header of an HTTP response consists of a status line and a collection of header fields. All HTTP messages must include the protocol version. Some HTTP messages can optionally enclose a content body.
 
+HTTP 消息由一个头和一个可选的主体组成。HTTP 请求的消息头由请求行和头字段集合组成。HTTP 响应的消息头由一个状态行和一个头字段集合组成。所有 HTTP 消息必须包含协议版本。一些 HTTP 消息可以选择封装内容主体。
+
 HttpCore defines the HTTP message object model to follow this definition closely, and provides extensive support for serialization (formatting) and deserialization (parsing) of HTTP message elements.
 
-### 1.1.2. Basic operations
+HttpCore 定义了 HTTP 消息对象模型来严格遵循这个定义，并提供了对 HTTP 消息元素的序列化（格式化）和反序列化（解析）的广泛支持。
 
-#### 1.1.2.1. HTTP request message
+### 1.1.2. Basic operations（基本操作）
+
+#### 1.1.2.1. HTTP request message（HTTP 请求消息）
 
 HTTP request is a message sent from the client to the server. The first line of that message includes the method to apply to the resource, the identifier of the resource, and the protocol version in use.
+
+HTTP 请求是从客户端发送到服务器的消息。该消息的第一行包括应用于资源的方法、资源的标识符和正在使用的协议版本。
 
 ```
 HttpRequest request = new BasicHttpRequest("GET", "/",
@@ -33,9 +39,11 @@ HTTP/1.1
 GET / HTTP/1.1
 ```
 
-#### 1.1.2.2. HTTP response message
+#### 1.1.2.2. HTTP response message（HTTP 响应消息）
 
 HTTP response is a message sent by the server back to the client after having received and interpreted a request message. The first line of that message consists of the protocol version followed by a numeric status code and its associated textual phrase.
+
+HTTP 响应是服务器在接收并解释请求消息之后发送回客户端的消息。该消息的第一行由协议版本、数字状态码及其相关的文本短语组成。
 
 ```
 HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1,
@@ -56,9 +64,11 @@ OK
 HTTP/1.1 200 OK
 ```
 
-#### 1.1.2.3. HTTP message common properties and methods
+#### 1.1.2.3. HTTP message common properties and methods（HTTP 消息的公共属性和方法）
 
 An HTTP message can contain a number of headers describing properties of the message such as the content length, content type, and so on. HttpCore provides methods to retrieve, add, remove, and enumerate such headers.
+
+HTTP 消息可以包含许多描述消息属性（如内容长度、内容类型等）的标头。HttpCore 提供了检索、添加、删除和枚举这些头文件的方法。
 
 ```
 HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1,
@@ -83,7 +93,7 @@ Set-Cookie: c2=b; path="/", c3=c; domain="localhost"
 2
 ```
 
-There is an efficient way to obtain all headers of a given type using the **_HeaderIterator_** interface.
+There is an efficient way to obtain all headers of a given type using the HeaderIterator interface.
 
 ```
 HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1,
@@ -158,7 +168,7 @@ HttpCore distinguishes three kinds of entities, depending on where their content
 
 #### 1.1.3.1. Repeatable entities
 
-An entity can be repeatable, meaning its content can be read more than once. This is only possible with self-contained entities (like **_ByteArrayEntity_** or **_StringEntity_**).
+An entity can be repeatable, meaning its content can be read more than once. This is only possible with self-contained entities (like ByteArrayEntity or StringEntity).
 
 #### 1.1.3.2. Using HTTP entities
 
@@ -166,11 +176,11 @@ Since an entity can represent both binary and character content, it has support 
 
 The entity is created when executing a request with enclosed content or when the request was successful and the response body is used to send the result back to the client.
 
-To read the content from the entity, one can either retrieve the input stream via the HttpEntity#getContent() method, which returns an **_java.io.InputStream_**, or one can supply an output stream to the **_HttpEntity#writeTo(OutputStream)_** method, which will return once all content has been written to the given stream. Please note that some non-streaming (self-contained) entities may be unable to represent their content as a java.io.InputStream efficiently. It is legal for such entities to implement **_HttpEntity#writeTo(OutputStream)_** method only and to throw UnsupportedOperationException from **_HttpEntity#getContent()_** method.
+To read the content from the entity, one can either retrieve the input stream via the HttpEntity#getContent() method, which returns an java.io.InputStream, or one can supply an output stream to the HttpEntity#writeTo(OutputStream) method, which will return once all content has been written to the given stream. Please note that some non-streaming (self-contained) entities may be unable to represent their content as a java.io.InputStream efficiently. It is legal for such entities to implement HttpEntity#writeTo(OutputStream) method only and to throw UnsupportedOperationException from HttpEntity#getContent() method.
 
-The **_EntityUtils_** class exposes several static methods to simplify extracting the content or information from an entity. Instead of reading the **_java.io.InputStream_** directly, one can retrieve the complete content body in a string or byte array by using the methods from this class.
+The EntityUtils class exposes several static methods to simplify extracting the content or information from an entity. Instead of reading the java.io.InputStream directly, one can retrieve the complete content body in a string or byte array by using the methods from this class.
 
-When the entity has been received with an incoming message, the methods **_HttpEntity#getContentType()_** and **_HttpEntity#getContentLength()_** methods can be used for reading the common metadata such as **_Content-Type_** and **_Content-Length_** headers (if they are available). Since the **_Content-Type_** header can contain a character encoding for text mime-types like text/plain or text/html, the HttpEntity#getContentEncoding() method is used to read this information. If the headers aren't available, a length of -1 will be returned, and NULL for the content type. If the Content-Type header is available, a Header object will be returned.
+When the entity has been received with an incoming message, the methods HttpEntity#getContentType() and HttpEntity#getContentLength() methods can be used for reading the common metadata such as Content-Type and Content-Length headers (if they are available). Since the Content-Type header can contain a character encoding for text mime-types like text/plain or text/html, the HttpEntity#getContentEncoding() method is used to read this information. If the headers aren't available, a length of -1 will be returned, and NULL for the content type. If the Content-Type header is available, a Header object will be returned.
 
 When creating an entity for a outgoing message, this meta data has to be supplied by the creator of the entity.
 
@@ -210,7 +220,7 @@ if (entity != null) {
 }
 ```
 
-When working with streaming entities, one can use the **_EntityUtils#consume(HttpEntity)_** method to ensure that the entity content has been fully consumed and the underlying stream has been closed.
+When working with streaming entities, one can use the EntityUtils#consume(HttpEntity) method to ensure that the entity content has been fully consumed and the underlying stream has been closed.
 
 ### 1.1.4. Creating entities
 
@@ -231,7 +241,7 @@ Exactly as the name implies, this basic entity represents an underlying stream. 
 
 This entity has an empty constructor. After construction, it represents no content, and has a negative content length.
 
-One needs to set the content stream, and optionally the length. This can be done with the **_BasicHttpEntity#setContent(InputStream)_** and **_BasicHttpEntity#setContentLength(long)_** methods respectively.
+One needs to set the content stream, and optionally the length. This can be done with the BasicHttpEntity#setContent(InputStream) and BasicHttpEntity#setContentLength(long) methods respectively.
 
 ```
 BasicHttpEntity myEntity = new BasicHttpEntity();
@@ -241,14 +251,14 @@ myEntity.setContentLength(340); // sets the length to 340
 
 #### 1.1.4.2. ByteArrayEntity
 
-**_ByteArrayEntity_** is a self-contained, repeatable entity that obtains its content from a given byte array. Supply the byte array to the constructor.
+ByteArrayEntity is a self-contained, repeatable entity that obtains its content from a given byte array. Supply the byte array to the constructor.
 
 ByteArrayEntity myEntity = new ByteArrayEntity(new byte[] {1,2,3},
 ContentType.APPLICATION_OCTET_STREAM);
 
 1.1.4.3. StringEntity
 
-**_StringEntity_** is a self-contained, repeatable entity that obtains its content from a java.lang.String object. It has three constructors, one simply constructs with a given java.lang.String object; the second also takes a character encoding for the data in the string; the third allows the mime type to be specified.
+StringEntity is a self-contained, repeatable entity that obtains its content from a java.lang.String object. It has three constructors, one simply constructs with a given java.lang.String object; the second also takes a character encoding for the data in the string; the third allows the mime type to be specified.
 
 ```
 StringBuilder sb = new StringBuilder();
@@ -272,7 +282,7 @@ HttpEntity myEntity3 = new StringEntity(sb.toString(),
 
 #### 1.1.4.4. InputStreamEntity
 
-**_InputStreamEntity_** is a streamed, non-repeatable entity that obtains its content from an input stream. Construct it by supplying the input stream and the content length. Use the content length to limit the amount of data read from the **_java.io.InputStream_**. If the length matches the content length available on the input stream, then all data will be sent. Alternatively, a negative content length will read all data from the input stream, which is the same as supplying the exact content length, so use the length to limit the amount of data to read.
+InputStreamEntity is a streamed, non-repeatable entity that obtains its content from an input stream. Construct it by supplying the input stream and the content length. Use the content length to limit the amount of data read from the java.io.InputStream. If the length matches the content length available on the input stream, then all data will be sent. Alternatively, a negative content length will read all data from the input stream, which is the same as supplying the exact content length, so use the length to limit the amount of data to read.
 
 ```
 InputStream instream = getSomeInputStream();
@@ -281,7 +291,7 @@ InputStreamEntity myEntity = new InputStreamEntity(instream, 16);
 
 #### 1.1.4.5. FileEntity
 
-FileEntity is a self-contained, repeatable entity that obtains its content from a file. Use this mostly to stream large files of different types, where you need to supply the content type of the file, for instance, sending a zip file would require the content type **_application/zip_**, for XML **_application/xml_**.
+FileEntity is a self-contained, repeatable entity that obtains its content from a file. Use this mostly to stream large files of different types, where you need to supply the content type of the file, for instance, sending a zip file would require the content type application/zip, for XML application/xml.
 
 ```
 HttpEntity entity = new FileEntity(staticFile,
@@ -294,7 +304,7 @@ This is the base class for creating wrapped entities. The wrapping entity holds 
 
 #### 1.1.4.7. BufferedHttpEntity
 
-**_BufferedHttpEntity_** is a subclass of **_HttpEntityWrapper_**. Construct it by supplying another entity. It reads the content from the supplied entity, and buffers it in memory.
+BufferedHttpEntity is a subclass of HttpEntityWrapper. Construct it by supplying another entity. It reads the content from the supplied entity, and buffers it in memory.
 
 This makes it possible to make a repeatable entity, from a non-repeatable entity. If the supplied entity is already repeatable, it simply passes calls through to the underlying entity.
 
