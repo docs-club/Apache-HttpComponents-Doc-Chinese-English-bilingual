@@ -1,4 +1,4 @@
-# Chapter 1. Fundamentals（基本原理）
+# Chapter 1. Fundamentals（基础）
 
 ## 1.1 Request execution（请求的执行）
 
@@ -262,7 +262,7 @@ important message
 
 In order to ensure proper release of system resources one must close either the content stream associated with the entity or the response itself
 
-为了确保正确释放系统资源，必须关闭与实体关联的内容流或响应本身。
+为了确保系统资源正确释放，必须关闭与实体关联的内容流或响应本身。
 
 ```
 CloseableHttpClient httpclient = HttpClients.createDefault();

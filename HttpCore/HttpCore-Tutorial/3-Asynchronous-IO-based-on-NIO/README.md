@@ -1,4 +1,4 @@
-Chapter 3. Asynchronous I/O based on NIO
+# Chapter 3. Asynchronous I/O based on NIO
 
 Asynchronous I/O model may be more appropriate for those scenarios where raw data throughput is less important than the ability to handle thousands of simultaneous connections in a scalable, resource efficient manner. Asynchronous I/O is arguably more complex and usually requires a special care when dealing with large message payloads.
 
@@ -12,7 +12,7 @@ Solves similar problems as other frameworks, but has certain distinct features:
 
 - direct access to the NIO channels where possible.
 
-  3.2. I/O reactor
+## 3.2. I/O reactor
 
 HttpCore NIO is based on the Reactor pattern as described by Doug Lea. The purpose of I/O reactors is to react to I/O events and to dispatch event notifications to individual I/O sessions. The main idea of I/O reactor pattern is to break away from the one thread per connection model imposed by the classic blocking I/O model. The IOReactor interface represents an abstract object which implements the Reactor pattern. Internally, IOReactor implementations encapsulate functionality of the NIO java.nio.channels.Selector.
 
