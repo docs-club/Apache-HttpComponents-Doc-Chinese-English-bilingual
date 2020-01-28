@@ -1,31 +1,47 @@
-# Chapter 3. Asynchronous I/O based on NIO
+# Chapter 3. Asynchronous I/O based on NIO（基于 NIO 的异步 I/O）
 
 Asynchronous I/O model may be more appropriate for those scenarios where raw data throughput is less important than the ability to handle thousands of simultaneous connections in a scalable, resource efficient manner. Asynchronous I/O is arguably more complex and usually requires a special care when dealing with large message payloads.
 
-## 3.1. Differences from other I/O frameworks
+异步 I/O 模型可能更适合那些raw data throughput is less important than the ability to handle thousands of simultaneous connections in a scalable, resource efficient manner. 异步 I/O 可能更复杂，在处理大型消息有效负载时通常需要特别小心。
+
+## 3.1. Differences from other I/O frameworks（与其他 I/O 框架的区别）
 
 Solves similar problems as other frameworks, but has certain distinct features:
 
+虽然解决与其他框架类似的问题，但具备某些独有特性：
+
 - minimalistic, optimized for data volume intensive protocols such as HTTP.
+
+最小化，针对 HTTP 等数据量密集型协议进行了优化。
 
 - efficient memory management: data consumer can read is only as much input data as it can process without having to allocate more memory.
 
+高效的内存管理：数据使用者可以读取的输入数据量与它可以处理的输入数据量相等，而不需要分配更多的内存。
+
 - direct access to the NIO channels where possible.
+
+在可能的情况下直接访问 NIO 通道。
 
 ## 3.2. I/O reactor
 
 HttpCore NIO is based on the Reactor pattern as described by Doug Lea. The purpose of I/O reactors is to react to I/O events and to dispatch event notifications to individual I/O sessions. The main idea of I/O reactor pattern is to break away from the one thread per connection model imposed by the classic blocking I/O model. The IOReactor interface represents an abstract object which implements the Reactor pattern. Internally, IOReactor implementations encapsulate functionality of the NIO java.nio.channels.Selector.
 
+HttpCore NIO 基于 Doug Lea 所描述的 Reactor 设计模式。I/O Reactor 的目的是响应 I/O 事件，并向各个 I/O 会话发送事件通知。I/O Reactor 模式的主要思想是摆脱经典的阻塞 I/O 模型所强加的每个连接一个线程的模式。IOReactor 接口表示实现 Reactor 模式的抽象对象。在内部，IOReactor 实现封装了 NIO java.nio.channels.Selector 的功能。
+
 I/O reactors usually employ a small number of dispatch threads (often as few as one) to dispatch I/O event notifications to a much greater number (often as many as several thousands) of I/O sessions or connections. It is generally recommended to have one dispatch thread per CPU core.
+
+I/O Reactor 通常使用少量的分派线程（通常只有一个）来将 I/O 事件通知分派给更多的 I/O 会话或连接（通常多达数千个）。通常建议每个 CPU 内核有一个分派线程。
 
 ```
 IOReactorConfig config = IOReactorConfig.DEFAULT;
 IOReactor ioreactor = new DefaultConnectingIOReactor(config);
 ```
 
-### 3.2.1. I/O dispatchers
+### 3.2.1. I/O dispatchers（I/O 调度）
 
 IOReactor implementations make use of the IOEventDispatch interface to notify clients of events pending for a particular session. All methods of the IOEventDispatch are executed on a dispatch thread of the I/O reactor. Therefore, it is important that processing that takes place in the event methods will not block the dispatch thread for too long, as the I/O reactor will be unable to react to other events.
+
+IOReactor 实现利用 IOEventDispatch 接口通知客户端特定会话的事件挂起。IOEventDispatch 的所有方法都在 I/O Reactor 的调度线程上执行。因此，重要的是，在事件方法中进行的处理不会阻塞分派线程太长时间，因为 I/O Reactor 将无法对其他事件作出反应。
 
 ```
 IOReactor ioreactor = new DefaultConnectingIOReactor();
@@ -35,6 +51,8 @@ ioreactor.execute(eventDispatch);
 ```
 
 Generic I/O events as defined by the IOEventDispatch interface:
+
+由 IOEventDispatch 接口定义的通用 I/O 事件：
 
 - connected: Triggered when a new session has been created.
 
@@ -50,6 +68,8 @@ Generic I/O events as defined by the IOEventDispatch interface:
 
 The shutdown of I/O reactors is a complex process and may usually take a while to complete. I/O reactors will attempt to gracefully terminate all active I/O sessions and dispatch threads approximately within the specified grace period. If any of the I/O sessions fails to terminate correctly, the I/O reactor will forcibly shut down remaining sessions.
 
+关闭 I/O Reactor 是一个复杂的过程，通常需要一段时间才能完成。I/O Reactor 将尝试优雅地终止所有活动 I/O 会话，并大约在指定的宽限期内分派线程。如果任何 I/O 会话未能正确终止，I/O Reactor 将强制关闭剩余的会话。
+
 ```
 IOReactor ioreactor = <...>
 long gracePeriod = 3000L; // milliseconds
@@ -58,9 +78,13 @@ ioreactor.shutdown(gracePeriod);
 
 The IOReactor#shutdown(long) method is safe to call from any thread.
 
+从任何线程调用 IOReactor#shutdown(long) 方法都是安全的。
+
 ### 3.2.3. I/O sessions
 
 The IOSession interface represents a sequence of logically related data exchanges between two end points. IOSession encapsulates functionality of NIO java.nio.channels.SelectionKey and java.nio.channels.SocketChannel. The channel associated with the IOSession can be used to read data from and write data to the session.
+
+IOSession 接口表示两个端点之间逻辑相关的数据交换序列。IOSession 封装了 NIO java.nio.channels.SelectionKey 和 java.nio.channels.SocketChannel 的功能。与 IOSession 关联的通道可用于从会话中读取数据并将数据写入会话。
 
 ```
 IOSession iosession = <...>
@@ -69,7 +93,7 @@ ByteBuffer dst = ByteBuffer.allocate(2048);
 ch.read(dst);
 ```
 
-### 3.2.4. I/O session state management
+### 3.2.4. I/O session state management（I/O 会话状态管理）
 
 I/O sessions are not bound to an execution thread, therefore one cannot use the context of the thread to store a session's state. All details about a particular session must be stored within the session itself.
 
@@ -931,7 +955,7 @@ Future<HttpResponse> future = requester.execute(
         connpool);
 ```
 
-3.10. Pipelined request execution
+## 3.10. Pipelined request execution
 
 In addition to the normal request / response execution mode HttpAsyncRequester is also capable of executing requests in the so called pipelined mode whereby several requests are immediately written out to the underlying connection. Please note that entity enclosing requests can be executed in the pipelined mode but the 'expect: continue' handshake should be disabled (request messages should contains no 'Expect: 100-continue' header).
 
