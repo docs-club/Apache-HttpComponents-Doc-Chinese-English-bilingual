@@ -63,7 +63,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
       - [2.3.1.2 Request handler resolver](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpCore/HttpCore-Tutorial/2-Blocking-IO-model#2312-request-handler-resolver)
       - [2.3.1.3 Using HTTP service to handle requests](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpCore/HttpCore-Tutorial/2-Blocking-IO-model#2313-using-http-service-to-handle-requests)
     - [2.3.2 HTTP request executor](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpCore/HttpCore-Tutorial/2-Blocking-IO-model#232-http-request-executor)
-    - [2.3.3 Connection persistence / re-use](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpCore/HttpCore-Tutorial/2-Blocking-IO-model#233-connection-persistence-/-re-use)
+    - [2.3.3 Connection persistence / re-use](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpCore/HttpCore-Tutorial/2-Blocking-IO-model#233-connection-persistence--re-use)
   - [2.4 Connection pools](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpCore/HttpCore-Tutorial/2-Blocking-IO-model#24-connection-pools)
   - [2.5 TLS/SSL support](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpCore/HttpCore-Tutorial/2-Blocking-IO-model#25-tlsssl-support)
   - [2.6 Embedded HTTP server](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpCore/HttpCore-Tutorial/2-Blocking-IO-model#26-embedded-http-server)

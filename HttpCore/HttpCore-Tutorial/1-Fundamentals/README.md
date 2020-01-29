@@ -304,7 +304,7 @@ ByteArrayEntity myEntity = new ByteArrayEntity(new byte[] {1,2,3},
 ContentType.APPLICATION_OCTET_STREAM);
 ```
 
-1.1.4.3. StringEntity
+#### 1.1.4.3. StringEntity
 
 StringEntity is a self-contained, repeatable entity that obtains its content from a java.lang.String object. It has three constructors, one simply constructs with a given java.lang.String object; the second also takes a character encoding for the data in the string; the third allows the mime type to be specified.
 
