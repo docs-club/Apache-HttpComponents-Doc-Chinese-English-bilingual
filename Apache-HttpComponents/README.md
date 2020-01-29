@@ -24,7 +24,7 @@ HttpClient 组件是为功能扩展而设计的，同时为基本 HTTP 协议提
 
 HttpCore is a set of low level HTTP transport components that can be used to build custom client and server side HTTP services with a minimal footprint. HttpCore supports two I/O models: blocking I/O model based on the classic Java I/O and non-blocking, event driven I/O model based on Java NIO.
 
-HttpCore 是一组底层 HTTP 传输组件，可用于构建自定义客户端和服务器端 HTTP 服务，并且占用空间最少。HttpCore 支持两种 I/O 模型：基于经典 Java I/O 的阻塞 I/O 模型和基于 Java NIO 的非阻塞事件驱动 I/O 模型。
+[HttpCore](/HttpCore) 是一组底层 HTTP 传输组件，可用于构建自定义客户端和服务器端 HTTP 服务，并且占用空间最少。HttpCore 支持两种 I/O 模型：基于经典 Java I/O 的阻塞 I/O 模型和基于 Java NIO 的非阻塞事件驱动 I/O 模型。
 
 The blocking I/O model may be more appropriate for data intensive, low latency scenarios, whereas the non-blocking model may be more appropriate for high latency scenarios where raw data throughput is less important than the ability to handle thousands of simultaneous HTTP connections in a resource efficient manner.
 
@@ -32,7 +32,7 @@ The blocking I/O model may be more appropriate for data intensive, low latency s
 
 - HttpCore Tutorial HTML / PDF
 
-HttpCore 教程
+[HttpCore 教程](/HttpCore/HttpCore-Tutorial)
 
 - HttpCore Examples
 
@@ -40,21 +40,17 @@ HttpCore 案例
 
 ### HttpComponents Client（HttpComponents 客户端）
 
-HttpClient is a HTTP/1.1 compliant HTTP agent implementation based on HttpCore. It also provides reusable components for client-side authentication, HTTP state management, and HTTP connection management. HttpComponents Client is a successor of and replacement for Commons HttpClient 3.x. Users of Commons HttpClient are strongly encouraged to upgrade.
+[HttpClient](/HttpClient) is a HTTP/1.1 compliant HTTP agent implementation based on HttpCore. It also provides reusable components for client-side authentication, HTTP state management, and HTTP connection management. HttpComponents Client is a successor of and replacement for Commons HttpClient 3.x. Users of Commons HttpClient are strongly encouraged to upgrade.
 
 HttpClient 是一个基于 HttpCore 并与 HTTP/1.1 兼容的 HTTP 代理实现。它还为客户端身份验证、HTTP 状态管理和 HTTP 连接管理提供了可重用组件。HttpComponents Client 是 Commons HttpClient 3.x 的继承者和替代者。强烈建议使用 Commons HttpClient 的用户进行升级。
 
 - HttpClient Tutorial HTML / PDF
 
-HttpClient 教程
+[HttpClient 教程](/HttpClient/HttpClient-Tutorial)
 
 - HttpClient Samples
 
 HttpClient 案例
-
-- HttpClient port for Android
-
-安卓下的 HttpClient 接口
 
 ### HttpComponents AsyncClient（HttpComponents 的异步客户端）
 

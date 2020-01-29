@@ -1,8 +1,8 @@
-# Chapter 1. Fundamentals（基础）
+# Chapter 1. Fundamentals
 
-## 1.1. HTTP messages（HTTP 消息）
+## 1.1. HTTP messages
 
-### 1.1.1. Structure（结构）
+### 1.1.1. Structure
 
 A HTTP message consists of a header and an optional body. The message header of an HTTP request consists of a request line and a collection of header fields. The message header of an HTTP response consists of a status line and a collection of header fields. All HTTP messages must include the protocol version. Some HTTP messages can optionally enclose a content body.
 
@@ -12,9 +12,9 @@ HttpCore defines the HTTP message object model to follow this definition closely
 
 HttpCore 定义了 HTTP 消息对象模型来严格遵循这个定义，并提供了对 HTTP 消息元素的序列化（格式化）和反序列化（解析）的广泛支持。
 
-### 1.1.2. Basic operations（基本操作）
+### 1.1.2. Basic operations
 
-#### 1.1.2.1. HTTP request message（HTTP 请求消息）
+#### 1.1.2.1. HTTP request message
 
 HTTP request is a message sent from the client to the server. The first line of that message includes the method to apply to the resource, the identifier of the resource, and the protocol version in use.
 
@@ -39,7 +39,7 @@ HTTP/1.1
 GET / HTTP/1.1
 ```
 
-#### 1.1.2.2. HTTP response message（HTTP 响应消息）
+#### 1.1.2.2. HTTP response message
 
 **注：该部分译文参见 [HttpClient 1.1.2]()**
 
@@ -64,7 +64,7 @@ OK
 HTTP/1.1 200 OK
 ```
 
-#### 1.1.2.3. HTTP message common properties and methods（HTTP 消息的公共属性和方法）
+#### 1.1.2.3. HTTP message common properties and methods
 
 An HTTP message can contain a number of headers describing properties of the message such as the content length, content type, and so on. HttpCore provides methods to retrieve, add, remove, and enumerate such headers.
 
@@ -160,7 +160,7 @@ HTTP headers are tokenized into individual header elements only on demand. HTTP 
 
 HTTP 头在有必要时可以分割成单个元素。通过 HTTP 连接接收到的 HTTP 报头在内部存储为字符数组，只有在访问它们的属性时才进行延迟解析。
 
-### 1.1.3. HTTP entity（HTTP 实体）
+### 1.1.3. HTTP entity
 
 HTTP messages can carry a content entity associated with the request or response. Entities can be found in some requests and in some responses, as they are optional. Requests that use entities are referred to as entity-enclosing requests. The HTTP specification defines two entity-enclosing methods: POST and PUT. Responses are usually expected to enclose a content entity. There are exceptions to this rule such as responses to HEAD method and 204 No Content, 304 Not Modified, 205 Reset Content responses.
 
@@ -374,7 +374,7 @@ BufferedHttpEntity myBufferedEntity = new BufferedHttpEntity(
   myNonRepeatableEntity);
 ```
 
-## 1.2. HTTP protocol processors（HTTP 协议处理器）
+## 1.2. HTTP protocol processors
 
 HTTP protocol interceptor is a routine that implements a specific aspect of the HTTP protocol. Usually protocol interceptors are expected to act upon one specific header or a group of related headers of the incoming message or populate the outgoing message with one specific header or a group of related headers. Protocol interceptors can also manipulate content entities enclosed with messages; transparent content compression / decompression being a good example. Usually this is accomplished by using the 'Decorator' pattern where a wrapper entity class is used to decorate the original entity. Several protocol interceptors can be combined to form one logical unit.
 

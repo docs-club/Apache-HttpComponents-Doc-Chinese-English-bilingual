@@ -1,10 +1,10 @@
-# Chapter 3. Asynchronous I/O based on NIO（基于 NIO 的异步 I/O）
+# Chapter 3. Asynchronous I/O based on NIO
 
 Asynchronous I/O model may be more appropriate for those scenarios where raw data throughput is less important than the ability to handle thousands of simultaneous connections in a scalable, resource efficient manner. Asynchronous I/O is arguably more complex and usually requires a special care when dealing with large message payloads.
 
 异步 I/O 模型可能更适合那些 raw data throughput is less important than the ability to handle thousands of simultaneous connections in a scalable, resource efficient manner. 异步 I/O 可能更复杂，在处理大型消息有效负载时通常需要特别小心。
 
-## 3.1. Differences from other I/O frameworks（与其他 I/O 框架的区别）
+## 3.1. Differences from other I/O frameworks
 
 Solves similar problems as other frameworks, but has certain distinct features:
 
@@ -37,7 +37,7 @@ IOReactorConfig config = IOReactorConfig.DEFAULT;
 IOReactor ioreactor = new DefaultConnectingIOReactor(config);
 ```
 
-### 3.2.1. I/O dispatchers（I/O 调度）
+### 3.2.1. I/O dispatchers
 
 IOReactor implementations make use of the IOEventDispatch interface to notify clients of events pending for a particular session. All methods of the IOEventDispatch are executed on a dispatch thread of the I/O reactor. Therefore, it is important that processing that takes place in the event methods will not block the dispatch thread for too long, as the I/O reactor will be unable to react to other events.
 
@@ -64,7 +64,7 @@ Generic I/O events as defined by the IOEventDispatch interface:
 
 - disconnected: Triggered when the session has been terminated.
 
-### 3.2.2. I/O reactor shutdown（关闭 I/O Reactor）
+### 3.2.2. I/O reactor shutdown
 
 The shutdown of I/O reactors is a complex process and may usually take a while to complete. I/O reactors will attempt to gracefully terminate all active I/O sessions and dispatch threads approximately within the specified grace period. If any of the I/O sessions fails to terminate correctly, the I/O reactor will forcibly shut down remaining sessions.
 
@@ -93,7 +93,7 @@ ByteBuffer dst = ByteBuffer.allocate(2048);
 ch.read(dst);
 ```
 
-### 3.2.4. I/O session state management（I/O 会话状态管理）
+### 3.2.4. I/O session state management
 
 I/O sessions are not bound to an execution thread, therefore one cannot use the context of the thread to store a session's state. All details about a particular session must be stored within the session itself.
 

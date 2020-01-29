@@ -1,6 +1,6 @@
 # Chapter 4. Advanced topics
 
-## 4.1. HTTP message parsing and formatting framework（HTTP 消息解析和格式化框架）
+## 4.1. HTTP message parsing and formatting framework
 
 HTTP message processing framework is designed to be expressive and flexible while remaining memory efficient and fast. HttpCore HTTP message processing code achieves near zero intermediate garbage and near zero-copy buffering for its parsing and formatting operations. The same HTTP message parsing and formatting API and implementations are used by both the blocking and non-blocking transport implementations, which helps ensure a consistent behavior of HTTP services regardless of the I/O model.
 

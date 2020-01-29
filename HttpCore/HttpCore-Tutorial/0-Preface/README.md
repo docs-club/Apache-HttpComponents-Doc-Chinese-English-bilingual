@@ -1,4 +1,4 @@
-# Preface（前言）
+# Preface
 
 HttpCore is a set of components implementing the most fundamental aspects of the HTTP protocol that are nonetheless sufficient to develop full-featured client-side and server-side HTTP services with a minimal footprint.
 
@@ -8,7 +8,7 @@ HttpCore has the following scope and goals:
 
 HttpCore 有以下范围和目标：
 
-1. HttpCore Scope（HttpCore 范围）
+# 1. HttpCore Scope
 
 - A consistent API for building client / proxy / server side HTTP services
 
@@ -22,7 +22,7 @@ HttpCore 有以下范围和目标：
 
 一组基于阻塞（classic）和非阻塞（NIO）I/O 模型的低层组件
 
-2. HttpCore Goals（HttpCore 目标）
+# 2. HttpCore Goals
 
 - Implementation of the most fundamental HTTP transport aspects
 
@@ -40,7 +40,7 @@ HttpCore 有以下范围和目标：
 
 自包含的库（除了 JRE 之外没有外部依赖项）
 
-3. What HttpCore is NOT（HttpCore 不是什么）
+# 3. What HttpCore is NOT
 
 - A replacement for HttpClient
 

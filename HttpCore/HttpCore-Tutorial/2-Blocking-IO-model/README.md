@@ -1,10 +1,10 @@
-# Chapter 2. Blocking I/O model（阻塞 I/O 模型）
+# Chapter 2. Blocking I/O model
 
 Blocking (or classic) I/O in Java represents a highly efficient and convenient I/O model well suited for high performance applications where the number of concurrent connections is relatively moderate. Modern JVMs are capable of efficient context switching and the blocking I/O model should offer the best performance in terms of raw data throughput as long as the number of concurrent connections is below one thousand and connections are mostly busy transmitting data. However for applications where connections stay idle most of the time the overhead of context switching may become substantial and a non-blocking I/O model may present a better alternative.
 
 Java 中的阻塞（或经典）I/O 代表了一种高效、方便的 I/O 模型，非常适合并发连接数量相对适中的高性能应用程序。现代 jvm 能够进行有效的上下文切换，而阻塞 I/O 模型应该能够提供原始数据吞吐量方面的最佳性能，只要并发连接的数量低于 1000，并且连接主要忙于传输数据。然而，对于连接大部分时间处于空闲状态的应用程序，上下文切换的开销可能会变得很大，而非阻塞 I/O 模型提供了更好的选择。
 
-## 2.1. Blocking HTTP connections（阻塞 HTTP 连接）
+## 2.1. Blocking HTTP connections
 
 HTTP connections are responsible for HTTP message serialization and deserialization. One should rarely need to use HTTP connection objects directly. There are higher level protocol components intended for execution and processing of HTTP requests. However, in some cases direct interaction with HTTP connections may be necessary, for instance, to access properties such as the connection status, the socket timeout or the local and remote addresses.
 
@@ -14,7 +14,7 @@ It is important to bear in mind that HTTP connections are not thread-safe. We st
 
 重要的是要记住 HTTP 连接不是线程安全的。我们强烈建议将所有与 HTTP 连接对象的交互限制在一个线程内。从另一个线程调用 HttpConnection 接口及其子接口的惟一安全方法是 HttpConnection#shutdown()。
 
-### 2.1.1. Working with blocking HTTP connections（处理阻塞 HTTP 连接）
+### 2.1.1. Working with blocking HTTP connections
 
 HttpCore does not provide full support for opening connections because the process of establishing a new connection - especially on the client side - can be very complex when it involves one or more authenticating or/and tunneling proxies. Instead, blocking HTTP connections can be bound to any arbitrary network socket.
 
@@ -91,13 +91,13 @@ Please note that one should rarely need to transmit messages using these low lev
 
 请注意，很少需要使用这些低级方法来传输消息，通常应该使用适当的高级 HTTP 服务实现。
 
-### 2.1.2. Content transfer with blocking I/O（使用阻塞 I/O 传输内容）
+### 2.1.2. Content transfer with blocking I/O
 
 HTTP connections manage the process of the content transfer using the HttpEntity interface. HTTP connections generate an entity object that encapsulates the content stream of the incoming message. Please note that HttpServerConnection#receiveRequestEntity() and HttpClientConnection#receiveResponseEntity() do not retrieve or buffer any incoming data. They merely inject an appropriate content codec based on the properties of the incoming message. The content can be retrieved by reading from the content input stream of the enclosed entity using HttpEntity#getContent(). The incoming data will be decoded automatically and completely transparently to the data consumer. Likewise, HTTP connections rely on HttpEntity#writeTo(OutputStream) method to generate the content of an outgoing message. If an outgoing message encloses an entity, the content will be encoded automatically based on the properties of the message.
 
 HTTP 连接使用 HttpEntity 接口管理内容传输的过程。HTTP 连接生成一个实体对象，该对象封装传入消息的内容流。请注意 HttpServerConnection#receiveRequestEntity() 和 HttpClientConnection#receiveResponseEntity() 不检索或缓冲任何传入数据。它们只是根据传入消息的属性注入适当的内容编解码器。可以使用 HttpEntity#getContent() 从所包含的实体的内容输入流中读取内容。传入的数据将被自动解码，并且对数据使用者完全透明。同样，HTTP 连接依赖于 HttpEntity#writeTo(OutputStream) 方法来生成传出消息的内容。如果传出消息包含一个实体，则根据消息的属性自动对内容进行编码。
 
-### 2.1.3. Supported content transfer mechanisms（支持的内容传输机制）
+### 2.1.3. Supported content transfer mechanisms
 
 Default implementations of HTTP connections support three content transfer mechanisms defined by the HTTP/1.1 specification:
 
@@ -119,27 +119,27 @@ The appropriate content stream class will be created automatically depending on 
 
 适当的内容流类将根据消息所包含的实体的属性自动创建。
 
-### 2.1.4. Terminating HTTP connections（终止 HTTP 连接）
+### 2.1.4. Terminating HTTP connections
 
 HTTP connections can be terminated either gracefully by calling HttpConnection#close() or forcibly by calling HttpConnection#shutdown(). The former tries to flush all buffered data prior to terminating the connection and may block indefinitely. The HttpConnection#close() method is not thread-safe. The latter terminates the connection without flushing internal buffers and returns control to the caller as soon as possible without blocking for long. The HttpConnection#shutdown() method is thread-safe.
 
 HTTP 连接可以通过调用 HttpConnection#close() 来优雅地终止，也可以通过调用 HttpConnection#shutdown() 强制终止。前者试图在终止连接之前刷新所有缓冲的数据，可能会无限期阻塞。HttpConnection#close() 方法不是线程安全的。后者在不刷新内部缓冲区的情况下终止连接，并在不长时间阻塞的情况下尽快将控制权返回给调用者。HttpConnection#shutdown() 方法是线程安全的。
 
-## 2.2. HTTP exception handling（HTTP 异常处理）
+## 2.2. HTTP exception handling
 
 All HttpCore components potentially throw two types of exceptions: IOException in case of an I/O failure such as socket timeout or an socket reset and HttpException that signals an HTTP failure such as a violation of the HTTP protocol. Usually I/O errors are considered non-fatal and recoverable, whereas HTTP protocol errors are considered fatal and cannot be automatically recovered from.
 
 所有 HttpCore 组件都可能抛出两种类型的异常：IOException（在 I/O 失败的情况下，如套接字超时或套接字重置）和 HttpException（表示 HTTP 失败，如违反 HTTP 协议）。通常，I/O 错误被认为是非致命的和可恢复的，而 HTTP 协议错误被认为是致命的，不能被自动恢复。
 
-### 2.2.1. Protocol exception（协议异常）
+### 2.2.1. Protocol exception
 
 ProtocolException signals a fatal HTTP protocol violation that usually results in an immediate termination of the HTTP message processing.
 
 ProtocolException 标志着一个致命的 HTTP 协议冲突，通常会导致 HTTP 消息处理的立即终止。
 
-## 2.3. Blocking HTTP protocol handlers（阻塞 HTTP 协议处理程序）
+## 2.3. Blocking HTTP protocol handlers
 
-### 2.3.1. HTTP service（HTTP 服务）
+### 2.3.1. HTTP service
 
 HttpService is a server side HTTP protocol handler based on the blocking I/O model that implements the essential requirements of the HTTP protocol for the server side message processing as described by RFC 2616.
 
@@ -159,7 +159,7 @@ HttpProcessor httpproc = HttpProcessorBuilder.create()
 HttpService httpService = new HttpService(httpproc, null);
 ```
 
-#### 2.3.1.1. HTTP request handlers（HTTP 请求处理程序）
+#### 2.3.1.1. HTTP request handlers
 
 The HttpRequestHandler interface represents a routine for processing of a specific group of HTTP requests. HttpService is designed to take care of protocol specific aspects, whereas individual request handlers are expected to take care of application specific HTTP processing. The main purpose of a request handler is to generate a response object with a content entity to be sent back to the client in response to the given request.
 
@@ -181,7 +181,7 @@ HttpRequestHandler myRequestHandler = new HttpRequestHandler() {
 };
 ```
 
-#### 2.3.1.2. Request handler resolver（请求处理程序解析器）
+#### 2.3.1.2. Request handler resolver
 
 HTTP request handlers are usually managed by a HttpRequestHandlerResolver that matches a request URI to a request handler. HttpCore includes a very simple implementation of the request handler resolver based on a trivial pattern matching algorithm: HttpRequestHandlerRegistry supports only three formats: `*`, `<uri>*` and `*<uri>`
 
@@ -205,7 +205,7 @@ Users are encouraged to provide more sophisticated implementations of HttpReques
 
 我们鼓励用户提供更复杂的 HttpRequestHandlerResolver 实现（例如，基于正则表达式）。
 
-#### 2.3.1.3. Using HTTP service to handle requests（使用 HTTP 服务处理请求）
+#### 2.3.1.3. Using HTTP service to handle requests
 
 When fully initialized and configured, the HttpService can be used to execute and handle requests for active HTTP connections. The HttpService#handleRequest() method reads an incoming request, generates a response and sends it back to the client. This method can be executed in a loop to handle multiple requests on a persistent connection. The HttpService#handleRequest() method is safe to execute from multiple threads. This allows processing of requests on several connections simultaneously, as long as all the protocol interceptors and requests handlers used by the HttpService are thread-safe.
 
@@ -226,7 +226,7 @@ try {
 }
 ```
 
-### 2.3.2. HTTP request executor（HTTP 请求执行程序）
+### 2.3.2. HTTP request executor
 
 HttpRequestExecutor is a client side HTTP protocol handler based on the blocking I/O model that implements the essential requirements of the HTTP protocol for the client side message processing, as described by RFC 2616. The HttpRequestExecutor relies on the HttpProcessor instance to generate mandatory protocol headers for all outgoing messages and apply common, cross-cutting message transformations to all incoming and outgoing messages. Application specific processing can be implemented outside HttpRequestExecutor once the request has been executed and a response has been received.
 
@@ -258,13 +258,13 @@ Methods of HttpRequestExecutor are safe to execute from multiple threads. This a
 
 HttpRequestExecutor 的方法在多线程中执行是安全的。只要 HttpRequestExecutor 使用的所有协议拦截器都是线程安全的，就允许在几个连接上同时执行请求。
 
-### 2.3.3. Connection persistence / re-use（连接持久性/重用）
+### 2.3.3. Connection persistence / re-use
 
 The ConnectionReuseStrategy interface is intended to determine whether the underlying connection can be re-used for processing of further messages after the transmission of the current message has been completed. The default connection re-use strategy attempts to keep connections alive whenever possible. Firstly, it examines the version of the HTTP protocol used to transmit the message. HTTP/1.1 connections are persistent by default, while HTTP/1.0 connections are not. Secondly, it examines the value of the Connection header. The peer can indicate whether it intends to re-use the connection on the opposite side by sending Keep-Alive or Close values in the Connection header. Thirdly, the strategy makes the decision whether the connection is safe to re-use based on the properties of the enclosed entity, if available.
 
 ConnectionReuseStrategy 接口用于确定在完成当前消息的传输之后，是否可以重用底层连接来处理进一步的消息。默认的连接重用策略尝试尽可能保持连接处于活动状态。首先，它检查用于传输消息的 HTTP 协议的版本。HTTP/1.1 连接在默认情况下是持久的，而 HTTP/1.0 连接则不是。其次，它检查连接头的值。对等方可以通过在连接头中发送 Keep-Alive 或 Close 值来指示它是否打算重用另一端的连接。第三，该策略根据封闭实体的属性（如果可用）来决定连接是否可以安全重用。
 
-## 2.4. Connection pools（连接池）
+## 2.4. Connection pools
 
 Efficient client-side HTTP transports often requires effective re-use of persistent connections. HttpCore facilitates the process of connection re-use by providing support for managing pools of persistent HTTP connections. Connection pool implementations are thread-safe and can be used concurrently by multiple consumers.
 
@@ -362,7 +362,7 @@ connpool.enumAvailable(new PoolEntryCallback<HttpHost, HttpClientConnection>() {
 });
 ```
 
-## 2.5. TLS/SSL support（TLS/SSL 支持）
+## 2.5. TLS/SSL support
 
 Blocking connections can be bound to any arbitrary socket. This makes SSL support quite straight-forward. Any SSLSocket instance can be bound to a blocking connection in order to make all messages transmitted over than connection secured by TLS/SSL.
 
@@ -386,7 +386,7 @@ DefaultBHttpClientConnection conn = new DefaultBHttpClientConnection(8 * 1204);
 conn.bind(socket);
 ```
 
-## 2.6. Embedded HTTP server（嵌入式 HTTP 服务器）
+## 2.6. Embedded HTTP server
 
 As of version 4.4 HttpCore ships with an embedded HTTP server based on blocking I/O components described above.
 
