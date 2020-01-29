@@ -95,7 +95,7 @@ null
 [principal: u3]
 ```
 
-## 4.4 HTTP authentication and execution context（HTTP 身份验证和执行上下文）
+## 4.4 HTTP authentication and execution context
 
 HttpClient relies on the AuthState class to keep track of detailed information about the state of the authentication process. HttpClient creates two instances of AuthState in the course of HTTP request execution: one for target host authentication and another one for proxy authentication. In case the target server or the proxy require user authentication the respective AuthScope instance will be populated with the AuthScope, AuthScheme and Crednetials used during the authentication process. The AuthState can be examined in order to find out what kind of authentication was requested, whether a matching AuthScheme implementation was found and whether the credentials provider managed to find user credentials for the given authentication scope.
 

@@ -193,7 +193,7 @@ static class GetThread extends Thread {
 }
 ```
 
-### 2.5 Connection eviction policy
+## 2.5 Connection eviction policy
 One of the major shortcomings of the classic blocking I/O model is that the network socket can react to I/O events only when blocked in an I/O operation. When a connection is released back to the manager, it can be kept alive however it is unable to monitor the status of the socket and react to any I/O events. If the connection gets closed on the server side, the client side connection is unable to detect the change in the connection state (and react appropriately by closing the socket on its end).
 
 经典阻塞 I/O 模型的一个主要缺点是，只有在 I/O 操作中阻塞时，网络 socket 才能对 I/O 事件作出反应。当一个连接被释放回管理器时，它可以保持活动状态，但是它不能监视 socket 的状态并对任何 I/O 事件作出反应。如果在服务器端关闭连接，则客户端连接无法检测连接状态中的更改（并通过关闭连接端上的 socket 做出适当的反应）。
