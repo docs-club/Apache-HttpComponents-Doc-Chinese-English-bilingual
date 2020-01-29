@@ -43,7 +43,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
         - [1.5.3 Automatic exception recovery](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals#153-automatic-exception-recovery)
         - [1.5.4 Request retry handler](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals#154-request-retry-handler)
     - [1.6 Aborting requests](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals#16-aborting-requests)
-    - [1.7 Redirect handling](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/xxxxxxxxxx#17-redirect-handling)
+    - [1.7 Redirect handling](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals#17-redirect-handling)
 - [2 Connection management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/xxxxxxxxxx#xxxx-Connection-management)
     - [2.1 Connection persistence](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/xxxxxxxxxx#xxxx-Connection-persistence)
     - [2.2 HTTP connection routing](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/xxxxxxxxxx#xxxx-HTTP-connection-routing)

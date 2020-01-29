@@ -753,7 +753,7 @@ In some situations HTTP request execution fails to complete within the expected 
 
 在某些情况下，由于目标服务器上的高负载或客户端端发出的并发请求太多，HTTP 请求执行无法在预期的时间框架内完成。在这种情况下，可能需要提前终止请求并解除 I/O 操作中阻塞的执行线程。通过调用 `HttpUriRequest#abort()` 方法，HttpClient 正在执行的 HTTP 请求可以在执行的任何阶段中止。该方法是线程安全的，可以从任何线程调用。当 HTTP 请求中止时，它的执行线程（即使当前在 I/O 操作中被阻塞）保证通过抛出一个 `InterruptedIOException` 来解除阻塞。
 
-### 1.7 Redirect handling
+## 1.7 Redirect handling
 
 HttpClient handles all types of redirects automatically, except those explicitly prohibited by the HTTP specification as requiring user intervention. `See Other` (status code 303) redirects on `POST` and `PUT` requests are converted to `GET` requests as required by the HTTP specification. One can use a custom redirect strategy to relaxe restrictions on automatic redirection of POST methods imposed by the HTTP specification.
 
