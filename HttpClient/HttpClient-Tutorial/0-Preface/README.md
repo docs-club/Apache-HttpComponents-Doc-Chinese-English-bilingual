@@ -1,4 +1,4 @@
-# Preface（前言）
+# Preface
 
 The Hyper-Text Transfer Protocol (HTTP) is perhaps the most significant protocol used on the Internet today. Web services, network-enabled appliances and the growth of network computing continue to expand the role of the HTTP protocol beyond user-driven web browsers, while increasing the number of applications that require HTTP support.
 
@@ -12,7 +12,7 @@ Designed for extension while providing robust support for the base HTTP protocol
 
 HttpClient 组件是为功能扩展而设计的，同时为基本 HTTP 协议提供强有力的支持，任何使用 HTTP 构建的客户端应用程序（如 web 浏览器、web 服务客户端或利用、扩展 HTTP 协议进行分布式通信的系统）的人都可能对它感兴趣。`注：该译文在 Apache HttpComponents README、HttpClient Preface 第一段、HttpClient README 第一段、项目 README 均相同`
 
-## 1. HttpClient scope（HttpClient 的范围）
+## 1. HttpClient scope
 
 Client-side HTTP transport library based on HttpCore
 
@@ -26,7 +26,7 @@ Content agnostic
 
 内容无关
 
-## 2. What HttpClient is NOT（HttpClient 不是什么）
+## 2. What HttpClient is NOT
 
 HttpClient is NOT a browser. It is a client side HTTP transport library. HttpClient's purpose is to transmit and receive HTTP messages. HttpClient will not attempt to process content, execute javascript embedded in HTML pages, try to guess content type, if not explicitly set, or reformat request / rewrite location URIs, or other functionality unrelated to the HTTP transport.
 

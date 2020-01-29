@@ -1,6 +1,6 @@
-# Chapter 5. Fluent API（流畅 API）
+# Chapter 5. Fluent API
 
-## 5.1. Easy to use facade API（易于使用的外观模式 API）
+## 5.1. Easy to use facade API
 
 As of version of 4.2 HttpClient comes with an easy to use facade API based on the concept of a fluent interface. Fluent facade API exposes only the most fundamental functions of HttpClient and is intended for simple use cases that do not require the full flexibility of HttpClient. For instance, fluent facade API relieves the users from having to deal with connection management and resource deallocation.
 
@@ -57,7 +57,7 @@ executor.execute(Request.Post("http://somehost/do-stuff")
         .returnContent().asString();
 ```
 
-### 5.1.1. Response handling（响应处理）
+### 5.1.1. Response handling
 
 The fluent facade API generally relieves the users from having to deal with connection management and resource deallocation. In most cases, though, this comes at a price of having to buffer content of response messages in memory. It is highly recommended to use ResponseHandler for HTTP response processing in order to avoid having to buffer content in memory.
 

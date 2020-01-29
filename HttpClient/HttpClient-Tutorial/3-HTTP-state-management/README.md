@@ -1,4 +1,4 @@
-# Chapter 3. HTTP state management（HTTP 状态管理）
+# Chapter 3. HTTP state management
 
 Originally HTTP was designed as a stateless, request / response oriented protocol that made no special provisions for stateful sessions spanning across several logically related request / response exchanges. As HTTP protocol grew in popularity and adoption more and more systems began to use it for applications it was never intended for, for instance as a transport for e-commerce applications. Thus, the support for state management became a necessity.
 
@@ -40,7 +40,7 @@ cookie.setAttribute(ClientCookie.PATH_ATTR, "/");
 cookie.setAttribute(ClientCookie.DOMAIN_ATTR, ".mycompany.com");
 ```
 
-## 3.2 Cookie specifications（Cookie 规范）
+## 3.2 Cookie specifications
 
 The `CookieSpec` interface represents a cookie management specification. The cookie management specification is expected to enforce:
 
@@ -98,7 +98,7 @@ It is strongly recommended to use either `Standard` or `Standard strict` policy 
 
 强烈建议在新应用程序中使用 `Standard` 或 `Standard strict` 策略。过时的规范应该只用于与遗留系统兼容。对过时规范的支持将在 HttpClient 的下一个主要版本中删除。
 
-## 3.3 Choosing cookie policy（选择 cookie 策略）
+## 3.3 Choosing cookie policy
 
 Cookie policy can be set at the HTTP client and overridden on the HTTP request level if required.
 
@@ -118,7 +118,7 @@ HttpGet httpGet = new HttpGet("/");
 httpGet.setConfig(localConfig);
 ```
 
-## 3.4 Custom cookie policy（自定义 cookie 策略）
+## 3.4 Custom cookie policy
 
 In order to implement a custom cookie policy one should create a custom implementation of the `CookieSpec` interface, create a `CookieSpecProvider` implementation to create and initialize instances of the custom specification and register the factory with HttpClient. Once the custom specification has been registered, it can be activated the same way as a standard cookie specification.
 
@@ -145,7 +145,7 @@ CloseableHttpClient httpclient = HttpClients.custom()
         .build();
 ```
 
-## 3.5 Cookie persistence（Cookie 持久性）
+## 3.5 Cookie persistence
 
 HttpClient can work with any physical representation of a persistent cookie store that implements the `CookieStore` interface. The default `CookieStore` implementation called `BasicCookieStore` is a simple implementation backed by a `java.util.ArrayList`. Cookies stored in an `BasicClientCookie` object are lost when the container object get garbage collected. Users can provide more complex implementations if necessary.
 
@@ -165,7 +165,7 @@ CloseableHttpClient httpclient = HttpClients.custom()
         .build();
 ```
 
-## 3.6 HTTP state management and execution context（HTTP 状态管理和执行 context）
+## 3.6 HTTP state management and execution context
 
 In the course of HTTP request execution HttpClient adds the following state management related objects to the execution context:
 

@@ -1,6 +1,6 @@
-# Chapter 1. Fundamentals（基础）
+# Chapter 1. Fundamentals
 
-## 1.1 Request execution（请求的执行）
+## 1.1 Request execution
 
 The most essential function of HttpClient is to execute HTTP methods. Execution of an HTTP method involves one or several HTTP request / HTTP response exchanges, usually handled internally by HttpClient. The user is expected to provide a request object to execute and HttpClient is expected to transmit the request to the target server return a corresponding response object, or throw an exception if execution was unsuccessful.
 
@@ -25,7 +25,7 @@ try {
 }
 ```
 
-### 1.1.1 HTTP request（HTTP 请求）
+### 1.1.1 HTTP request
 
 All HTTP requests have a request line consisting a method name, a request URI and an HTTP protocol version.
 
@@ -70,7 +70,7 @@ stdout >
 http://www.google.com/search?q=httpclient&btnG=Google+Search&aq=f&oq=
 ```
 
-### 1.1.2 HTTP response（HTTP 响应）
+### 1.1.2 HTTP response
 
 HTTP response is a message sent by the server back to the client after having received and interpreted a request message. The first line of that message consists of the protocol version followed by a numeric status code and its associated textual phrase.
 
@@ -96,7 +96,7 @@ OK
 HTTP/1.1 200 OK
 ```
 
-### 1.1.3 Working with message headers（处理消息头）
+### 1.1.3 Working with message headers
 
 An HTTP message can contain a number of headers describing properties of the message such as the content length, content type and so on. HttpClient provides methods to retrieve, add, remove and enumerate headers.
 
@@ -184,7 +184,7 @@ c3 = c
 domain=localhost
 ```
 
-### 1.1.4 HTTP entity（HTTP 实体）
+### 1.1.4 HTTP entity
 
 HTTP messages can carry a content entity associated with the request or response. Entities can be found in some requests and in some responses, as they are optional. Requests that use entities are referred to as entity enclosing requests. The HTTP specification defines two entity enclosing request methods: POST and PUT. Responses are usually expected to enclose a content entity. There are exceptions to this rule such as responses to HEAD method and 204 No Content, 304 Not Modified, 205 Reset Content responses.
 
@@ -210,13 +210,13 @@ This distinction is important for connection management when streaming out conte
 
 当从 HTTP 响应中输出内容时，这些区别对于连接管理非常重要。对于由应用程序创建且仅使用 HttpClient 发送的请求实体，streamed 和 self-contained 的区别并不重要。在这种情况下，建议将不可重复的实体视为 streamed，将可重复的实体视为 self-contained。
 
-#### 1.1.4.1 Repeatable entities（可重复的实体）
+#### 1.1.4.1 Repeatable entities
 
 An entity can be repeatable, meaning its content can be read more than once. This is only possible with self contained entities (like `ByteArrayEntity` or `StringEntity`)
 
 一个实体可重复，这意味着它的内容可以被多次读取。这只可能是 self-contained 实体（如 `ByteArrayEntity` 或 `StringEntity`）
 
-#### 1.1.4.2 Using HTTP entities（使用 HTTP 实体）
+#### 1.1.4.2 Using HTTP entities
 
 Since an entity can represent both binary and character content, it has support for character encodings (to support the latter, ie. character content).
 
@@ -258,7 +258,7 @@ important message
 17
 ```
 
-### 1.1.5 Ensuring release of low level resources（确保底层资源的释放）
+### 1.1.5 Ensuring release of low level resources
 
 In order to ensure proper release of system resources one must close either the content stream associated with the entity or the response itself
 
@@ -320,7 +320,7 @@ The connection will not be reused, but all level resources held by it will be co
 
 连接将不会被重用，它所覆盖的所有层级的资源都将被正确释放。
 
-### 1.1.6 Consuming entity content（消费实体内容）
+### 1.1.6 Consuming entity content
 
 The recommended way to consume the content of an entity is by using its `HttpEntity#getContent()` or `HttpEntity#writeTo(OutputStream)` methods. HttpClient also comes with the `EntityUtils` class, which exposes several static methods to more easily read the content or information from an entity. Instead of reading the `java.io.InputStream` directly, one can retrieve the whole content body in a string / byte array by using the methods from this class. However, the use of `EntityUtils` is strongly discouraged unless the response entities originate from a trusted HTTP server and are known to be of limited length.
 
@@ -357,7 +357,7 @@ if (entity != null) {
 }
 ```
 
-### 1.1.7 Producing entity content（生产实体内容）
+### 1.1.7 Producing entity content
 
 HttpClient provides several classes that can be used to efficiently stream out content throught HTTP connections. Instances of those classes can be associated with entity enclosing requests such as `POST` and `PUT` in order to enclose entity content into outgoing HTTP requests. HttpClient provides several classes for most common data containers such as string, byte array, input stream, and file: `StringEntity`, `ByteArrayEntity`, `InputStreamEntity`, and `FileEntity`.
 
@@ -375,7 +375,7 @@ Please note `InputStreamEntity` is not repeatable, because it can only read from
 
 请注意 `InputStreamEntity` 是不可重复的，因为它只能从底层数据流读取一次。通常建议实现自定义的 `HttpEntity` 类，该类是 self-contained 的，而不是使用通用的 `InputStreamEntity`。`FileEntity` 可以作为一个很好的参考。
 
-#### 1.1.7.1 HTML forms（HTML 表单）
+#### 1.1.7.1 HTML forms
 
 Many applications need to simulate the process of submitting an HTML form, for instance, in order to log in to a web application or submit input data. HttpClient provides the entity class `UrlEncodedFormEntity` to facilitate the process.
 
@@ -399,7 +399,7 @@ The `UrlEncodedFormEntity` instance will use the so called URL encoding to encod
 param1=value1&param2=value2
 ```
 
-#### 1.1.7.2 Content chunking（内容分块）
+#### 1.1.7.2 Content chunking
 
 Generally it is recommended to let HttpClient choose the most appropriate transfer encoding based on the properties of the HTTP message being transferred. It is possible, however, to inform HttpClient that chunk coding is preferred by setting `HttpEntity#setChunked()` to true. Please note that HttpClient will use this flag as a hint only. This value will be ignored when using HTTP protocol versions that do not support chunk coding, such as HTTP/1.0.
 
@@ -412,7 +412,7 @@ HttpPost httppost = new HttpPost("http://localhost/acrtion.do");
 httppost.setEntity(entity);
 ```
 
-### 1.1.8 Response handlers（响应处理程序）
+### 1.1.8 Response handlers
 
 The simplest and the most convenient way to handle responses is by using the `ResponseHandler` interface, which includes the `handleResponse(HttpResponse response)` method. This method completely relieves the user from having to worry about connection management. When using a `ResponseHandler`, HttpClient will automatically take care of ensuring release of the connection back to the connection manager regardless whether the request execution succeeds or causes an exception.
 
@@ -444,7 +444,7 @@ ResponseHandler<MyJsonObject> rh = new ResponseHandler<MyJsonObject>() {
 MyJsonObject myjson = client.execute(httpget, rh);
 ```
 
-## 1.2 HttpClient interface（HttpClient 接口）
+## 1.2 HttpClient interface
 
 `HttpClient` interface represents the most essential contract for HTTP request execution. It imposes no restrictions or particular details on the request execution process and leaves the specifics of connection management, state management, authentication and redirect handling up to individual implementations. This should make it easier to decorate the interface with additional functionality such as response content caching.
 
@@ -476,13 +476,13 @@ CloseableHttpClient httpclient = HttpClients.custom()
         .build();
 ```
 
-### 1.2.1 HttpClient thread safety（HttpClient 线程安全）
+### 1.2.1 HttpClient thread safety
 
 `HttpClient` implementations are expected to be thread safe. It is recommended that the same instance of this class is reused for multiple request executions.
 
 `HttpClient` 实现应该是线程安全的。建议在多个请求执行中重用该类的同一个实例。
 
-### 1.2.2 HttpClient resource deallocation（HttpClient 资源回收）
+### 1.2.2 HttpClient resource deallocation
 
 When an instance CloseableHttpClient is no longer needed and is about to go out of scope the connection manager associated with it must be shut down by calling the `CloseableHttpClient#close()` method.
 
@@ -497,7 +497,7 @@ try {
 }
 ```
 
-## 1.3 HTTP execution context（HTTP 执行环境）
+## 1.3 HTTP execution context
 
 Originally HTTP has been designed as a stateless, response-request oriented protocol. However, real world applications often need to be able to persist state information through several logically related request-response exchanges. In order to enable applications to maintain a processing state HttpClient allows HTTP requests to be executed within a particular execution context, referred to as HTTP context. Multiple logically related requests can participate in a logical session if the same context is reused between consecutive requests. HTTP context functions similarly to a `java.util.Map<String, Object>`. It is simply a collection of arbitrary named values. An application can populate context attributes prior to request execution or examine the context after the execution has been completed.
 
@@ -591,7 +591,7 @@ try {
 }
 ```
 
-## 1.4 HTTP protocol interceptors（HTTP 协议拦截器）
+## 1.4 HTTP protocol interceptors
 
 The HTTP protocol interceptor is a routine that implements a specific aspect of the HTTP protocol. Usually protocol interceptors are expected to act upon one specific header or a group of related headers of the incoming message, or populate the outgoing message with one specific header or a group of related headers. Protocol interceptors can also manipulate content entities enclosed with messages - transparent content compression / decompression being a good example. Usually this is accomplished by using the 'Decorator' pattern where a wrapper entity class is used to decorate the original entity. Several protocol interceptors can be combined to form one logical unit.
 
@@ -641,13 +641,13 @@ for (int i = 0; i < 10; i++) {
 }
 ```
 
-## 1.5 Exception handling（异常处理）
+## 1.5 Exception handling
 
 HTTP protocol processors can throw two types of exceptions: `java.io.IOException` in case of an I/O failure such as socket timeout or an socket reset and `HttpException` that signals an HTTP failure such as a violation of the HTTP protocol. Usually I/O errors are considered non-fatal and recoverable, whereas HTTP protocol errors are considered fatal and cannot be automatically recovered from. Please note that `HttpClient` implementations re-throw `HttpExceptions` as `ClientProtocolException`, which is a subclass of `java.io.IOException`. This enables the users of `HttpClient` to handle both I/O errors and protocol violations from a single catch clause.
 
 HTTP 协议处理器可以抛出两种类型的异常：在 I/O 失败（如套接字超时或套接字重置）的情况下抛出 `java.io.IOException`，以及发出 HTTP 失败（如违反 HTTP 协议）信号的 `HttpException`。通常，I/O 错误被认为是非致命的和可恢复的，而 HTTP 协议错误被认为是致命的，不能自动恢复。请注意，`HttpClient` 实现将 `HttpExceptions` 重新抛出为 `ClientProtocolException`，这是 `java.io.IOException` 的子类。这使得 `HttpClient` 的用户能够通过一个 catch 子句同时处理 I/O 错误抛出的异常和违反协议抛出的异常。
 
-### 1.5.1 HTTP transport safety（HTTP 传输安全）
+### 1.5.1 HTTP transport safety
 
 It is important to understand that the HTTP protocol is not well suited to all types of applications. HTTP is a simple request/response oriented protocol which was initially designed to support static or dynamically generated content retrieval. It has never been intended to support transactional operations. For instance, the HTTP server will consider its part of the contract fulfilled if it succeeds in receiving and processing the request, generating a response and sending a status code back to the client. The server will make no attempt to roll back the transaction if the client fails to receive the response in its entirety due to a read timeout, a request cancellation or a system crash. If the client decides to retry the same request, the server will inevitably end up executing the same transaction more than once. In some cases this may lead to application data corruption or inconsistent application state.
 
@@ -657,7 +657,7 @@ Even though HTTP has never been designed to support transactional processing, it
 
 尽管 HTTP 从来没有被设计成支持事务处理，但如果满足某些条件，它仍然可以用作任务关键型应用程序的传输协议。为了确保 HTTP 传输层的安全性，系统必须确保 HTTP 方法在应用层上的幂等性。
 
-### 1.5.2 Idempotent methods（幂等方法）
+### 1.5.2 Idempotent methods
 
 HTTP/1.1 specification defines an idempotent method as
 
@@ -679,7 +679,7 @@ By default HttpClient assumes only non-entity enclosing methods such as `GET` an
 
 默认情况下，HttpClient 只假设非实体的方法（如 `GET` 和 `HEAD`）是幂等的，而实体的方法（如 `POST` 和 `PUT`）是不兼容的。
 
-### 1.5.3 Automatic exception recovery（异常自动恢复）
+### 1.5.3 Automatic exception recovery
 
 By default HttpClient attempts to automatically recover from I/O exceptions. The default auto-recovery mechanism is limited to just a few exceptions that are known to be safe.
 
@@ -697,7 +697,7 @@ HttpClient 将自动重试那些假定为幂等的方法。
 
 当 HTTP 请求仍然传输到目标服务器（即请求还没有完全传输到服务器）时，HttpClient 将自动重试那些由于传输异常而失败的方法。
 
-### 1.5.4 Request retry handler（重试请求处理器）
+### 1.5.4 Request retry handler
 
 In order to enable a custom exception recovery mechanism one should provide an implementation of the `HttpRequestRetryHandler` interface.
 
@@ -747,13 +747,13 @@ Please note that one can use `StandardHttpRequestRetryHandler` instead of the on
 
 请注意，可以使用 StandardHttpRequestRetryHandler 而不是默认使用的方法，以便将 RFC-2616 定义为等权的请求方法视为自动重试的安全方法：`GET`、`HEAD`、`PUT`、`DELETE`、`OPTIONS` 和 `TRACE`。
 
-## 1.6 Aborting requests（中止请求）
+## 1.6 Aborting requests
 
 In some situations HTTP request execution fails to complete within the expected time frame due to high load on the target server or too many concurrent requests issued on the client side. In such cases it may be necessary to terminate the request prematurely and unblock the execution thread blocked in a I/O operation. HTTP requests being executed by HttpClient can be aborted at any stage of execution by invoking `HttpUriRequest#abort()` method. This method is thread-safe and can be called from any thread. When an HTTP request is aborted its execution thread - even if currently blocked in an I/O operation - is guaranteed to unblock by throwing a `InterruptedIOException`
 
 在某些情况下，由于目标服务器上的高负载或客户端端发出的并发请求太多，HTTP 请求执行无法在预期的时间框架内完成。在这种情况下，可能需要提前终止请求并解除 I/O 操作中阻塞的执行线程。通过调用 `HttpUriRequest#abort()` 方法，HttpClient 正在执行的 HTTP 请求可以在执行的任何阶段中止。该方法是线程安全的，可以从任何线程调用。当 HTTP 请求中止时，它的执行线程（即使当前在 I/O 操作中被阻塞）保证通过抛出一个 `InterruptedIOException` 来解除阻塞。
 
-### 1.7. Redirect handling（重定向处理）
+### 1.7. Redirect handling
 
 HttpClient handles all types of redirects automatically, except those explicitly prohibited by the HTTP specification as requiring user intervention. `See Other` (status code 303) redirects on `POST` and `PUT` requests are converted to `GET` requests as required by the HTTP specification. One can use a custom redirect strategy to relaxe restrictions on automatic redirection of POST methods imposed by the HTTP specification.
 

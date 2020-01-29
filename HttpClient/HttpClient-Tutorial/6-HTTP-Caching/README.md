@@ -1,6 +1,6 @@
-# Chapter 6. HTTP Caching（HTTP 缓存）
+# Chapter 6. HTTP Caching
 
-## 6.1. General Concepts（一般概念）
+## 6.1. General Concepts
 
 HttpClient Cache provides an HTTP/1.1-compliant caching layer to be used with HttpClient--the Java equivalent of a browser cache. The implementation follows the Chain of Responsibility design pattern, where the caching HttpClient implementation can serve a drop-in replacement for the default non-caching HttpClient implementation; requests that can be satisfied entirely from the cache will not result in actual origin requests. Stale cache entries are automatically validated with the origin where possible, using conditional GETs and the If-Modified-Since and/or If-None-Match request headers.
 
@@ -66,13 +66,13 @@ It is important to note that caching HttpClient is not, itself, a different impl
 
 需要注意的是，缓存 HttpClient 本身并不是 HttpClient 的另一种实现，而是通过将自身作为附加处理组件插入请求执行管道来实现的。
 
-## 6.2. RFC-2616 Compliance（RFC-2616 合规性）
+## 6.2. RFC-2616 Compliance
 
 We believe HttpClient Cache is unconditionally compliant with RFC-2616. That is, wherever the specification indicates MUST, MUST NOT, SHOULD, or SHOULD NOT for HTTP caches, the caching layer attempts to behave in a way that satisfies those requirements. This means the caching module won't produce incorrect behavior when you drop it in.
 
 我们相信 HttpClient 缓存是无条件兼容 RFC-2616 的。也就是说，当规范指出 HTTP 缓存 MUST、MUST NOT、SHOULD 或 SHOULD NOT 时，缓存层尝试以满足这些需求的方式运行。这意味着当您将缓存模块放入时，它不会产生不正确的行为。
 
-## 6.3. Example Usage（使用案例）
+## 6.3. Example Usage
 
 This is a simple example of how to set up a basic caching HttpClient. As configured, it will store a maximum of 1000 cached objects, each of which may have a maximum body size of 8192 bytes. The numbers selected here are for example only and not intended to be prescriptive or considered as recommendations.
 
@@ -119,7 +119,7 @@ try {
 }
 ```
 
-## 6.4. Configuration（配置）
+## 6.4. Configuration
 
 The caching HttpClient inherits all configuration options and parameters of the default non-caching implementation (this includes setting options like timeouts and connection pool sizes). For caching-specific configuration, you can provide a CacheConfig instance to customize behavior across the following areas:
 
@@ -141,7 +141,7 @@ The caching HttpClient inherits all configuration options and parameters of the 
 
 背景验证。缓存模块支持 RFC5861 的跟踪-同时-重新验证指令，它允许某些缓存条目在后台重新验证。您可能想要调整后台工作线程的最小和最大数量的设置，以及它们在被回收之前可以空闲的最大时间。您还可以控制用于重新验证的队列的大小，当没有足够的工作人员来满足需求时。
 
-## 6.5. Storage Backends（后端存储）
+## 6.5. Storage Backends
 
 The default implementation of caching HttpClient stores cache entries and cached response bodies in memory in the JVM of your application. While this offers high performance, it may not be appropriate for your application due to the limitation on size or because the cache entries are ephemeral and don't survive an application restart. The current release includes support for storing cache entries using EhCache and memcached implementations, which allow for spilling cache entries to disk or storing them in an external process.
 

@@ -6,7 +6,7 @@ Apache HttpComponents™ 项目负责创建和维护一套底层 Java 组件工�
 
 This project functions under the Apache Software Foundation (http://www.apache.org), and is part of a larger community of developers and users.
 
-这个项目在 Apache Software Foundation（http://www.apache.org）下运行，它是一个大型开发人员和用户社区的一部分。
+这个项目在 Apache Software Foundation(http://www.apache.org) 下运行，它是一个大型开发人员和用户社区的一部分。
 
 ## HttpComponents Overview（HttpComponents 概述）
 
