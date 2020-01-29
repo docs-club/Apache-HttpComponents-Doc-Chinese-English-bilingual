@@ -6,9 +6,9 @@ Apache HttpComponents™ 项目负责创建和维护一套底层 Java 组件工�
 
 This project functions under the Apache Software Foundation (http://www.apache.org), and is part of a larger community of developers and users.
 
-这个项目在 Apache Software Foundation(http://www.apache.org) 下运行，它是一个大型开发人员和用户社区的一部分。
+这个项目在 Apache Software Foundation (http://www.apache.org) 下运行，它是一个大型开发人员和用户社区的一部分。
 
-## HttpComponents Overview（HttpComponents 概述）
+## HttpComponents Overview
 
 The Hyper-Text Transfer Protocol (HTTP) is perhaps the most significant protocol used on the Internet today. Web services, network-enabled appliances and the growth of network computing continue to expand the role of the HTTP protocol beyond user-driven web browsers, while increasing the number of applications that require HTTP support.
 
@@ -18,9 +18,9 @@ Designed for extension while providing robust support for the base HTTP protocol
 
 HttpClient 组件是为功能扩展而设计的，同时为基本 HTTP 协议提供强有力的支持，任何使用 HTTP 构建的客户端应用程序（如 web 浏览器、web 服务客户端或利用、扩展 HTTP 协议进行分布式通信的系统）的人都可能对它感兴趣。`注：该译文在 Apache HttpComponents README、HttpClient Preface 第一段、HttpClient README 第一段、项目 README 均相同`
 
-## HttpComponents Structure（HttpComponents 的构成）
+## HttpComponents Structure
 
-### HttpComponents Core（HttpComponents 核心）
+### HttpComponents Core
 
 HttpCore is a set of low level HTTP transport components that can be used to build custom client and server side HTTP services with a minimal footprint. HttpCore supports two I/O models: blocking I/O model based on the classic Java I/O and non-blocking, event driven I/O model based on Java NIO.
 
@@ -38,7 +38,7 @@ The blocking I/O model may be more appropriate for data intensive, low latency s
 
 HttpCore 案例
 
-### HttpComponents Client（HttpComponents 客户端）
+### HttpComponents Client
 
 [HttpClient](/HttpClient) is a HTTP/1.1 compliant HTTP agent implementation based on HttpCore. It also provides reusable components for client-side authentication, HTTP state management, and HTTP connection management. HttpComponents Client is a successor of and replacement for Commons HttpClient 3.x. Users of Commons HttpClient are strongly encouraged to upgrade.
 
@@ -52,7 +52,7 @@ HttpClient 是一个基于 HttpCore 并与 HTTP/1.1 兼容的 HTTP 代理实现�
 
 HttpClient 案例
 
-### HttpComponents AsyncClient（HttpComponents 的异步客户端）
+### HttpComponents AsyncClient
 
 Asynch HttpClient is a HTTP/1.1 compliant HTTP agent implementation based on HttpCore NIO and HttpClient components. It is a complementary module to Apache HttpClient intended for special cases where ability to handle a great number of concurrent connections is more important than performance in terms of a raw data throughput.
 

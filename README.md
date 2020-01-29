@@ -2,13 +2,13 @@
 
 文档地址：http://hc.apache.org/httpclient-3.x/
 
-## End of life（生命结束）
+## End of life
 
 The Commons HttpClient project is now end of life, and is no longer being developed. It has been replaced by the Apache HttpComponents project in its HttpClient and HttpCore modules, which offer better performance and more flexibility.
 
-Commons HttpClient 项目已经终结了，并且不再开发。它已经被 [Apache HttpComponents](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/Apache-HttpComponents) 项目中的 [HttpClient](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient) 和 [HttpCore](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpCore) 模块取代，这些模块提供了更好的性能和更强的灵活性。
+Commons HttpClient 项目已经终结了，并且不再开发。它已经被 [Apache HttpComponents](/Apache-HttpComponents) 项目中的 [HttpClient](/HttpClient) 和 [HttpCore](/HttpCore) 模块取代，这些模块提供了更好的性能和更强的灵活性。
 
-## Introduction（介绍）
+## Introduction
 
 The Hyper-Text Transfer Protocol (HTTP) is perhaps the most significant protocol used on the Internet today. Web services, network-enabled appliances and the growth of network computing continue to expand the role of the HTTP protocol beyond user-driven web browsers, while increasing the number of applications that require HTTP support.
 
@@ -26,7 +26,7 @@ There are many projects that use HttpClient to provide the core HTTP functionali
 
 有许多项目使用 HttpClient 来提供核心的 HTTP 功能。其中一些是开源的，可以在 web 上找到项目页面，而另一些是闭源的，你永远不会看到或听说过。Apache Source License 为源代码和二进制代码的重用提供了最大的灵活性。请参阅使用 HttpClient 的项目的应用程序页面。
 
-## History（历史）
+## History
 
 HttpClient was started in 2001 as a subproject of the Jakarta Commons, based on code developed by the Jakarta Slide project. It was promoted out of the Commons in 2004, graduating to a separate Jakarta project. In 2005, the HttpComponents project at Jakarta was created, with the task of developing a successor to HttpClient 3.x and to maintain the existing codebase until the new one is ready to take over. The Commons project, cradle of HttpClient, left Jakarta in 2007 to become an independent Top Level Project. Later in the same year, the HttpComponents project also left Jakarta to become an independent Top Level Project, taking the responsibility for maintaining HttpClient with it.
 
