@@ -26,7 +26,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
         - [1.1.4 HTTP entity](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals#114-http-entity)
             - [1.1.4.1 Repeatable entities](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals#1141-repeatable-entities)
             - [1.1.4.2 Using HTTP entities](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals#1142-using-http-entities)
-        - [1.1.5 Ensuring release of low level resources](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals#115-ensuring-release-of-low-levelresources)
+        - [1.1.5 Ensuring release of low level resources](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals#115-ensuring-release-of-low-level-resources)
         - [1.1.6 Consuming entity content](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals#116-consuming-entity-content)
         - [1.1.7 Producing entity content](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals#117-producing-entity-content)
             - [1.1.7.1 HTML forms](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals#1171-html-forms)
