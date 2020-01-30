@@ -188,7 +188,7 @@ domain=localhost
 
 HTTP messages can carry a content entity associated with the request or response. Entities can be found in some requests and in some responses, as they are optional. Requests that use entities are referred to as entity enclosing requests. The HTTP specification defines two entity enclosing request methods: POST and PUT. Responses are usually expected to enclose a content entity. There are exceptions to this rule such as responses to HEAD method and 204 No Content, 304 Not Modified, 205 Reset Content responses.
 
-HTTP 消息可以携带与请求或响应相关联的内容实体。实体可以在一些请求和响应中找到，因为它们是可选的。使用实体的请求称为 entity enclosing request。HTTP 规范定义了两个 entity enclosing request 的方法：POST 和 PUT。通常认为响应包含一个内容实体。这个规则也有例外，比如 HEAD 方法的响应和几种常见的响应：204 No Content、304 Not Modified、205 Reset Content。
+HTTP 消息可以携带与请求或响应相关联的内容实体。实体可以在某些请求和响应中找到，因为它们是可选的。使用实体的请求称为 entity enclosing request。HTTP 规范定义了两个 entity enclosing request 的方法：POST 和 PUT。通常认为响应包含一个内容实体。这个规则也有例外，比如 HEAD 方法的响应和几种常见的响应：204 No Content、304 Not Modified、205 Reset Content。
 
 HttpClient distinguishes three kinds of entities, depending on where their content originates:
 
@@ -196,7 +196,7 @@ HttpClient 根据内容的来源将实体分为三种：
 
 - **streamed**: The content is received from a stream, or generated on the fly. In particular, this category includes entities being received from HTTP responses. Streamed entities are generally not repeatable.
 
-**streamed**：内容从流中接收，或动态生成。尤其应注意的是，这个类别也包括从 HTTP 响应接收的实体。streamed 实体通常是不可重复的。
+**streamed**：内容从流中接收，或即时生成的。尤其应注意的是，这个类别也包括从 HTTP 响应接收的实体。streamed 实体通常是不可重复的。
 
 - **self-contained**: The content is in memory or obtained by means that are independent from a connection or other entity. Self-contained entities are generally repeatable. This type of entities will be mostly used for entity enclosing HTTP requests.
 
@@ -214,7 +214,7 @@ This distinction is important for connection management when streaming out conte
 
 An entity can be repeatable, meaning its content can be read more than once. This is only possible with self contained entities (like ByteArrayEntity or StringEntity)
 
-一个实体可重复，这意味着它的内容可以被多次读取。这只可能是 self-contained 实体（如 ByteArrayEntity 或 StringEntity）
+一个实体可重复，这意味着它的内容可以被多次读取。这仅适用于 self-contained 实体（如 ByteArrayEntity 或 StringEntity）
 
 #### 1.1.4.2 Using HTTP entities
 
@@ -224,7 +224,7 @@ Since an entity can represent both binary and character content, it has support 
 
 The entity is created when executing a request with enclosed content or when the request was successful and the response body is used to send the result back to the client.
 
-实体是在执行包含内容的请求时或请求成功时创建的，响应体用于将结果发送回客户端。
+实体是在执行 enclosed 内容的请求，或请求成功时创建的，响应体用于将结果发送回客户端。
 
 To read the content from the entity, one can either retrieve the input stream via the HttpEntity#getContent() method, which returns an java.io.InputStream, or one can supply an output stream to the HttpEntity#writeTo(OutputStream) method, which will return once all content has been written to the given stream.
 
@@ -232,11 +232,11 @@ To read the content from the entity, one can either retrieve the input stream vi
 
 When the entity has been received with an incoming message, the methods HttpEntity#getContentType() and HttpEntity#getContentLength() methods can be used for reading the common metadata such as Content-Type and Content-Length headers (if they are available). Since the Content-Type header can contain a character encoding for text mime-types like text/plain or text/html, the HttpEntity#getContentEncoding() method is used to read this information. If the headers aren't available, a length of -1 will be returned, and NULL for the content type. If the Content-Type header is available, a Header object will be returned.
 
-当接收到带有传入消息的实体时，方法 HttpEntity#getContentType() 和 HttpEntity#getContentLength() 可用于读取公共元数据，如 Content-Type 和 Content-Length 头信息（如果它们可用）。由于 Content-Type 头可以包含文本的 mime-type（如 text/plain 或 text/html）的字符编码，因此使用 HttpEntity#getContentEncoding() 方法来读取此信息。如果头不可用，则返回长度 -1，内容类型为 NULL。如果 Content-Type 头可用，则返回一个 Header 对象。
+当接收到带有传入消息的实体时，方法 HttpEntity#getContentType() 和 HttpEntity#getContentLength() 可用于读取常见的元数据，如 Content-Type 和 Content-Length 头信息（如果它们可用）。由于 Content-Type 头可以包含文本 mime-type（如 text/plain 或 text/html）的字符编码，因此使用 HttpEntity#getContentEncoding() 方法来读取此信息。如果头不可用，则返回长度 -1，内容类型为 NULL。如果 Content-Type 头可用，则返回一个 Header 对象。
 
 When creating an entity for a outgoing message, this meta data has to be supplied by the creator of the entity.
 
-在为传出消息创建实体时，必须由实体的创建者提供此元数据。
+在为传出消息创建实体时，必须由实体的创建者提供元数据。
 
 ```
 StringEntity myEntity = new StringEntity("important message", ContentType.create("text/plain", "UTF-8"));
@@ -289,15 +289,15 @@ The difference between closing the content stream and closing the response is th
 
 Please note that the HttpEntity#writeTo(OutputStream) method is also required to ensure proper release of system resources once the entity has been fully written out. If this method obtains an instance of java.io.InputStream by calling HttpEntity#getContent(), it is also expected to close the stream in a finally clause.
 
-请注意，HttpEntity#writeTo(OutputStream) 方法也需要确保在实体被完全写完之后，系统资源得到适当的释放。如果该方法通过调用 HttpEntity#getContent() 获得 java.io.InputStream 实例，它还将在 finally 子句中关闭流。
+请注意，HttpEntity#writeTo(OutputStream) 方法也需要确保在实体被完全写入之后释放系统资源。如果该方法通过调用 HttpEntity#getContent() 获得 java.io.InputStream 实例，则还应该在 finally 子句中关闭流。
 
 When working with streaming entities, one can use the EntityUtils#consume(HttpEntity) method to ensure that the entity content has been fully consumed and the underlying stream has been closed.
 
-在处理流实体时，可以使用 EntityUtils#consume(HttpEntity) 方法来确保实体内容已被完全使用，并且底层流已被关闭。
+在处理流实体时，可以使用 EntityUtils#consume(HttpEntity) 方法来确保实体内容已被完全消费，并且底层流已被关闭。
 
 There can be situations, however, when only a small portion of the entire response content needs to be retrieved and the performance penalty for consuming the remaining content and making the connection reusable is too high, in which case one can terminate the content stream by closing the response.
 
-但是，当需要检索整个响应内容的一小部分时，使用剩余内容和使连接可重用的性能代价太高，这时可以通过关闭响应终止内容流。
+但是，当仅需要检索整个响应内容的一小部分，而且继续消费剩余内容或使连接可重用的性能代价太高，这时可以直接关闭响应来终止内容流。
 
 ```
 CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -318,13 +318,13 @@ try {
 
 The connection will not be reused, but all level resources held by it will be correctly deallocated.
 
-连接将不会被重用，它所覆盖的所有层级的资源都将被正确释放。
+连接将不会被重用，它所拥有的所有层级的资源都将被正确释放。
 
 ### 1.1.6 Consuming entity content
 
 The recommended way to consume the content of an entity is by using its HttpEntity#getContent() or HttpEntity#writeTo(OutputStream) methods. HttpClient also comes with the EntityUtils class, which exposes several static methods to more easily read the content or information from an entity. Instead of reading the java.io.InputStream directly, one can retrieve the whole content body in a string / byte array by using the methods from this class. However, the use of EntityUtils is strongly discouraged unless the response entities originate from a trusted HTTP server and are known to be of limited length.
 
-推荐使用实体内容的方法是使用它的 HttpEntity#getContent() 或 HttpEntity#writeTo(OutputStream) 方法。HttpClient 还附带了 EntityUtils 类，它公开了几个静态方法，以便更容易地从实体中读取内容或信息。你可以直接使用这个类的方法在一个字符串或字节数组中检索整个内容体，而不是读取 java.io.InputStream。但是，强烈反对使用 EntityUtils，除非响应实体来自可信的 HTTP 服务器，并且已知其长度有限。
+推荐消费实体内容的方法是使用 HttpEntity#getContent() 或 HttpEntity#writeTo(OutputStream) 方法。HttpClient 还附带了 EntityUtils 类，它公开了几个静态方法，以便更容易的从实体中读取内容或信息。可以直接使用这个类的方法在一个字符串或字节数组中检索整个内容主体，而不必读取 java.io.InputStream。但是，强烈反对使用 EntityUtils，除非响应实体来自可信的 HTTP 服务器，并且已知其长度有限。
 
 ```
 CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -347,7 +347,7 @@ try {
 
 In some situations it may be necessary to be able to read entity content more than once. In this case entity content must be buffered in some way, either in memory or on disk. The simplest way to accomplish that is by wrapping the original entity with the BufferedHttpEntity class. This will cause the content of the original entity to be read into a in-memory buffer. In all other ways the entity wrapper will be have the original one.
 
-在某些情况下，可能需要多次读取实体内容。在这种情况下，必须以某种方式缓冲实体内容，要么在内存中，要么在磁盘上。最简单的方法是使用 BufferedHttpEntity 类包装原始实体。这将导致原始实体的内容被读入内存缓冲区。In all other ways the entity wrapper will be have the original one.
+在某些情况下，可能需要多次读取实体内容。在这种情况下，实体内容必须以某种方式缓冲在内存或磁盘。最简单的方法是使用 BufferedHttpEntity 类包装原始实体。这将导致原始实体的内容被读入内存缓冲区。In all other ways the entity wrapper will be have the original one.
 
 ```
 CloseableHttpResponse response = <...>
@@ -361,7 +361,7 @@ if (entity != null) {
 
 HttpClient provides several classes that can be used to efficiently stream out content throught HTTP connections. Instances of those classes can be associated with entity enclosing requests such as POST and PUT in order to enclose entity content into outgoing HTTP requests. HttpClient provides several classes for most common data containers such as string, byte array, input stream, and file: StringEntity, ByteArrayEntity, InputStreamEntity, and FileEntity.
 
-HttpClient 提供了几个类，可用于通过 HTTP 连接高效地输出内容。这些类的实例可以与包含 POST 和 PUT 等请求的实体相关联，以便将实体内容包含到传出 HTTP 请求中。HttpClient 为最常见的数据容器提供了几个类，如字符串、字节数组、输入流和文件：StringEntity、ByteArrayEntity、InputStreamEntity 和 FileEntity。
+HttpClient 提供了几个类用于通过 HTTP 连接高效地输出内容。这些类的实例可以与诸如 POST 和 PUT 等 entity enclosing requests 的实体相关联，以便将实体内容封装到传出 HTTP 请求中。HttpClient 为最常见的数据容器提供了几个类（如字符串、字节数组、输入流和文件）：StringEntity、ByteArrayEntity、InputStreamEntity 和 FileEntity。
 
 ```
 File file = new File("somefile.txt");
@@ -373,7 +373,7 @@ httppost.setEntity(entity);
 
 Please note InputStreamEntity is not repeatable, because it can only read from the underlying data stream once. Generally it is recommended to implement a custom HttpEntity class which is self-contained instead of using the generic InputStreamEntity. FileEntity can be a good starting point.
 
-请注意 InputStreamEntity 是不可重复的，因为它只能从底层数据流读取一次。通常建议实现自定义的 HttpEntity 类，该类是 self-contained 的，而不是使用通用的 InputStreamEntity。FileEntity 可以作为一个很好的参考。
+请注意 InputStreamEntity 是不可重复的，因为它只能从底层数据流读取一次。通常情况下，建议实现自定义的 HttpEntity 类，该类是 self-contained 的，而不是使用通用的 InputStreamEntity。FileEntity 可以作为一个很好的参考。
 
 #### 1.1.7.1 HTML forms
 
@@ -403,7 +403,7 @@ param1=value1&param2=value2
 
 Generally it is recommended to let HttpClient choose the most appropriate transfer encoding based on the properties of the HTTP message being transferred. It is possible, however, to inform HttpClient that chunk coding is preferred by setting HttpEntity#setChunked() to true. Please note that HttpClient will use this flag as a hint only. This value will be ignored when using HTTP protocol versions that do not support chunk coding, such as HTTP/1.0.
 
-通常建议让 HttpClient 根据正在传输的 HTTP 消息的属性选择最合适的传输编码。但是，可以通过将 HttpEntity#setChunked() 设置为 true 来通知 HttpClient，Chunked 编码是首选的。请注意 HttpClient 将只使用此标志作为提示。当使用不支持 Chunked 编码的 HTTP 协议版本（如 HTTP/1.0）时，此值将被忽略。
+通常情况下，建议让 HttpClient 根据要传输的 HTTP 消息的属性选择最合适的传输编码。但是，可以通过将 HttpEntity#setChunked() 设置为 true 来通知 HttpClient 首选 Chunked 编码。请注意 HttpClient 将只使用此标志作为提示。当使用不支持 Chunked 编码的 HTTP 协议版本（如 HTTP/1.0）时，此值将被忽略。
 
 ```
 StringEntity entity = new StringEntity("important message", ContentType.create("plain/text", Consts.UTF_8));
@@ -448,11 +448,11 @@ MyJsonObject myjson = client.execute(httpget, rh);
 
 HttpClient interface represents the most essential contract for HTTP request execution. It imposes no restrictions or particular details on the request execution process and leaves the specifics of connection management, state management, authentication and redirect handling up to individual implementations. This should make it easier to decorate the interface with additional functionality such as response content caching.
 
-HttpClient 接口代表 HTTP 请求执行的最基本约定。它对请求执行过程没有任何限制或具体细节，将连接管理、状态管理、身份验证和重定向处理的细节留给各个实现。这让使用附加功能（如响应内容缓存）装饰接口变得更容易。
+HttpClient 接口代表 HTTP 请求执行的最基本约定。它对请求执行过程没有任何限制或指明具体细节，而将连接管理、状态管理、身份验证和重定向处理的细节留给各个实现。这让使用附加功能（如响应内容缓存）装饰接口变得更容易。
 
 Generally HttpClient implementations act as a facade to a number of special purpose handler or strategy interface implementations responsible for handling of a particular aspect of the HTTP protocol such as redirect or authentication handling or making decision about connection persistence and keep alive duration. This enables the users to selectively replace default implementation of those aspects with custom, application specific ones.
 
-通常，HttpClient 实现充当许多特殊用途处理程序或策略接口实现的门户，这些处理程序或策略接口实现负责处理 HTTP 协议的特定实现，比如重定向或身份验证处理，或者决定连接持久性和保持活动持续时间。这使用户能够有选择地用定制的、特定于应用程序的实现替换默认实现。
+通常，HttpClient 实现充当许多专用处理程序或策略接口实现的基础，这些处理程序或策略接口实现负责处理 HTTP 协议的特定实现，比如重定向或身份验证处理，或者决定连接持久性和保持活动持续时间。这使用户能够选择定制的、特定于应用程序的实现来替换默认实现。
 
 ```
 ConnectionKeepAliveStrategy keepAliveStrat = new DefaultConnectionKeepAliveStrategy() {
@@ -501,15 +501,15 @@ try {
 
 Originally HTTP has been designed as a stateless, response-request oriented protocol. However, real world applications often need to be able to persist state information through several logically related request-response exchanges. In order to enable applications to maintain a processing state HttpClient allows HTTP requests to be executed within a particular execution context, referred to as HTTP context. Multiple logically related requests can participate in a logical session if the same context is reused between consecutive requests. HTTP context functions similarly to a `java.util.Map<String, Object>`. It is simply a collection of arbitrary named values. An application can populate context attributes prior to request execution or examine the context after the execution has been completed.
 
-最初，HTTP 被设计为一种无状态的、面向响应请求的协议。然而，实际应用程序常常需要能够通过几个逻辑上相关的请求响应交换来持久化状态信息。为了使应用程序能够维护处理状态，HttpClient 允许在特定的执行环境（称为 HTTP 执行环境）中执行 HTTP 请求。如果在连续的请求之间重用相同的执行 context，则多个逻辑相关的请求可以参与逻辑会话。HTTP 上下文的功能类似于 `java.util.Map<String, Object>`。它只是任意命名值的集合。应用程序可以在请求执行之前填充 context 属性，或者在执行完成后检查 context。
+最初，HTTP 被设计为一种无状态的、面向响应请求的协议。然而，应用程序常需要能够通过几个逻辑上相关的请求响应交换来持久化状态信息。为了使应用程序能够保持处理状态，HttpClient 允许在特定的执行环境（称为 HTTP 上下文）中执行 HTTP 请求。如果在连续的请求之间重用相同的执行上下文，则多个逻辑相关的请求可以参与逻辑会话。HTTP 上下文的功能类似于 `java.util.Map<String, Object>`。它只是任意命名值的集合。应用程序可以在请求执行之前填充上下文属性，或者在执行完成后检查上下文。
 
 HttpContext can contain arbitrary objects and therefore may be unsafe to share between multiple threads. It is recommended that each thread of execution maintains its own context.
 
-HttpContext 可以包含任意对象，因此在多个线程之间共享可能是不安全的。建议每个执行线程维护自己的 context。
+HttpContext 可以包含任意对象，因此在多个线程之间共享可能是不安全的。建议每个执行线程维护自己的上下文。
 
 In the course of HTTP request execution HttpClient adds the following attributes to the execution context:
 
-在 HTTP 请求执行过程中，HttpClient 向执行 context 添加了以下属性：
+在 HTTP 请求执行过程中，HttpClient 向执行上下文添加了以下属性：
 
 - HttpConnection instance representing the actual connection to the target server.
 
@@ -525,7 +525,7 @@ HttpRoute 实例表示完整的连接路由。
 
 - HttpRequest instance representing the actual HTTP request. The final HttpRequest object in the execution context always represents the state of the message exactly as it was sent to the target server. Per default HTTP/1.0 and HTTP/1.1 use relative request URIs. However if the request is sent via a proxy in a non-tunneling mode then the URI will be absolute.
 
-HttpRequest 实例用于代表实际 HTTP 请求。执行 context 中最后一个 HttpRequest 对象始终表示消息发送到目标服务器时的状态。每个默认 HTTP/1.0 和 HTTP/1.1 都使用相对请求 URI。然而，如果请求以非隧道模式通过代理发送，则 URI 将是绝对的。
+HttpRequest 实例用于代表实际 HTTP 请求。执行上下文中最后一个 HttpRequest 对象始终表示消息发送到目标服务器时的状态。HTTP/1.0 和 HTTP/1.1 都默认使用相对请求 URI。然而，如果请求以非隧道模式通过代理发送，则 URI 将是绝对的。
 
 - HttpResponse instance representing the actual HTTP response.
 
@@ -533,7 +533,7 @@ HttpResponse 实例用于表示实际的 HTTP 响应。
 
 - java.lang.Boolean object representing the flag indicating whether the actual request has been fully transmitted to the connection target.
 
-java.lang.Boolean 对象用于表示一种标志，表征实际请求是否已完全传输到连接目标。
+java.lang.Boolean 对象用于标志实际请求是否已完全传输到连接目标。
 
 - RequestConfig object representing the actual request configuation.
 
@@ -545,7 +545,7 @@ RequestConfig 对象，表示实际的请求配置。
 
 One can use HttpClientContext adaptor class to simplify interractions with the context state.
 
-可以使用 HttpClientContext 适配器类来简化与 context 状态的交互。
+可以使用 HttpClientContext 适配器类来简化与上下文状态的交互。
 
 ```
 HttpContext context = <...>
@@ -558,11 +558,11 @@ RequestConfig config = clientContext.getRequestConfig();
 
 Multiple request sequences that represent a logically related session should be executed with the same HttpContext instance to ensure automatic propagation of conversation context and state information between requests.
 
-表示逻辑相关会话的多个请求序列应该使用相同的 HttpContext 实例执行，以确保会话 context 和状态信息在请求之间自动传播。
+表示逻辑相关会话的多个请求序列应该使用相同的 HttpContext 实例执行，以确保会话上下文和状态信息在请求之间自动传播。
 
 In the following example the request configuration set by the initial request will be kept in the execution context and get propagated to the consecutive requests sharing the same context.
 
-在下面的示例中，初始请求设置的请求配置将保存在执行 context 中，并传播到共享相同 context 中的连续请求。
+在下面的示例中，初始请求设置的请求配置将保存在执行上下文中，并传播到共享相同上下文中的连续请求中。
 
 ```
 CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -595,15 +595,15 @@ try {
 
 The HTTP protocol interceptor is a routine that implements a specific aspect of the HTTP protocol. Usually protocol interceptors are expected to act upon one specific header or a group of related headers of the incoming message, or populate the outgoing message with one specific header or a group of related headers. Protocol interceptors can also manipulate content entities enclosed with messages - transparent content compression / decompression being a good example. Usually this is accomplished by using the 'Decorator' pattern where a wrapper entity class is used to decorate the original entity. Several protocol interceptors can be combined to form one logical unit.
 
-HTTP 协议拦截器是实现 HTTP 协议特定方面的一个程序。通常，协议拦截器被期望作用于传入消息的一个特定头或一组相关头，或者用一个特定头或一组相关头填充传出消息。协议拦截器还可以操作消息所包含的内容实体（透明内容压缩 / 解压就是一个很好的例子）。通常这是使用「装饰者」模式来实现的，其中使用包装器实体类来装饰原始实体。几个协议拦截器可以组合成一个逻辑单元。
+HTTP 协议拦截器是实现 HTTP 协议特定方面的一个程序。通常，协议拦截器应作用于传入消息的一个特定头或一组相关头，或者用一个特定头或一组相关头填充传出消息。协议拦截器还可以操作包含在消息中的内容实体（透明内容压缩 / 解压就是一个很好的例子）。通常这是使用「装饰者」模式来实现的，其中使用包装器实体类来装饰原始实体。几个协议拦截器可以组合成一个逻辑单元。
 
 Protocol interceptors can collaborate by sharing information - such as a processing state - through the HTTP execution context. Protocol interceptors can use HTTP context to store a processing state for one request or several consecutive requests.
 
-协议拦截器可以通过 HTTP 执行 context 共享信息（例如处理状态）进行协作。协议拦截器可以使用 HTTP context 存储一个请求或多个连续请求的处理状态。
+协议拦截器可以通过 HTTP 执行上下文共享信息（例如处理状态）进行协作。协议拦截器可以使用 HTTP 上下文存储一个请求或多个连续请求的处理状态。
 
 Usually the order in which interceptors are executed should not matter as long as they do not depend on a particular state of the execution context. If protocol interceptors have interdependencies and therefore must be executed in a particular order, they should be added to the protocol processor in the same sequence as their expected execution order.
 
-通常，只要拦截器不依赖于执行 context 的特定状态，拦截器执行的顺序就不重要。如果协议拦截器具有相互依赖关系，因此必须按照特定的顺序执行，则应该按照预期的执行顺序将它们添加到协议处理器中。
+通常，只要拦截器不依赖于执行上下文的特定状态，拦截器执行的顺序就不重要。如果协议拦截器具有相互依赖关系，就必须按照特定的顺序执行，就应该按照预期的执行顺序将它们添加到协议处理器中。
 
 Protocol interceptors must be implemented as thread-safe. Similarly to servlets, protocol interceptors should not use instance variables unless access to those variables is synchronized.
 
@@ -611,7 +611,7 @@ Protocol interceptors must be implemented as thread-safe. Similarly to servlets,
 
 This is an example of how local context can be used to persist a processing state between consecutive requests:
 
-这是一个例子，说明如何使用本地 context 在连续请求之间持久化处理状态:
+这是一个说明如何使用本地上下文在连续请求之间持久化处理状态的例子:
 
 ```
 CloseableHttpClient httpclient = HttpClients.custom().addInterceptorLast(new HttpRequestInterceptor() {
@@ -655,7 +655,7 @@ It is important to understand that the HTTP protocol is not well suited to all t
 
 Even though HTTP has never been designed to support transactional processing, it can still be used as a transport protocol for mission critical applications provided certain conditions are met. To ensure HTTP transport layer safety the system must ensure the idempotency of HTTP methods on the application layer.
 
-尽管 HTTP 从来没有被设计成支持事务处理，但如果满足某些条件，它仍然可以用作任务关键型应用程序的传输协议。为了确保 HTTP 传输层的安全性，系统必须确保 HTTP 方法在应用层上的幂等性。
+尽管 HTTP 从来没有被设计成支持事务处理，但如果满足某些条件，它仍然可以作为任务关键型应用程序的传输协议。为了确保 HTTP 传输层的安全性，系统必须确保 HTTP 方法在应用层上的幂等性。
 
 ### 1.5.2 Idempotent methods
 
@@ -669,7 +669,7 @@ HTTP/1.1 规范将幂等方法定义为：
 
 In other words the application ought to ensure that it is prepared to deal with the implications of multiple execution of the same method. This can be achieved, for instance, by providing a unique transaction id and by other means of avoiding execution of the same logical operation.
 
-换句话说，应用程序应该确保它准备好处理同一方法的多次执行的影响。例如，可以通过提供惟一的事务 id 和避免执行相同逻辑操作的其他方法来实现这一点。
+换句话说，应用程序应该确保应对处理同一方法的多次执行的影响。例如，可以通过提供唯一的事务 id 和避免执行相同逻辑操作的其他方法来实现这一点。
 
 Please note that this problem is not specific to HttpClient. Browser based applications are subject to exactly the same issues related to HTTP methods non-idempotency.
 
@@ -677,7 +677,7 @@ Please note that this problem is not specific to HttpClient. Browser based appli
 
 By default HttpClient assumes only non-entity enclosing methods such as GET and HEAD to be idempotent and entity enclosing methods such as POST and PUT to be not for compatibility reasons.
 
-默认情况下，HttpClient 只假设非实体的方法（如 GET 和 HEAD）是幂等的，而实体的方法（如 POST 和 PUT）是不兼容的。
+默认情况下，HttpClient 只假设非实体封装的方法（如 GET 和 HEAD）是幂等的，而实体封装的方法（如 POST 和 PUT）由于兼容性原因不是幂等的。
 
 ### 1.5.3 Automatic exception recovery
 
@@ -745,19 +745,19 @@ CloseableHttpClient httpclient = HttpClients.custom()
 
 Please note that one can use StandardHttpRequestRetryHandler instead of the one used by default in order to treat those request methods defined as idempotent by RFC-2616 as safe to retry automatically: GET, HEAD, PUT, DELETE, OPTIONS, and TRACE.
 
-请注意，可以使用 StandardHttpRequestRetryHandler 而不是默认使用的方法，以便将 RFC-2616 定义为等权的请求方法视为自动重试的安全方法：GET、HEAD、PUT、DELETE、OPTIONS 和 TRACE。
+请注意，为了将 RFC-2616 定义为幂等的请求方法视为自动重试的安全方法，可以使用 StandardHttpRequestRetryHandler，而不是默认使用的方法：GET、HEAD、PUT、DELETE、OPTIONS 和 TRACE。
 
 ## 1.6 Aborting requests
 
 In some situations HTTP request execution fails to complete within the expected time frame due to high load on the target server or too many concurrent requests issued on the client side. In such cases it may be necessary to terminate the request prematurely and unblock the execution thread blocked in a I/O operation. HTTP requests being executed by HttpClient can be aborted at any stage of execution by invoking HttpUriRequest#abort() method. This method is thread-safe and can be called from any thread. When an HTTP request is aborted its execution thread - even if currently blocked in an I/O operation - is guaranteed to unblock by throwing a InterruptedIOException
 
-在某些情况下，由于目标服务器上的高负载或客户端端发出的并发请求太多，HTTP 请求执行无法在预期的时间框架内完成。在这种情况下，可能需要提前终止请求并解除 I/O 操作中阻塞的执行线程。通过调用 HttpUriRequest#abort() 方法，HttpClient 正在执行的 HTTP 请求可以在执行的任何阶段中止。该方法是线程安全的，可以从任何线程调用。当 HTTP 请求中止时，它的执行线程（即使当前在 I/O 操作中被阻塞）保证通过抛出一个 InterruptedIOException 来解除阻塞。
+在某些情况下，由于目标服务器上的高负载或客户端发出的并发请求太多，HTTP 请求执行无法在预期的时间内完成。在这种情况下，可能需要提前终止请求并解除 I/O 操作中阻塞的执行线程。通过调用 HttpUriRequest#abort() 方法，可以在执行的任何阶段中止由 HttpClient 执行的 HTTP 请求。该方法是线程安全的，可以从任何线程调用。当 HTTP 请求中止时，它的执行线程（即使当前在 I/O 操作中被阻塞）也可以通过抛出一个 InterruptedIOException 来解除阻塞。
 
 ## 1.7 Redirect handling
 
 HttpClient handles all types of redirects automatically, except those explicitly prohibited by the HTTP specification as requiring user intervention. See Other (status code 303) redirects on POST and PUT requests are converted to GET requests as required by the HTTP specification. One can use a custom redirect strategy to relaxe restrictions on automatic redirection of POST methods imposed by the HTTP specification.
 
-HttpClient 自动处理所有类型的重定向，除非 HTTP 规范明确禁止用户进行干预。根据 HTTP 规范的要求，See Other（状态码 303）重定向 POST 和 PUT 请求被转换为 GET 请求。可以使用自定义重定向策略来放松 HTTP 规范对 POST 方法自动重定向的限制。
+HttpClient 自动处理所有类型的重定向，但 HTTP 规范明确禁止用户进行干预的除外。根据 HTTP 规范的要求，POST 重定向（状态码 303）和 PUT 请求将被转换为 GET 请求。可以自定义重定向策略来放宽 HTTP 规范对 POST 方法自动重定向的限制。
 
 ```
 LaxRedirectStrategy redirectStrategy = new LaxRedirectStrategy();
@@ -768,7 +768,7 @@ CloseableHttpClient httpclient = HttpClients.custom()
 
 HttpClient often has to rewrite the request message in the process of its execution. Per default HTTP/1.0 and HTTP/1.1 generally use relative request URIs. Likewise, original request may get redirected from location to another multiple times. The final interpreted absolute HTTP location can be built using the original request and the context. The utility method URIUtils#resolve can be used to build the interpreted absolute URI used to generate the final request. This method includes the last fragment identifier from the redirect requests or the original request.
 
-HttpClient 在执行请求消息的过程中经常需要重写请求消息。对于默认的 HTTP/1.0 和 HTTP/1.1，通常使用相对请求 URI。同样，原始请求可能会多次从某个位置重定向到另一个位置。最终解释的绝对 HTTP 位置可以使用原始请求和 context 构建。实用程序方法 URIUtils#resolve 可用于构建用于生成最终请求的解释绝对 URI。此方法包括重定向请求或原始请求的最后一个片段标识符。
+HttpClient 在执行请求消息的过程中必须重写请求消息。默认情况下，HTTP/1.0 和 HTTP/1.1 通常使用相对请求 URI。同样，原始请求可能会多次从某个位置重定向到另一个位置。可以使用原始请求和上下文构建最终的绝对 HTTP 位置。URIUtils 的 URIUtils#resolve 方法可用于构建生成最终请求的绝对 URI。此方法包括重定向请求或原始请求的最后一个 fragment 标识符。
 
 ```
 CloseableHttpClient httpclient = HttpClients.createDefault();
