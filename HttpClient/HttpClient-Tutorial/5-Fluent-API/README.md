@@ -4,7 +4,7 @@
 
 As of version of 4.2 HttpClient comes with an easy to use facade API based on the concept of a fluent interface. Fluent facade API exposes only the most fundamental functions of HttpClient and is intended for simple use cases that do not require the full flexibility of HttpClient. For instance, fluent facade API relieves the users from having to deal with connection management and resource deallocation.
 
-从 4.2 版本开始，HttpClient 提供了一个易于使用的基于流畅接口概念的外观模式API。外观模式 API 只公开 HttpClient 的最基本的功能，用于不需要 HttpClient 的全部灵活性的简单用例。例如，外观模式 API 使用户不必处理连接管理和资源分配。
+从 4.2 版本开始，HttpClient 提供了一个易于使用的基于流畅接口概念的外观模式 API。外观模式 API 只公开 HttpClient 的最基本的功能，用于不需要 HttpClient 的全部灵活性的简单用例。例如，外观模式 API 使用户不必处理连接管理和资源分配。
 
 Here are several examples of HTTP requests executed through the HC fluent API
 

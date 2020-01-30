@@ -27,7 +27,7 @@ I’m really excited that you are interested in contributing to this project. Be
 
 - Provide convincing reason to fixing a bug or add this improvement. Ideally you should open a issue first and have it greenlighted before working on it.
 
-- If you are resolving a issue, add `(closes #xxxx[,#xxx])` (#xxxx is the issue id) in your PR title for a better release log, e.g. `update Item 19 (closes #1899)`.
+- If you are resolving a issue, add `(closes #xxxx[,#xxx])` (#xxxx is the issue id) in your PR title for a better release log, e.g. `update 1.5.1 (closes #1899)`.
 
 - All updated content should be formatted in accordance with [Format Guidelines](#format-guidelines) requirements.
 

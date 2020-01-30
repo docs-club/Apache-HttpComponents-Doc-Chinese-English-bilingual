@@ -1,4 +1,4 @@
-## HttpClient Overview（HttpClient 概述）
+## HttpClient Overview
 
 The Hyper-Text Transfer Protocol (HTTP) is perhaps the most significant protocol used on the Internet today. Web services, network-enabled appliances and the growth of network computing continue to expand the role of the HTTP protocol beyond user-driven web browsers, while increasing the number of applications that require HTTP support.
 
@@ -12,41 +12,41 @@ Designed for extension while providing robust support for the base HTTP protocol
 
 HttpClient 组件是为功能扩展而设计的，同时为基本 HTTP 协议提供强有力的支持，任何使用 HTTP 构建的客户端应用程序（如 web 浏览器、web 服务客户端或利用、扩展 HTTP 协议进行分布式通信的系统）的人都可能对它感兴趣。`注：该译文在 Apache HttpComponents README、HttpClient Preface 第一段、HttpClient README 第一段、项目 README 均相同`
 
-## Documentation（文档）
+## Documentation
 
 1. Quick Start - contains a simple, complete example of an HTTP GET and POST with parameters.
 
-快速开始。包含一个简单、完整的带有参数的 HTTP GET 和 POST 的案例。
+[快速开始](/HttpClient/HttpClient-Quick-Start.md)。包含一个简单、带有参数的 HTTP GET 和 POST 的完整案例。
 
 2. HttpClient Tutorial - gives a detailed examination of the HttpClient API, which was written in close accordance with the (sometimes not very intuitive) HTTP specification/standard. A copy is also shipped with the release. A PDF version is also available.
 
-HttpClient教程。详细介绍了 HttpClient API，它是根据 HTTP 规范/标准编写的（有时不是很直观）。该版本还附带了一个副本。还有 PDF 版本。
+[HttpClient 教程](/HttpClient/HttpClient-Tutorial)，详细介绍了 HttpClient API，它是根据 HTTP 规范/标准编写的（有时不是很直观）。该版本还附带了一个副本。还有 PDF 版本。
 
 3. HttpClient Examples - a set of examples demonstrating some of the more complex behavior.
 
-HttpClient 案例。通过一组示例演示一些更复杂的行为。
+[HttpClient 案例](/HttpClient/HttpClient-Examples.md)。通过一组示例演示一些更复杂的行为。
 
 4. HttpClient Primer - explains the scope of HttpClient. Note that HttpClient is not a browser. It lacks the UI, HTML renderer and a JavaScript engine that a browser will possess.
 
-HttpClient 的作用域。注意，HttpClient 不是一个浏览器。它缺少浏览器所拥有的 UI、HTML 渲染器和 JavaScript 引擎。
+[HttpClient 作用域](/HttpClient/Client-HTTP-Programming-Primer.md)。注意，HttpClient 不是一个浏览器。它缺少浏览器所拥有的 UI、HTML 渲染器和 JavaScript 引擎。
 
-5. Project reports（项目报告）
+5. Project reports
 
-- [HttpClient]()
-- [HC Fluent]()
-- [HttpMime]()
-- [HttpClient Cache]()
-- [HttpClient OSGi]()
+- [HttpClient](http://hc.apache.org/httpcomponents-client-ga/httpclient/project-reports.html)
+- [HC Fluent](http://hc.apache.org/httpcomponents-client-ga/fluent-hc/project-reports.html)
+- [HttpMime](http://hc.apache.org/httpcomponents-client-ga/httpmime/project-reports.html)
+- [HttpClient Cache](http://hc.apache.org/httpcomponents-client-ga/httpclient-cache/project-reports.html)
+- [HttpClient OSGi](http://hc.apache.org/httpcomponents-client-ga/httpclient-osgi/project-reports.html)
 
-## Features（特性）
+## Features
 
 - Standards based, pure Java, implementation of HTTP versions 1.0 and 1.1
 
-基于标准，纯 Java，实现 HTTP 版本 1.0 和 1.1
+基于标准，纯 Java，实现 HTTP 1.0 和 1.1
 
 - Full implementation of all HTTP methods (GET, POST, PUT, DELETE, HEAD, OPTIONS, and TRACE) in an extensible OO framework.
 
-在可扩展的 OO 框架中全面实现所有 HTTP 方法（GET、POST、PUT、DELETE、HEAD、OPTIONS和TRACE）。
+可扩展的 OO 框架，全面实现所有 HTTP 方法（GET、POST、PUT、DELETE、HEAD、OPTIONS 和 TRACE）。
 
 - Supports encryption with HTTPS (HTTP over SSL) protocol.
 
@@ -54,11 +54,11 @@ HttpClient 的作用域。注意，HttpClient 不是一个浏览器。它缺少�
 
 - Transparent connections through HTTP proxies.
 
-通过 HTTP 代理的透明连接。
+透明 HTTP 连接。
 
 - Tunneled HTTPS connections through HTTP proxies, via the CONNECT method.
 
-通过 HTTP 代理，通过 CONNECT 方法隧道 HTTPS 连接。
+通过 HTTP 代理，CONNECT 方法隧道 HTTPS 连接。
 
 - Basic, Digest, NTLMv1, NTLMv2, NTLM2 Session, SNPNEGO, Kerberos authentication schemes.
 
@@ -78,18 +78,39 @@ Basic、Digest、NTLMv1、NTLMv2、NTLM2 会话，SNPNEGO、Kerberos 身份验�
 
 - Automatic Cookie handling for reading Set-Cookie: headers from the server and sending them back out in a Cookie: header when appropriate.
 
-读取 Set-Cookie：标头的自动 Cookie 处理，并在适当的时候将它们发送回Cookie：标头。
-
 - Plug-in mechanism for custom cookie policies.
+
+自定义 cookie 策略的插件机制。
+
 - Request output streams to avoid buffering any content body by streaming directly to the socket to the server.
+
+请求输出流以避免通过直接流到服务器的套接字来缓冲任何内容主体。
+
 - Response input streams to efficiently read the response body by streaming directly from the socket to the server.
+
+响应输入流通过直接从套接字流到服务器来有效地读取响应主体。
+
 - Persistent connections using KeepAlive in HTTP/1.0 and persistance in HTTP/1.1
+
+在 HTTP/1.0 中使用 KeepAlive，在 HTTP/1.1 中使用持久性
+
 - Direct access to the response code and headers sent by the server.
+
+直接访问服务器发送的响应代码和消息头。
+
 - The ability to set connection timeouts.
+
+可设置连接超时。
+
 - Support for HTTP/1.1 response caching.
+
+支持 HTTP/1.1 响应缓存。
+
 - Source code is freely available under the Apache License.
 
-## Standards Compliance（标准兼容性）
+源代码可以在 Apache 许可下免费获得。
+
+## Standards Compliance
 
 HttpClient strives to conform to the following specifications endorsed by the Internet Engineering Task Force (IETF) and the internet at large:
 
