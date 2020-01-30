@@ -157,7 +157,7 @@ Finally, with some extra efforts it's entirely possible to set up a multi-tier c
 
 ---
 
-**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial#contents)**
+**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial#contents)**
 
-- **Previous Chapter：[Chapter 5 Fluent API](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/5-Fluent-API#chapter-5-fluent-api)**
-- **Next Chapter：[Chapter 7 Advanced topics](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/7-Advanced-topics#chapter-7-advanced-topics)**
+- **Previous Chapter：[Chapter 5 Fluent API](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/5-Fluent-API#chapter-5-fluent-api)**
+- **Next Chapter：[Chapter 7 Advanced topics](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/7-Advanced-topics#chapter-7-advanced-topics)**

@@ -244,6 +244,6 @@ metrics.getTaskAverageDuration(); // average task duration
 
 ---
 
-**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial#contents)**
+**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial#contents)**
 
-- **Previous Chapter：[Chapter 6 HTTP Caching](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/6-HTTP-Caching#chapter-6-http-caching)**
+- **Previous Chapter：[Chapter 6 HTTP Caching](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/6-HTTP-Caching#chapter-6-http-caching)**

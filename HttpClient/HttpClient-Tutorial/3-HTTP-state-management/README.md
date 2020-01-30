@@ -211,7 +211,7 @@ CookieSpec cookieSpec = context.getCookieSpec();
 
 ---
 
-**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial#contents)**
+**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial#contents)**
 
-- **Previous Chapter：[Chapter 2 Connection management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/2-Connection-management#chapter-2-connection-management)**
-- **Next Chapter：[Chapter 4 HTTP authentication](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#chapter-4-http-authentication)**
+- **Previous Chapter：[Chapter 2 Connection management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#chapter-2-connection-management)**
+- **Next Chapter：[Chapter 4 HTTP authentication](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#chapter-4-http-authentication)**
