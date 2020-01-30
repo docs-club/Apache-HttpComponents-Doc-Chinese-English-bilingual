@@ -1,4 +1,4 @@
-## HttpClient Tutorial
+# HttpClient Tutorial
 
 **Oleg Kalnichevski**
 
@@ -15,93 +15,93 @@ http://www.apache.org/licenses/LICENSE-2.0
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 ## Contents
-- 0 Preface
-    - 1 HttpClient scope
-    - 2 What HttpClient is NOT
-- 1 Fundamentals
-    - 1.1 Request execution
-        - 1.1.1 HTTP request
-        - 1.1.2 HTTP response
-        - 1.1.3 Working with message headers
-        - 1.1.4 HTTP entity
-            - 1.1.4.1 Repeatable entities
-            - 1.1.4.2 Using HTTP entities
-        - 1.1.5 Ensuring release of low level resources
-        - 1.1.6 Consuming entity content
-        - 1.1.7 Producing entity content
-            - 1.1.7.1 HTML forms
-            - 1.1.7.2 Content chunking
-            - 1.1.8 Response handlers
-    - 1.2 HttpClient interface
-        - 1.2.1 HttpClient thread safety
-        - 1.2.2 HttpClient resource deallocation
-    - 1.3 HTTP execution context
-    - 1.4 HTTP protocol interceptors
-    - 1.5 Exception handling
-        - 1.5.1 HTTP transport safety
-        - 1.5.2 Idempotent methods
-        - 1.5.3 Automatic exception recovery
-        - 1.5.4 Request retry handler
-    - 1.6 Aborting requests
-    - 1.7 Redirect handling
-- 2 Connection management
-    - 2.1 Connection persistence
-    - 2.2 HTTP connection routing
-        - 2.2.1 Route computation
-        - 2.2.2 Secure HTTP connections
-    - 2.3 HTTP connection managers
-        - 2.3.1 Managed connections and connection managers
-        - 2.3.2 Simple connection manager
-        - 2.3.3 Pooling connection manager
-        - 2.3.4 Connection manager shutdown
-    - 2.4 Multithreaded request execution
-    - 2.5 Connection eviction policy
-    - 2.6 Connection keep alive strategy
-    - 2.7 Connection socket factories
-        - 2.7.1 Secure socket layering
-        - 2.7.2 Integration with connection manager
-        - 2.7.3 SSL/TLS customization
-        - 2.7.4 Hostname verification
-    - 2.8 HttpClient proxy configuration
-- 3 HTTP state management
-    - 3.1 HTTP cookies
-    - 3.2 Cookie specifications
-    - 3.3 Choosing cookie policy
-    - 3.4 Custom cookie policy
-    - 3.5 Cookie persistence
-    - 3.6 HTTP state management and execution context
-- 4 HTTP authentication
-    - 4.1 User credentials
-    - 4.2 Authentication schemes
-    - 4.3 Credentials provider
-    - 4.4 HTTP authentication and execution context
-    - 4.5 Caching of authentication data
-    - 4.6 Preemptive authentication
-    - 4.7 NTLM Authentication
-        - 4.7.1 NTLM connection persistence
-    - 4.8 SPNEGO/Kerberos Authentication
-        - 4.8.1 SPNEGO support in HttpClient
-        - 4.8.2 GSS/Java Kerberos Setup
-        - 4.8.3 login.conf file
-        - 4.8.4 krb5.conf / krb5.ini file
-        - 4.8.5 Windows Specific configuration
-- 5 Fluent API
-    - 5.1 Easy to use facade API
-        - 5.1.1 Response handling
-- 6 HTTP Caching
-    - 6.1 General Concepts
-    - 6.2 RFC-2616 Compliance
-    - 6.3 Example Usage
-    - 6.4 Configuration
-    - 6.5 Storage Backends
-- 7 Advanced topics
-    - 7.1 Custom client connections
-    - 7.2 Stateful HTTP connections
-        - 7.2.1 User token handler
-        - 7.2.2 Persistent stateful connections
-    - 7.3 Using the FutureRequestExecutionService
-        - 7.3.1 Creating the FutureRequestExecutionService
-        - 7.3.2 Scheduling requests
-        - 7.3.3 Canceling tasks
-        - 7.3.4 Callbacks
-        - 7.3.5 Metrics
+- [0 Preface](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/0-Preface#preface)
+    - [1 HttpClient scope](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/0-Preface#1-httpclient-scope)
+    - [2 What HttpClient is NOT](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/0-Preface#2-what-httpclient-is-not)
+- [1 Fundamentals](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#chapter-1-fundamentals)
+    - [1.1 Request execution](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#11-request-execution)
+        - [1.1.1 HTTP request](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#111-http-request)
+        - [1.1.2 HTTP response](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#112-http-response)
+        - [1.1.3 Working with message headers](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#113-working-with-message-headers)
+        - [1.1.4 HTTP entity](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#114-http-entity)
+            - [1.1.4.1 Repeatable entities](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#1141-repeatable-entities)
+            - [1.1.4.2 Using HTTP entities](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#1142-using-http-entities)
+        - [1.1.5 Ensuring release of low level resources](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#115-ensuring-release-of-low-level-resources)
+        - [1.1.6 Consuming entity content](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#116-consuming-entity-content)
+        - [1.1.7 Producing entity content](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#117-producing-entity-content)
+            - [1.1.7.1 HTML forms](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#1171-html-forms)
+            - [1.1.7.2 Content chunking](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#1172-content-chunking)
+            - [1.1.8 Response handlers](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#118-response-handlers)
+    - [1.2 HttpClient interface](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#12-httpclient-interface)
+        - [1.2.1 HttpClient thread safety](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#121-httpclient-thread-safety)
+        - [1.2.2 HttpClient resource deallocation](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#122-httpclient-resource-deallocation)
+    - [1.3 HTTP execution context](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#13-http-execution-context)
+    - [1.4 HTTP protocol interceptors](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#14-http-protocol-interceptors)
+    - [1.5 Exception handling](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#15-exception-handling)
+        - [1.5.1 HTTP transport safety](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#151-http-transport-safety)
+        - [1.5.2 Idempotent methods](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#152-idempotent-methods)
+        - [1.5.3 Automatic exception recovery](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#153-automatic-exception-recovery)
+        - [1.5.4 Request retry handler](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#154-request-retry-handler)
+    - [1.6 Aborting requests](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#16-aborting-requests)
+    - [1.7 Redirect handling](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/1-Fundamentals#17-redirect-handling)
+- [2 Connection management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#chapter-2-connection-management)
+    - [2.1 Connection persistence](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#21-connection-persistence)
+    - [2.2 HTTP connection routing](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#22-http-connection-routing)
+        - [2.2.1 Route computation](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#221-route-computation)
+        - [2.2.2 Secure HTTP connections](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#222-secure-HTTP-connections)
+    - [2.3 HTTP connection managers](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#23-http-connection-managers)
+        - [2.3.1 Managed connections and connection managers](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#231-managed-connections-and-connection-managers)
+        - [2.3.2 Simple connection manager](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#232-simple-connection-manager)
+        - [2.3.3 Pooling connection manager](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#233-pooling-connection-manager)
+        - [2.3.4 Connection manager shutdown](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#234-connection-manager-shutdown)
+    - [2.4 Multithreaded request execution](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#24-multithreaded-request-execution)
+    - [2.5 Connection eviction policy](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#25-connection-eviction-policy)
+    - [2.6 Connection keep alive strategy](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#26-connection-keep-alive-strategy)
+    - [2.7 Connection socket factories](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#27-connection-socket-factories)
+        - [2.7.1 Secure socket layering](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#271-secure-socket-layering)
+        - [2.7.2 Integration with connection manager](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#272-integration-with-connection-manager)
+        - [2.7.3 SSL/TLS customization](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#273-ssltls-customization)
+        - [2.7.4 Hostname verification](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#274-hostname-verification)
+    - [2.8 HttpClient proxy configuration](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/2-Connection-management#28-httpclient-proxy-configuration)
+- [3 HTTP state management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/3-HTTP-state-management#chapter-3-http-state-management)
+    - [3.1 HTTP cookies](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/3-HTTP-state-management#31-http-cookies)
+    - [3.2 Cookie specifications](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/3-HTTP-state-management#32-cookie-specifications)
+    - [3.3 Choosing cookie policy](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/3-HTTP-state-management#33-choosing-cookie-policy)
+    - [3.4 Custom cookie policy](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/3-HTTP-state-management#34-custom-cookie-policy)
+    - [3.5 Cookie persistence](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/3-HTTP-state-management#35-cookie-persistence)
+    - [3.6 HTTP state management and execution context](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/3-HTTP-state-management#36-http-state-management-and-execution-context)
+- [4 HTTP authentication](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#chapter-4-http-authentication)
+    - [4.1 User credentials](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#41-user-credentials)
+    - [4.2 Authentication schemes](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#42-authentication-schemes)
+    - [4.3 Credentials provider](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#43-credentials-provider)
+    - [4.4 HTTP authentication and execution context](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#44-http-authentication-and-execution-context)
+    - [4.5 Caching of authentication data](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#45-caching-of-authentication-data)
+    - [4.6 Preemptive authentication](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#46-preemptive-authentication)
+    - [4.7 NTLM Authentication](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#47-ntlm-authentication)
+        - [4.7.1 NTLM connection persistence](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#471-ntlm-connection-persistence)
+    - [4.8 SPNEGO/Kerberos Authentication](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#48-spnegokerberos-authentication)
+        - [4.8.1 SPNEGO support in HttpClient](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#481-spnego-support-in-HttpClient)
+        - [4.8.2 GSS/Java Kerberos Setup](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#482-gssjava-kerberos-setup)
+        - [4.8.3 login.conf file](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#483-loginconf-file)
+        - [4.8.4 krb5.conf / krb5.ini file](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#484-krb5conf--krb5ini-file)
+        - [4.8.5 Windows Specific configuration](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/4-HTTP-authentication#485-windows-specific-configuration)
+- [5 Fluent API](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/5-Fluent-API#chapter-5-fluent-api)
+    - [5.1 Easy to use facade API](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/5-Fluent-API#51-easy-to-use-facade-api)
+        - [5.1.1 Response handling](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/5-Fluent-API#511-response-handling)
+- [6 HTTP Caching](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/6-HTTP-Caching#chapter-6-http-caching)
+    - [6.1 General Concepts](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/6-HTTP-Caching#61-general-concepts)
+    - [6.2 RFC-2616 Compliance](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/6-HTTP-Caching#62-rfc-2616-compliance)
+    - [6.3 Example Usage](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/6-HTTP-Caching#63-example-usage)
+    - [6.4 Configuration](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/6-HTTP-Caching#64-configuration)
+    - [6.5 Storage Backends](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/6-HTTP-Caching#65-storage-backends)
+- [7 Advanced topics](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/7-Advanced-topics#chapter-7-advanced-topics)
+    - [7.1 Custom client connections](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/7-Advanced-topics#71-custom-client-connections)
+    - [7.2 Stateful HTTP connections](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/7-Advanced-topics#72-stateful-http-connections)
+        - [7.2.1 User token handler](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/7-Advanced-topics#721-user-token-handler)
+        - [7.2.2 Persistent stateful connections](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/7-Advanced-topics#722-persistent-stateful-connections) 
+    - [7.3 Using the FutureRequestExecutionService](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/7-Advanced-topics#73-using-the-futurerequestexecutionservice)
+        - [7.3.1 Creating the FutureRequestExecutionService](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/7-Advanced-topics#731-creating-the-futurerequestexecutionservice)
+        - [7.3.2 Scheduling requests](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/7-Advanced-topics#732-scheduling-requests)
+        - [7.3.3 Canceling tasks](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/7-Advanced-topics#733-canceling-tasks)
+        - [7.3.4 Callbacks](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/7-Advanced-topics#734-callbacks)
+        - [7.3.5 Metrics](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/master/HttpClient/HttpClient-Tutorial/7-Advanced-topics#735-metrics)
