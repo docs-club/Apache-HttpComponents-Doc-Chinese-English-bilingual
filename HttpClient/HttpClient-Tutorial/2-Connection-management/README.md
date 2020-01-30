@@ -4,11 +4,11 @@
 
 The process of establishing a connection from one host to another is quite complex and involves multiple packet exchanges between two endpoints, which can be quite time consuming. The overhead of connection handshaking can be significant, especially for small HTTP messages. One can achieve a much higher data throughput if open connections can be re-used to execute multiple requests.
 
-从一台主机到另一台主机建立连接的过程相当复杂，涉及两个端点之间的多个包交换，这可能非常耗时。连接握手的开销非常大，尤其是对于小的 HTTP 消息而言。如果可以重用打开的连接来执行多个请求，则可以获得更高的数据吞吐量。
+建立一台主机到另一台主机的连接过程相当复杂，涉及两个端点之间的多次数据包交换，这可能非常耗时。连接握手的开销非常大，尤其是对于小型 HTTP 消息而言。如果可以重用打开的连接来执行多个请求，则可以获得更高的数据吞吐量。
 
 HTTP/1.1 states that HTTP connections can be re-used for multiple requests per default. HTTP/1.0 compliant endpoints can also use a mechanism to explicitly communicate their preference to keep connection alive and use it for multiple requests. HTTP agents can also keep idle connections alive for a certain period time in case a connection to the same target host is needed for subsequent requests. The ability to keep connections alive is usually refered to as connection persistence. HttpClient fully supports connection persistence.
 
-HTTP/1.1 声明的 HTTP 连接默认情况下可以被多个请求重用。符合 HTTP/1.0 的端点还可以使用一种机制显式地通信它们的首选项，以保持连接活动，并将其用于多个请求。HTTP 代理还可以将空闲连接保持一定时间的活动状态，以防后续请求需要连接到相同的目标主机。保持连接活动的能力通常称为连接持久性。HttpClient 完全支持连接持久性。
+HTTP/1.1 指出，HTTP 连接在默认情况下可以被多个请求重用。符合 HTTP/1.0 的端点还可以使用一种机制显式地传输 their preference，以保持连接活动，并将其用于多个请求。HTTP 代理还可以在一定时间的使空闲连接保持活动状态，以防后续请求需要连接到相同的目标主机。保持连接活动的能力通常称为连接持久性。HttpClient 完全支持连接持久性。
 
 ## 2.2 HTTP connection routing
 
