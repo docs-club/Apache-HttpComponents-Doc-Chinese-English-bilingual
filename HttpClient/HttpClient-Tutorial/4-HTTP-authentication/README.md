@@ -250,7 +250,7 @@ The Sun JRE provides the supporting classes to do nearly all the Kerberos and SP
 
 The best way to start is to grab the KerberosHttpClient.java file in examples and try and get it to work. There are a lot of issues that can happen but if lucky it'll work without too much of a problem. It should also provide some output to debug with.
 
-In Windows it should default to using the logged in credentials; this can be overridden by using 'kinit' e.g. $JAVA_HOME\bin\kinit testuser@AD.EXAMPLE.NET, which is very helpful for testing and debugging issues. Remove the cache file created by kinit to revert back to the windows Kerberos cache.
+In Windows it should default to using the logged in credentials; this can be overridden by using 'kinit' e.g. \$JAVA_HOME\bin\kinit testuser@AD.EXAMPLE.NET, which is very helpful for testing and debugging issues. Remove the cache file created by kinit to revert back to the windows Kerberos cache.
 
 Make sure to list domain_realms in the krb5.conf file. This is a major source of problems.
 
@@ -322,3 +322,10 @@ Value Name: allowtgtsessionkey
 Value Type: REG_DWORD
 Value: 0x01
 ```
+
+---
+
+**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Effective-Java-3rd-edition-Chinese-English-bilingual/blob/master/Chapter-2/Chapter-2-Introduction.md)**
+
+- **Previous：[Chapter 3 HTTP state management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/3-HTTP-state-management)**
+- **Next：[Chapter 5 Fluent API](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/5-Fluent-API)**

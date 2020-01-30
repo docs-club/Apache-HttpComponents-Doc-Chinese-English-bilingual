@@ -450,3 +450,10 @@ CloseableHttpClient httpclient = HttpClients.custom()
     }
 }
 ```
+
+---
+
+**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Effective-Java-3rd-edition-Chinese-English-bilingual/blob/master/Chapter-2/Chapter-2-Introduction.md)**
+
+- **Previous：[Chapter 1 Fundamentals](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals)**
+- **Next：[Chapter 3 HTTP state management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/3-HTTP-state-management)**

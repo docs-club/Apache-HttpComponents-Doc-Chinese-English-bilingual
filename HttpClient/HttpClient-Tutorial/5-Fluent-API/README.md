@@ -100,3 +100,10 @@ Document result = Request.Get("http://somehost/content")
 
     });
 ```
+
+---
+
+**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Effective-Java-3rd-edition-Chinese-English-bilingual/blob/master/Chapter-2/Chapter-2-Introduction.md)**
+
+- **Previous：[Chapter 4 HTTP authentication](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/4-HTTP-authentication)**
+- **Next：[Chapter 6 HTTP Caching](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/6-HTTP-Caching)**

@@ -31,3 +31,9 @@ Content agnostic
 HttpClient is NOT a browser. It is a client side HTTP transport library. HttpClient's purpose is to transmit and receive HTTP messages. HttpClient will not attempt to process content, execute javascript embedded in HTML pages, try to guess content type, if not explicitly set, or reformat request / rewrite location URIs, or other functionality unrelated to the HTTP transport.
 
 HttpClient 不是一个浏览器。它是一个客户端 HTTP 传输库。HttpClient 的目的是传输和接收 HTTP 消息。HttpClient 不会试图处理内容、执行嵌入在 HTML 页面中的 javascript、尝试猜测内容类型（如果没有显式设置）、or reformat request / rewrite location URIs 或其他与 HTTP 传输无关的功能。
+
+---
+
+**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Effective-Java-3rd-edition-Chinese-English-bilingual/blob/master/Chapter-2/Chapter-2-Introduction.md)**
+
+- **Next：[Chapter 1 Fundamentals](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals)**

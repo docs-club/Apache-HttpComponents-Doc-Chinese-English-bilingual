@@ -154,3 +154,10 @@ If none of those options are suitable for your application, it is possible to pr
 Finally, with some extra efforts it's entirely possible to set up a multi-tier caching hierarchy; for example, wrapping an in-memory caching HttpClient around one that stores cache entries on disk or remotely in memcached, following a pattern similar to virtual memory, L1/L2 processor caches, etc.
 
 最后，通过一些额外的努力，完全可以建立一个多层缓存层次结构；例如，按照类似于虚拟内存、L1/L2 处理器缓存等的模式，在将缓存项存储在磁盘上或远程存储在 memcached 的缓存器周围包装一个内存缓存 HttpClient。
+
+---
+
+**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Effective-Java-3rd-edition-Chinese-English-bilingual/blob/master/Chapter-2/Chapter-2-Introduction.md)**
+
+- **Previous：[Chapter 5 Fluent API](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/5-Fluent-API)**
+- **Next：[Chapter 7 Advanced topics](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/7-Advanced-topics)**

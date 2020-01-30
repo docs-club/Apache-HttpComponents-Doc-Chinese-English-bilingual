@@ -208,3 +208,10 @@ CookieOrigin cookieOrigin = context.getCookieOrigin();
 // Cookie spec used
 CookieSpec cookieSpec = context.getCookieSpec();
 ```
+
+---
+
+**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Effective-Java-3rd-edition-Chinese-English-bilingual/blob/master/Chapter-2/Chapter-2-Introduction.md)**
+
+- **Previous：[Chapter 2 Connection management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/2-Connection-management)**
+- **Next：[Chapter 4 HTTP authentication](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/4-HTTP-authentication)**
