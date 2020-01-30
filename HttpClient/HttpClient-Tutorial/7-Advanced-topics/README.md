@@ -1,6 +1,6 @@
-# Chapter 7. Advanced topics
+# Chapter 7 Advanced topics
 
-## 7.1. Custom client connections
+## 7.1 Custom client connections
 
 In certain situations it may be necessary to customize the way HTTP messages get transmitted across the wire beyond what is possible using HTTP parameters in order to be able to deal non-standard, non-compliant behaviours. For instance, for web crawlers it may be necessary to force HttpClient into accepting malformed response heads in order to salvage the content of the messages.
 
@@ -55,13 +55,13 @@ CloseableHttpClient httpclient = HttpClients.custom()
         .build();
 ```
 
-## 7.2. Stateful HTTP connections
+## 7.2 Stateful HTTP connections
 
 While HTTP specification assumes that session state information is always embedded in HTTP messages in the form of HTTP cookies and therefore HTTP connections are always stateless, this assumption does not always hold true in real life. There are cases when HTTP connections are created with a particular user identity or within a particular security context and therefore cannot be shared with other users and can be reused by the same user only. Examples of such stateful HTTP connections are NTLM authenticated connections and SSL connections with client certificate authentication.
 
 虽然 HTTP 规范假设会话状态信息总是以 HTTP cookie 的形式嵌入到 HTTP 消息中，因此 HTTP 连接总是无状态的，但这种假设在实际生活中并不总是成立。在某些情况下，HTTP 连接是使用特定的用户标识或在特定的安全上下文中创建的，因此不能与其他用户共享，只能由同一用户重用。这种有状态 HTTP 连接的例子有 NTLM 认证连接和客户端证书认证的 SSL 连接。
 
-### 7.2.1. User token handler
+### 7.2.1 User token handler
 
 HttpClient relies on UserTokenHandler interface to determine if the given execution context is user specific or not. The token object returned by this handler is expected to uniquely identify the current user if the context is user specific or to be null if the context does not contain any resources or details specific to the current user. The user token will be used to ensure that user specific resources will not be shared with or reused by other users.
 
@@ -101,7 +101,7 @@ CloseableHttpClient httpclient = HttpClients.custom()
         .build();
 ```
 
-### 7.2.2. Persistent stateful connections
+### 7.2.2 Persistent stateful connections
 
 Please note that a persistent connection that carries a state object can be reused only if the same state object is bound to the execution context when requests are executed. So, it is really important to ensure the either same context is reused for execution of subsequent HTTP requests by the same user or the user token is bound to the context prior to request execution.
 
@@ -130,7 +130,7 @@ try {
 }
 ```
 
-## 7.3. Using the FutureRequestExecutionService
+## 7.3 Using the FutureRequestExecutionService
 
 Using the FutureRequestExecutionService, you can schedule http calls and treat the response as a Future. This is useful when e.g. making multiple calls to a web service. The advantage of using the FutureRequestExecutionService is that you can use multiple threads to schedule requests concurrently, set timeouts on the tasks, or cancel them when a response is no longer necessary.
 
@@ -153,7 +153,7 @@ FutureRequestExecutionService futureRequestExecutionService =
     new FutureRequestExecutionService(httpClient, executorService);
 ```
 
-### 7.3.2. Scheduling requests
+### 7.3.2 Scheduling requests
 
 To schedule a request, simply provide a HttpUriRequest, HttpContext, and a ResponseHandler. Because the request is processed by the executor service, a ResponseHandler is mandatory.
 
@@ -174,7 +174,7 @@ HttpRequestFutureTask<Boolean> task = futureRequestExecutionService.execute(
 boolean ok=task.get();
 ```
 
-### 7.3.3. Canceling tasks
+### 7.3.3 Canceling tasks
 
 Scheduled tasks may be cancelled. If the task is not yet executing but merely queued for execution, it simply will never execute. If it is executing and the mayInterruptIfRunning parameter is set to true, abort() will be called on the request; otherwise the response will simply be ignored but the request will be allowed to complete normally. Any subsequent calls to task.get() will fail with an IllegalStateException. It should be noticed that canceling tasks merely frees up the client side resources. The request may actually be handled normally on the server side.
 
@@ -185,7 +185,7 @@ task.cancel(true)
 task.get() // throws an Exception
 ```
 
-### 7.3.4. Callbacks
+### 7.3.4 Callbacks
 
 Instead of manually calling task.get(), you can also use a FutureCallback instance that gets callbacks when the request completes. This is the same interface as is used in HttpAsyncClient
 
@@ -212,7 +212,7 @@ HttpRequestFutureTask<Boolean> task = futureRequestExecutionService.execute(
     new OkidokiHandler(), new MyCallback());
 ```
 
-### 7.3.5. Metrics
+### 7.3.5 Metrics
 
 FutureRequestExecutionService is typically used in applications that make large amounts of web service calls. To facilitate e.g. monitoring or configuration tuning, the FutureRequestExecutionService keeps track of several metrics.
 
@@ -246,4 +246,4 @@ metrics.getTaskAverageDuration(); // average task duration
 
 **[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial)**
 
-- **Previous：[Chapter 6 HTTP Caching](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/6-HTTP-Caching)**
+- **Previous Chapter：[Chapter 6 HTTP Caching](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/6-HTTP-Caching)**

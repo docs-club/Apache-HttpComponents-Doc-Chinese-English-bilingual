@@ -1,4 +1,4 @@
-# Chapter 4. HTTP authentication
+# Chapter 4 HTTP authentication
 
 HttpClient provides full support for authentication schemes defined by the HTTP standard specification as well as a number of widely used non-standard authentication schemes such as NTLM and SPNEGO.
 
@@ -327,5 +327,5 @@ Value: 0x01
 
 **[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial)**
 
-- **Previous：[Chapter 3 HTTP state management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/3-HTTP-state-management)**
-- **Next：[Chapter 5 Fluent API](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/5-Fluent-API)**
+- **Previous Chapter：[Chapter 3 HTTP state management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/3-HTTP-state-management)**
+- **Next Chapter：[Chapter 5 Fluent API](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/5-Fluent-API)**

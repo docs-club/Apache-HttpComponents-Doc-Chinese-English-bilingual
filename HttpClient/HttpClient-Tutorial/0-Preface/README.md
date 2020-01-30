@@ -36,4 +36,4 @@ HttpClient 不是一个浏览器。它是一个客户端 HTTP 传输库。HttpCl
 
 **[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial)**
 
-- **Next：[Chapter 1 Fundamentals](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals)**
+- **Next Chapter：[Chapter 1 Fundamentals](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals)**

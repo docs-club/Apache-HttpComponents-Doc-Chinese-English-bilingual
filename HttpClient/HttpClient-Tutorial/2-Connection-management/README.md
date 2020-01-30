@@ -1,4 +1,4 @@
-# Chapter 2. Connection management
+# Chapter 2 Connection management
 
 ## 2.1 Connection persistence
 
@@ -455,5 +455,5 @@ CloseableHttpClient httpclient = HttpClients.custom()
 
 **[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial)**
 
-- **Previous：[Chapter 1 Fundamentals](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals)**
-- **Next：[Chapter 3 HTTP state management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/3-HTTP-state-management)**
+- **Previous Chapter：[Chapter 1 Fundamentals](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/1-Fundamentals)**
+- **Next Chapter：[Chapter 3 HTTP state management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/3-HTTP-state-management)**

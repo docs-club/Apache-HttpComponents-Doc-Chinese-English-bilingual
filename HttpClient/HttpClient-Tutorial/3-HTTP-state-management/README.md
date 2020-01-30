@@ -1,4 +1,4 @@
-# Chapter 3. HTTP state management
+# Chapter 3 HTTP state management
 
 Originally HTTP was designed as a stateless, request / response oriented protocol that made no special provisions for stateful sessions spanning across several logically related request / response exchanges. As HTTP protocol grew in popularity and adoption more and more systems began to use it for applications it was never intended for, for instance as a transport for e-commerce applications. Thus, the support for state management became a necessity.
 
@@ -213,5 +213,5 @@ CookieSpec cookieSpec = context.getCookieSpec();
 
 **[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial)**
 
-- **Previous：[Chapter 2 Connection management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/2-Connection-management)**
-- **Next：[Chapter 4 HTTP authentication](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/4-HTTP-authentication)**
+- **Previous Chapter：[Chapter 2 Connection management](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/2-Connection-management)**
+- **Next Chapter：[Chapter 4 HTTP authentication](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/4-HTTP-authentication)**

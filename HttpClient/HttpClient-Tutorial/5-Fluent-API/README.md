@@ -1,6 +1,6 @@
 # Chapter 5. Fluent API
 
-## 5.1. Easy to use facade API
+## 5.1 Easy to use facade API
 
 As of version of 4.2 HttpClient comes with an easy to use facade API based on the concept of a fluent interface. Fluent facade API exposes only the most fundamental functions of HttpClient and is intended for simple use cases that do not require the full flexibility of HttpClient. For instance, fluent facade API relieves the users from having to deal with connection management and resource deallocation.
 
@@ -57,7 +57,7 @@ executor.execute(Request.Post("http://somehost/do-stuff")
         .returnContent().asString();
 ```
 
-### 5.1.1. Response handling
+### 5.1.1 Response handling
 
 The fluent facade API generally relieves the users from having to deal with connection management and resource deallocation. In most cases, though, this comes at a price of having to buffer content of response messages in memory. It is highly recommended to use ResponseHandler for HTTP response processing in order to avoid having to buffer content in memory.
 
@@ -105,5 +105,5 @@ Document result = Request.Get("http://somehost/content")
 
 **[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial)**
 
-- **Previous：[Chapter 4 HTTP authentication](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/4-HTTP-authentication)**
-- **Next：[Chapter 6 HTTP Caching](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/6-HTTP-Caching)**
+- **Previous Chapter：[Chapter 4 HTTP authentication](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/4-HTTP-authentication)**
+- **Next Chapter：[Chapter 6 HTTP Caching](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/6-HTTP-Caching)**
