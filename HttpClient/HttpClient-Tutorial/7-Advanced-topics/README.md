@@ -140,7 +140,7 @@ FutureRequestExecutionService wraps the request with a HttpRequestFutureTask, wh
 
 FutureRequestExecutionService 使用 HttpRequestFutureTask 封装请求，该请求扩展了 FutureTask。这个类允许您取消任务，并跟踪各种指标，如请求持续时间。
 
-### 7.3.1. Creating the FutureRequestExecutionService
+### 7.3.1 Creating the FutureRequestExecutionService
 
 The constructor for the futureRequestExecutionService takes any existing httpClient instance and an ExecutorService instance. When configuring both, it is important to align the maximum number of connections with the number of threads you are going to use. When there are more threads than connections, the connections may start timing out because there are no available connections. When there are more connections than threads, the futureRequestExecutionService will not use all of them.
 
@@ -244,6 +244,6 @@ metrics.getTaskAverageDuration(); // average task duration
 
 ---
 
-**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial)**
+**[Back to contents of HttpClient Tutorial（返回 HttpClient 教程目录）](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial#contents)**
 
-- **Previous Chapter：[Chapter 6 HTTP Caching](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/6-HTTP-Caching)**
+- **Previous Chapter：[Chapter 6 HTTP Caching](https://github.com/clxering/Apache-HttpComponents-Doc-Chinese-English-bilingual/tree/dev/HttpClient/HttpClient-Tutorial/6-HTTP-Caching#chapter-6-http-caching)**
