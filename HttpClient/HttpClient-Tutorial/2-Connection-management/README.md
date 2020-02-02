@@ -14,7 +14,7 @@ HTTP/1.1 指出，HTTP 连接在默认情况下可以被多个请求重用。符
 
 HttpClient is capable of establishing connections to the target host either directly or via a route that may involve multiple intermediate connections - also referred to as hops. HttpClient differentiates connections of a route into plain, tunneled and layered. The use of multiple intermediate proxies to tunnel connections to the target host is referred to as proxy chaining.
 
-HttpClient 能够直接建立到目标主机的连接，或通过路由来达到目的，但这种方式可能涉及多个中间连接（也称为 hop）。HttpClient 将路由的连接分为普通连接、隧道连接和分层连接。使用多个中间代理来进行到目标主机的隧道连接称为代理链接。
+HttpClient 能够直接建立到目标主机的连接，或通过路由来达到目的，但这种方式可能涉及多个中间路由（也称为跃点）。HttpClient 将路由的连接分为普通连接、隧道连接和分层连接。使用多个中间代理来进行到目标主机的隧道连接称为代理链接。
 
 Plain routes are established by connecting to the target or the first and only proxy. Tunnelled routes are established by connecting to the first and tunnelling through a chain of proxies to the target. Routes without a proxy cannot be tunnelled. Layered routes are established by layering a protocol over an existing connection. Protocols can only be layered over a tunnel to the target, or over a direct connection without proxies.
 
@@ -24,7 +24,7 @@ Plain routes are established by connecting to the target or the first and only p
 
 The RouteInfo interface represents information about a definitive route to a target host involving one or more intermediate steps or hops. HttpRoute is a concrete implementation of the RouteInfo, which cannot be changed (is immutable). HttpTracker is a mutable RouteInfo implementation used internally by HttpClient to track the remaining hops to the ultimate route target. HttpTracker can be updated after a successful execution of the next hop towards the route target. HttpRouteDirector is a helper class that can be used to compute the next step in a route. This class is used internally by HttpClient.
 
-RouteInfo 接口表示关于到目标主机的最终路由的信息，该路由涉及一个或多个中间步骤或跃点。HttpRoute 是 RouteInfo 的一个具体实现，它不能被更改（不可变类）。HttpTracker 是一个可变的 RouteInfo 实现，HttpClient 内部使用它来跟踪剩余的跳转到最终路由目标。HttpTracker 可以在成功执行下一个跳转到路由目标后更新。HttpRouteDirector 是一个助手类，可以用来计算路由的下一步。这个类由 HttpClient 在内部使用。
+RouteInfo 接口表示关于到目标主机的最终路由的信息，该路由涉及一个或多个中间步骤或跃点。HttpRoute 是 RouteInfo 的一个具体实现，它不能被更改（不可变类）。HttpTracker 是一个可变的 RouteInfo 实现，HttpClient 内部使用它来跟踪到最终路由目标的剩余跃点。HttpTracker 可以在成功执行下一个跳转到路由目标后更新。HttpRouteDirector 是一个助手类，可以用来计算路由的下一步。这个类由 HttpClient 在内部使用。
 
 HttpRoutePlanner is an interface representing a strategy to compute a complete route to a given target based on the execution context. HttpClient ships with two default HttpRoutePlanner implementations. SystemDefaultRoutePlanner is based on java.net.ProxySelector. By default, it will pick up the proxy settings of the JVM, either from system properties or from the browser running the application. The DefaultProxyRoutePlanner implementation does not make use of any Java system properties, nor any system or browser proxy settings. It always computes routes via the same default proxy.
 
@@ -34,7 +34,7 @@ HttpRoutePlanner 是一个接口，它表示根据执行上下文计算到给定
 
 HTTP connections can be considered secure if information transmitted between two connection endpoints cannot be read or tampered with by an unauthorized third party. The SSL/TLS protocol is the most widely used technique to ensure HTTP transport security. However, other encryption techniques could be employed as well. Usually, HTTP transport is layered over the SSL/TLS encrypted connection.
 
-如果两个连接端点之间传输的信息不能被未经授权的第三方读取或篡改，则可以认为 HTTP 连接是安全的。SSL/TLS 协议是最广泛使用的技术，用于确保 HTTP 传输安全。不过，也可以使用其他加密技术。通常，HTTP 传输层位于 SSL/TLS 加密连接之上。
+如果两个连接端点之间传输的信息不能被未经授权的第三方读取或篡改，则可以认为 HTTP 连接是安全的。SSL/TLS 协议是用于确保 HTTP 传输安全的技术，使用非常广泛。不过，也可以使用其他加密技术。通常，HTTP 传输层位于 SSL/TLS 加密连接之上。
 
 ## 2.3 HTTP connection managers
 
@@ -42,7 +42,7 @@ HTTP connections can be considered secure if information transmitted between two
 
 HTTP connections are complex, stateful, thread-unsafe objects which need to be properly managed to function correctly. HTTP connections can only be used by one execution thread at a time. HttpClient employs a special entity to manage access to HTTP connections called HTTP connection manager and represented by the HttpClientConnectionManager interface. The purpose of an HTTP connection manager is to serve as a factory for new HTTP connections, to manage life cycle of persistent connections and to synchronize access to persistent connections making sure that only one thread can have access to a connection at a time. Internally HTTP connection managers work with instances of ManagedHttpClientConnection acting as a proxy for a real connection that manages connection state and controls execution of I/O operations. If a managed connection is released or get explicitly closed by its consumer the underlying connection gets detached from its proxy and is returned back to the manager. Even though the service consumer still holds a reference to the proxy instance, it is no longer able to execute any I/O operations or change the state of the real connection either intentionally or unintentionally.
 
-HTTP 连接是复杂的、有状态的、线程不安全的对象，需要正确地管理它们才能确保程序正确地工作。HTTP 连接一次只能由一个执行线程使用。HttpClient 使用一个特殊的实体来管理对 HTTP 连接的访问，该实体称为 HTTP 连接管理器，由 HttpClientConnectionManager 接口表示。HTTP 连接管理器的目的是充当新 HTTP 连接的工厂，管理持久连接的生命周期，并同步对持久连接的访问，确保一次只能有一个线程访问连接。在内部，HTTP 连接管理器使用 ManagedHttpClientConnection 实例作为一个实际连接的代理，管理连接状态并控制 I/O 操作的执行。如果托管连接被其使用者释放或显式关闭，则底层连接将从其代理分离并返回给管理器。即使服务使用者仍然持有对代理实例的引用，它也不再能够执行任何 I/O 操作，也不能更改实际连接的状态。
+HTTP 连接是复杂的、有状态的、线程不安全的对象，需要适当管理它们才能确保程序正确地工作。HTTP 连接一次只能由一个执行线程使用。HttpClient 使用一个特殊的实体来管理 HTTP 连接的访问，该实体称为 HTTP 连接管理器，由 HttpClientConnectionManager 接口表示。HTTP 连接管理器的目的是充当新 HTTP 连接的工厂，管理持久连接的生命周期，并同步对持久连接的访问，确保一次只能有一个线程访问连接。在内部，HTTP 连接管理器使用 ManagedHttpClientConnection 实例作为一个实际连接的代理，管理连接状态并控制 I/O 操作的执行。如果托管连接被其使用者释放或显式关闭，则底层连接将从其代理分离并返回给管理器。即便服务使用者仍然持有对代理实例的引用，它也不再能够执行任何 I/O 操作，也不能更改实际连接的状态。
 
 This is an example of acquiring a connection from a connection manager:
 
@@ -72,13 +72,13 @@ try {
 
 The connection request can be terminated prematurely by calling ConnectionRequest#cancel() if necessary. This will unblock the thread blocked in the ConnectionRequest#get() method.
 
-如果需要，可以通过调用 ConnectionRequest#cancel() 提前终止连接请求。这将解除 ConnectionRequest#get() 方法中线程的阻塞状态。
+如果必要，可以通过调用 ConnectionRequest#cancel() 提前终止连接请求。这将解除 ConnectionRequest#get() 方法中的阻塞线程。
 
 ### 2.3.2 Simple connection manager
 
 BasicHttpClientConnectionManager is a simple connection manager that maintains only one connection at a time. Even though this class is thread-safe it ought to be used by one execution thread only. BasicHttpClientConnectionManager will make an effort to reuse the connection for subsequent requests with the same route. It will, however, close the existing connection and re-open it for the given route, if the route of the persistent connection does not match that of the connection request. If the connection has been already been allocated, then java.lang.IllegalStateException is thrown.
 
-BasicHttpClientConnectionManager 是一个简单的连接管理器，一次只维护一个连接。即使这个类是线程安全的，它也应该只被一个执行线程使用。BasicHttpClientConnectionManager 将努力重用连接，为后续请求与相同的路由。但是，如果持久连接的路由与连接请求的路由不匹配，则它将关闭现有连接并为给定路由重新打开它。如果已经分配了连接，则将 java.lang.IllegalStateException 抛出。
+BasicHttpClientConnectionManager 是一个简单的连接管理器，一次只维护一个连接。即使这个类是线程安全的，它也应该只被一个执行线程使用。BasicHttpClientConnectionManager 将努力重用连接，为后续请求相同的路由提供便利。但是，如果持久连接的路由与连接请求的路由不匹配，则它将关闭现有连接并为给定路由重新打开它。如果已经分配了连接，则将 java.lang.IllegalStateException 抛出。
 
 This connection manager implementation should be used inside an EJB container.
 
@@ -92,7 +92,7 @@ PoolingHttpClientConnectionManager 是一个更复杂的实现，它管理一个
 
 PoolingHttpClientConnectionManager maintains a maximum limit of connections on a per route basis and in total. Per default this implementation will create no more than 2 concurrent connections per given route and no more 20 connections in total. For many real-world applications these limits may prove too constraining, especially if they use HTTP as a transport protocol for their services.
 
-PoolingHttpClientConnectionManager 在每个路由的基础上和总体上维护连接的最大限制。默认情况下，此实现将为每个给定路由创建不超过 2 个并发连接，并且总共不超过 20 个连接。对于许多实际应用程序来说，这些限制可能被证明过于严格，特别是如果它们将 HTTP 用作服务的传输协议时。
+PoolingHttpClientConnectionManager 在每个路由的基础上和总体上维护连接的最大限制。默认情况下，此实现将为每个给定路由创建不超过 2 个并发连接，并且总共不超过 20 个连接。对于许多实际应用程序来说，这些限制被认为可能过于严格，特别是如果它们将 HTTP 用作服务的传输协议时。
 
 This example shows how the connection pool parameters can be adjusted:
 
