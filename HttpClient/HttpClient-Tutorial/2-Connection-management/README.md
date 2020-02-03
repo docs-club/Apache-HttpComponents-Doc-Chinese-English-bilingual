@@ -128,11 +128,11 @@ httpClient.close();
 
 When equipped with a pooling connection manager such as PoolingClientConnectionManager, HttpClient can be used to execute multiple requests simultaneously using multiple threads of execution.
 
-当配置池连接管理器（如 PoolingClientConnectionManager）时，HttpClient 可以使用多个执行线程同时执行多个请求。
+如果配置了连接池管理器（如 PoolingClientConnectionManager），HttpClient 就可以使用多个执行线程同时执行多个请求。
 
 The PoolingClientConnectionManager will allocate connections based on its configuration. If all connections for a given route have already been leased, a request for a connection will block until a connection is released back to the pool. One can ensure the connection manager does not block indefinitely in the connection request operation by setting 'http.conn-manager.timeout' to a positive value. If the connection request cannot be serviced within the given time period ConnectionPoolTimeoutException will be thrown.
 
-PoolingClientConnectionManager 将根据其配置分配连接。如果已分配了给定路由的所有连接，则对该连接的请求将阻塞，直到将连接释放回池为止。通过设置 'http.conn-manager.timeout'（超时值为正值），可以确保连接管理器不会在连接请求操作中无限期阻塞。如果连接请求不能在给定的时间段内得到服务，将抛出 ConnectionPoolTimeoutException。
+PoolingClientConnectionManager 将根据自身配置分配连接。如果给定路由的所有连接都已经租用，则对连接的请求将阻塞，直到有连接释放回池为止。通过设置 'http.conn-manager.timeout' 为正值，可以确保连接管理器不会无限期的阻塞请求。如果不能在给定的时间段内满足连接请求，将抛出 ConnectionPoolTimeoutException。
 
 ```
 PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
@@ -168,7 +168,7 @@ for (int j = 0; j < threads.length; j++) {
 
 While HttpClient instances are thread safe and can be shared between multiple threads of execution, it is highly recommended that each thread maintains its own dedicated instance of HttpContext.
 
-虽然 HttpClient 实例是线程安全的，并且可以在多个执行线程之间共享，但是强烈建议每个线程维护自己专用的 HttpContext 实例。
+虽然 HttpClient 实例是线程安全的，并且可以在多个执行线程之间共享，但是强烈建议每个线程都维护自己专用的 HttpContext 实例。
 
 ```
 static class GetThread extends Thread {
@@ -207,11 +207,11 @@ static class GetThread extends Thread {
 
 One of the major shortcomings of the classic blocking I/O model is that the network socket can react to I/O events only when blocked in an I/O operation. When a connection is released back to the manager, it can be kept alive however it is unable to monitor the status of the socket and react to any I/O events. If the connection gets closed on the server side, the client side connection is unable to detect the change in the connection state (and react appropriately by closing the socket on its end).
 
-经典阻塞 I/O 模型的一个主要缺点是，只有在 I/O 操作中阻塞时，网络 socket 才能对 I/O 事件作出反应。当一个连接被释放回管理器时，它可以保持活动状态，但是它不能监视 socket 的状态并对任何 I/O 事件作出反应。如果在服务器端关闭连接，则客户端连接无法检测连接状态中的更改（并通过关闭连接端上的 socket 做出适当的反应）。
+经典阻塞 I/O 模型的一个主要缺点是，只有在 I/O 操作中阻塞时，网络 socket 才能对 I/O 事件作出反应。当一个连接被释放回管理器时，它可以保持活动状态，但是它不能监视 socket 的状态并对任何 I/O 事件作出反应。如果在服务器端关闭连接，则客户端连接无法检测连接状态中的变化（并通过关闭连接端上的 socket 做出适当的反应）。
 
 HttpClient tries to mitigate the problem by testing whether the connection is 'stale', that is no longer valid because it was closed on the server side, prior to using the connection for executing an HTTP request. The stale connection check is not 100% reliable. The only feasible solution that does not involve a one thread per socket model for idle connections is a dedicated monitor thread used to evict connections that are considered expired due to a long period of inactivity. The monitor thread can periodically call ClientConnectionManager#closeExpiredConnections() method to close all expired connections and evict closed connections from the pool. It can also optionally call ClientConnectionManager#closeIdleConnections() method to close all connections that have been idle over a given period of time.
 
-HttpClient 试图通过测试连接是否「陈旧」来缓解这个问题，因为在使用连接执行 HTTP 请求之前，如果连接在服务器端已经关闭，其不再有效。陈旧的连接检查不是 100% 可靠的。对于空闲连接，唯一可行的不涉及每个 socket 模型一个线程的解决方案是一个专用的监视线程，用于回收长时间不活动而被认为已过期的连接。监视器线程可以周期性地调用 ClientConnectionManager#closeExpiredConnections() 方法来关闭所有过期的连接，并从池中回收关闭的连接。它还可以选择性地调用 ClientConnectionManager#closeIdleConnections() 方法来关闭在给定时间内空闲的所有连接。
+HttpClient 试图通过测试连接是否「过时」来缓解这个问题，因为在使用连接执行 HTTP 请求之前，如果连接在服务器端已经关闭，该连接将不再有效。过时的连接检查不是 100% 可靠的。对于空闲连接，唯一可行的不涉及每个 socket 模型一个线程的解决方案是专用的监视线程，用于回收长时间不活动而被认为已过时的连接。监视器线程可以周期性地调用 ClientConnectionManager#closeExpiredConnections() 方法来关闭所有过时的连接，并从池中回收关闭的连接。它还可以选择性地调用 ClientConnectionManager#closeIdleConnections() 方法来关闭在给定时间内空闲的所有连接。
 
 ```
 public static class IdleConnectionMonitorThread extends Thread {
@@ -256,7 +256,7 @@ public static class IdleConnectionMonitorThread extends Thread {
 
 The HTTP specification does not specify how long a persistent connection may be and should be kept alive. Some HTTP servers use a non-standard Keep-Alive header to communicate to the client the period of time in seconds they intend to keep the connection alive on the server side. HttpClient makes use of this information if available. If the Keep-Alive header is not present in the response, HttpClient assumes the connection can be kept alive indefinitely. However, many HTTP servers in general use are configured to drop persistent connections after a certain period of inactivity in order to conserve system resources, quite often without informing the client. In case the default strategy turns out to be too optimistic, one may want to provide a custom keep-alive strategy.
 
-HTTP 规范没有指定持久性连接可能存在多长时间，并且应该保持活动状态。一些 HTTP 服务器使用非标准的 Keep-Alive 头与客户端通信，并希望在服务器端保持连接活动的时间（以秒为单位）。如果可用，HttpClient 将使用这些信息。如果响应中没有 Keep-Alive 头，HttpClient 假定连接可以无限期地保持活动状态。然而，通常使用的许多 HTTP 服务器都被配置为在一段时间不活动之后删除持久连接，以便节省系统资源，而且常常不通知客户端。如果默认策略过于乐观，可能需要提供一个定制的 keep-alive 策略。
+HTTP 规范没有指定持久性连接可能存在多长时间，应该保持多久的活动状态。一些 HTTP 服务器使用非标准的 Keep-Alive 头与客户端通信，并希望在服务器端保持连接活动的时间以秒为单位。如果有，HttpClient 将使用这些信息。如果响应中没有 Keep-Alive 头，则 HttpClient 假定连接可以无限期地保持活动状态。然而，平时使用的许多 HTTP 服务器都被配置为在一段时间不活动之后删除持久连接，以便节省系统资源，而且经常不通知客户端。如果默认策略过于乐观，可能需要提供一个定制的 keep-alive 策略。
 
 ```
 ConnectionKeepAliveStrategy myStrategy = new ConnectionKeepAliveStrategy() {
