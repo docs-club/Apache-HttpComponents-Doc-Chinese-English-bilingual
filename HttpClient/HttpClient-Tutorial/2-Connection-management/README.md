@@ -256,7 +256,7 @@ public static class IdleConnectionMonitorThread extends Thread {
 
 The HTTP specification does not specify how long a persistent connection may be and should be kept alive. Some HTTP servers use a non-standard Keep-Alive header to communicate to the client the period of time in seconds they intend to keep the connection alive on the server side. HttpClient makes use of this information if available. If the Keep-Alive header is not present in the response, HttpClient assumes the connection can be kept alive indefinitely. However, many HTTP servers in general use are configured to drop persistent connections after a certain period of inactivity in order to conserve system resources, quite often without informing the client. In case the default strategy turns out to be too optimistic, one may want to provide a custom keep-alive strategy.
 
-HTTP 规范没有指定持久性连接可能存在多长时间，应该保持多久的活动状态。一些 HTTP 服务器使用非标准的 Keep-Alive 头与客户端通信，并希望在服务器端保持连接活动的时间以秒为单位。如果有，HttpClient 将使用这些信息。如果响应中没有 Keep-Alive 头，则 HttpClient 假定连接可以无限期地保持活动状态。然而，平时使用的许多 HTTP 服务器都被配置为在一段时间不活动之后删除持久连接，以便节省系统资源，而且经常不通知客户端。如果默认策略过于乐观，可能需要提供一个定制的 keep-alive 策略。
+HTTP 规范没有指定持久性连接的活动状态可能，或应该持续多长时间。一些 HTTP 服务器使用非标准的 Keep-Alive 头与客户端通信，并希望在服务器端保持连接活动的时间以秒为单位。如果有，HttpClient 将使用这些信息。如果响应中没有 Keep-Alive 头，则 HttpClient 假定连接可以无限期地保持活动状态。然而，平时使用的许多 HTTP 服务器都被配置为在一段时间不活动之后删除持久连接，以便节省系统资源，而且经常不通知客户端。如果默认策略过于乐观，可能需要提供一个定制的 keep-alive 策略。
 
 ```
 ConnectionKeepAliveStrategy myStrategy = new ConnectionKeepAliveStrategy() {
@@ -297,11 +297,11 @@ CloseableHttpClient client = HttpClients.custom()
 
 HTTP connections make use of a java.net.Socket object internally to handle transmission of data across the wire. However they rely on the ConnectionSocketFactory interface to create, initialize and connect sockets. This enables the users of HttpClient to provide application specific socket initialization code at runtime. PlainConnectionSocketFactory is the default factory for creating and initializing plain (unencrypted) sockets.
 
-HTTP 连接在内部使用一个 java.net.Socket 对象来处理跨线路的数据传输。然而，它们依赖于 ConnectionSocketFactory 接口来创建、初始化和连接 socket。这允许 HttpClient 的用户在运行时提供特定于应用程序的 socket 初始化代码。PlainConnectionSocketFactory 是创建和初始化普通（未加密）socket 的默认工厂。
+HTTP 连接在内部使用一个 java.net.Socket 对象来处理网络数据传输。然而，它们依赖于 ConnectionSocketFactory 接口来创建、初始化和连接 socket。这允许 HttpClient 的用户在运行时提供特定于应用程序的 socket 初始化代码。PlainConnectionSocketFactory 是创建和初始化普通（未加密）socket 的默认工厂。
 
 The process of creating a socket and that of connecting it to a host are decoupled, so that the socket could be closed while being blocked in the connect operation.
 
-创建 socket 和将 socket 连接到主机的两个过程是解耦的，以便在连接操作中阻塞 socket 时可以关闭 socket。
+创建 socket 和将 socket 连接到主机的两个过程是分离的，这样就可以在连接操作被阻塞的同时关闭 socket。
 
 ```
 HttpClientContext clientContext = HttpClientContext.create();
@@ -318,7 +318,7 @@ sf.connectSocket(timeout, socket, target, remoteAddress, null, clientContext);
 
 LayeredConnectionSocketFactory is an extension of the ConnectionSocketFactory interface. Layered socket factories are capable of creating sockets layered over an existing plain socket. Socket layering is used primarily for creating secure sockets through proxies. HttpClient ships with SSLSocketFactory that implements SSL/TLS layering. Please note HttpClient does not use any custom encryption functionality. It is fully reliant on standard Java Cryptography (JCE) and Secure Sockets (JSEE) extensions.
 
-LayeredConnectionSocketFactory 继承了 ConnectionSocketFactory 接口。分层 socket 工厂能够在现有的普通 socket 上创建分层的 socket。socket 分层主要用于通过代理创建安全 socket。HttpClient 附带实现 SSL/TLS 分层的 SSLSocketFactory。请注意 HttpClient 不使用任何自定义加密功能。它完全依赖于标准 Java 密码学（JCE）和安全 socket（JSEE）扩展。
+LayeredConnectionSocketFactory 继承了 ConnectionSocketFactory 接口。分层 socket 工厂能够在现有的普通 socket 上创建分层的 socket。socket 分层主要用于通过代理创建安全 socket。HttpClient 附带实现基于 SSL/TLS 分层的 SSLSocketFactory。请注意 HttpClient 不使用任何自定义加密功能。它完全依赖于标准 Java 密码学（JCE）和安全 socket（JSEE）扩展。
 
 ### 2.7.2 Integration with connection manager
 
@@ -362,7 +362,7 @@ SSLConnectionSocketFactory 的自定义意味着对 SSL/TLS 协议的概念有�
 
 In addition to the trust verification and the client authentication performed on the SSL/TLS protocol level, HttpClient can optionally verify whether the target hostname matches the names stored inside the server's X.509 certificate, once the connection has been established. This verification can provide additional guarantees of authenticity of the server trust material. The javax.net.ssl.HostnameVerifier interface represents a strategy for hostname verification. HttpClient ships with two javax.net.ssl.HostnameVerifier implementations. Important: hostname verification should not be confused with SSL trust verification.
 
-除了在 SSL/TLS 协议级别上执行的信任验证和客户端身份验证之外，一旦建立了连接，HttpClient 还可以选择性地验证目标主机名是否与存储在服务器的 X.509 证书中的名称匹配。这种验证可以为服务器信任材料的真实性提供额外的保证。接口 javax.net.ssl.HostnameVerifier 表示一种验证主机名的策略。HttpClient 附带两个 javax.net.ssl.HostnameVerifier 实现。重要提示：主机名验证不应与 SSL 信任验证混淆。
+除了在 SSL/TLS 协议级别上执行的信任验证和客户端身份验证之外，一旦建立了连接，HttpClient 还可以选择性地验证目标主机名是否与存储在服务器的 X.509 证书中的名称匹配。这种验证可以为服务器信任信息的真实性提供额外的保证。接口 javax.net.ssl.HostnameVerifier 表示一种验证主机名的策略。HttpClient 附带两个 javax.net.ssl.HostnameVerifier 实现。重要提示：主机名验证不应与 SSL 信任验证混淆。
 
 - DefaultHostnameVerifier: The default implementation used by HttpClient is expected to be compliant with RFC 2818. The hostname must match any of alternative names specified by the certificate, or in case no alternative names are given the most specific CN of the certificate subject. A wildcard can occur in the CN, and in any of the subject-alts.
 
