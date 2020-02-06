@@ -14,7 +14,7 @@ HTTP/1.1 指出，HTTP 连接在默认情况下可以被多个请求重用。符
 
 HttpClient is capable of establishing connections to the target host either directly or via a route that may involve multiple intermediate connections - also referred to as hops. HttpClient differentiates connections of a route into plain, tunneled and layered. The use of multiple intermediate proxies to tunnel connections to the target host is referred to as proxy chaining.
 
-HttpClient 能够直接建立到目标主机的连接，或通过路由来达到目的，但这种方式可能涉及多个中间路由（也称为跃点）。HttpClient 将路由的连接分为普通连接、隧道连接和分层连接。使用多个中间代理来进行到目标主机的隧道连接称为代理链接。
+HttpClient 能够直接建立到目标主机的连接，或通过路由来达到目的，但这种方式可能涉及多个中间路由（也称为跳）。HttpClient 将路由的连接分为普通连接、隧道连接和分层连接。使用多个中间代理来进行到目标主机的隧道连接称为代理链接。
 
 Plain routes are established by connecting to the target or the first and only proxy. Tunnelled routes are established by connecting to the first and tunnelling through a chain of proxies to the target. Routes without a proxy cannot be tunnelled. Layered routes are established by layering a protocol over an existing connection. Protocols can only be layered over a tunnel to the target, or over a direct connection without proxies.
 
@@ -24,7 +24,7 @@ Plain routes are established by connecting to the target or the first and only p
 
 The RouteInfo interface represents information about a definitive route to a target host involving one or more intermediate steps or hops. HttpRoute is a concrete implementation of the RouteInfo, which cannot be changed (is immutable). HttpTracker is a mutable RouteInfo implementation used internally by HttpClient to track the remaining hops to the ultimate route target. HttpTracker can be updated after a successful execution of the next hop towards the route target. HttpRouteDirector is a helper class that can be used to compute the next step in a route. This class is used internally by HttpClient.
 
-RouteInfo 接口表示关于到目标主机的最终路由的信息，该路由涉及一个或多个中间步骤或跃点。HttpRoute 是 RouteInfo 的一个具体实现，它不能被更改（不可变类）。HttpTracker 是一个可变的 RouteInfo 实现，HttpClient 内部使用它来跟踪到最终路由目标的剩余跃点。HttpTracker 可以在成功执行下一个跳转到路由目标后更新。HttpRouteDirector 是一个助手类，可以用来计算路由的下一步。这个类由 HttpClient 在内部使用。
+RouteInfo 接口表示关于到目标主机的最终路由的信息，该路由涉及一个或多个中间步骤或跳。HttpRoute 是 RouteInfo 的一个具体实现，它不能被更改（不可变类）。HttpTracker 是一个可变的 RouteInfo 实现，HttpClient 内部使用它来跟踪到最终路由目标的剩余跳数。HttpTracker 可以在成功执行下一个跳转到路由目标后更新。HttpRouteDirector 是一个助手类，可以用来计算路由的下一跳。这个类由 HttpClient 在内部使用。
 
 HttpRoutePlanner is an interface representing a strategy to compute a complete route to a given target based on the execution context. HttpClient ships with two default HttpRoutePlanner implementations. SystemDefaultRoutePlanner is based on java.net.ProxySelector. By default, it will pick up the proxy settings of the JVM, either from system properties or from the browser running the application. The DefaultProxyRoutePlanner implementation does not make use of any Java system properties, nor any system or browser proxy settings. It always computes routes via the same default proxy.
 
@@ -356,17 +356,17 @@ SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext);
 
 Customization of SSLConnectionSocketFactory implies a certain degree of familiarity with the concepts of the SSL/TLS protocol, a detailed explanation of which is out of scope for this document. Please refer to the Java™ Secure Socket Extension (JSSE) Reference Guide for a detailed description of javax.net.ssl.SSLContext and related tools.
 
-SSLConnectionSocketFactory 的自定义意味着对 SSL/TLS 协议的概念有一定程度的熟悉，详细的解释超出了本文的范围。有关 javax.net.ssl.SSLContext 和相关工具的详细描述，请参阅 Java™ Secure Socket Extension (JSSE) Reference Guide。
+对 SSLConnectionSocketFactory 自定义意味着对 SSL/TLS 协议的概念有一定程度的熟悉，详细的解释超出了本文的范围。有关 javax.net.ssl.SSLContext 和相关工具的详细描述，请参阅 Java™ Secure Socket Extension (JSSE) Reference Guide。
 
 ### 2.7.4 Hostname verification
 
 In addition to the trust verification and the client authentication performed on the SSL/TLS protocol level, HttpClient can optionally verify whether the target hostname matches the names stored inside the server's X.509 certificate, once the connection has been established. This verification can provide additional guarantees of authenticity of the server trust material. The javax.net.ssl.HostnameVerifier interface represents a strategy for hostname verification. HttpClient ships with two javax.net.ssl.HostnameVerifier implementations. Important: hostname verification should not be confused with SSL trust verification.
 
-除了在 SSL/TLS 协议级别上执行的信任验证和客户端身份验证之外，一旦建立了连接，HttpClient 还可以选择性地验证目标主机名是否与存储在服务器的 X.509 证书中的名称匹配。这种验证可以为服务器信任信息的真实性提供额外的保证。接口 javax.net.ssl.HostnameVerifier 表示一种验证主机名的策略。HttpClient 附带两个 javax.net.ssl.HostnameVerifier 实现。重要提示：主机名验证不应与 SSL 信任验证混淆。
+一旦建立了连接，除了在 SSL/TLS 协议级别上执行的信任验证和客户端身份验证之外，HttpClient 还可以选择性地验证目标主机名是否与存储在服务器的 X.509 证书中的名称匹配。这种验证可以为服务器信任信息的真实性提供额外的保证。接口 javax.net.ssl.HostnameVerifier 表示一种验证主机名的策略。HttpClient 附带两个 javax.net.ssl.HostnameVerifier 实现。重要提示：主机名验证不应与 SSL 信任验证混淆。
 
 - DefaultHostnameVerifier: The default implementation used by HttpClient is expected to be compliant with RFC 2818. The hostname must match any of alternative names specified by the certificate, or in case no alternative names are given the most specific CN of the certificate subject. A wildcard can occur in the CN, and in any of the subject-alts.
 
-DefaultHostnameVerifier：HttpClient 使用的默认实现应该与 RFC 2818 兼容。主机名必须匹配证书指定的任何替代名称，或者在没有提供证书主题的最特定 CN 的情况下。通配符可以出现在 CN 中，也可以出现在任何 subject-alts 中。
+DefaultHostnameVerifier：HttpClient 使用的默认实现应该与 RFC 2818 兼容。主机名必须与证书指定的任何替代名称匹配，or in case no alternative names are given the most specific CN of the certificate subject. A wildcard can occur in the CN, and in any of the subject-alts.
 
 - NoopHostnameVerifier: This hostname verifier essentially turns hostname verification off. It accepts any SSL session as valid and matching the target host.
 
@@ -374,7 +374,7 @@ NoopHostnameVerifier：这个主机名验证器实际上关闭了主机名验证
 
 Per default HttpClient uses the DefaultHostnameVerifier implementation. One can specify a different hostname verifier implementation if desired
 
-每个默认 HttpClient 使用「DefaultHostnameVerifier」实现。如果需要，可以指定不同的主机名验证器实现。
+默认情况下 HttpClient 使用 DefaultHostnameVerifier 实现。如果需要，可以指定其他主机名验证器实现。
 
 ```
 SSLContext sslContext = SSLContexts.createSystemDefault();
@@ -383,7 +383,7 @@ SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext, No
 
 As of version 4.4 HttpClient uses the public suffix list kindly maintained by Mozilla Foundation to make sure that wildcards in SSL certificates cannot be misused to apply to multiple domains with a common top-level domain. HttpClient ships with a copy of the list retrieved at the time of the release. The latest revision of the list can found at https://publicsuffix.org/list/. It is highly adviseable to make a local copy of the list and download the list no more than once per day from its original location.
 
-从 4.4 版开始，HttpClient 使用由 Mozilla 基金会维护的公共后缀列表，以确保 SSL 证书中的通配符不会被误用来应用于具有公共顶级域的多个域。HttpClient 附带了在发布时检索到的列表的副本。该列表的最新修订可以在 https://publicsuffix.org/list/ 找到。最好将列表复制到本地，每天从原始位置下载列表的次数不要超过一次。
+从 4.4 版开始，HttpClient 使用由 Mozilla 基金会维护的公共后缀列表，以确保 SSL 证书中的通配符不会被滥用于具有公共顶级域的多个域。HttpClient 附带了在发布时检索到的列表的副本。该列表的最新版本可以在 https://publicsuffix.org/list/ 找到。最好将列表复制到本地，每天从原始位置下载列表的次数不要超过一次。
 
 ```
 PublicSuffixMatcher publicSuffixMatcher = PublicSuffixMatcherLoader
