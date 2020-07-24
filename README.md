@@ -12,15 +12,15 @@ Commons HttpClient 项目已经终结了，并且不再开发。它已经被 [Ap
 
 The Hyper-Text Transfer Protocol (HTTP) is perhaps the most significant protocol used on the Internet today. Web services, network-enabled appliances and the growth of network computing continue to expand the role of the HTTP protocol beyond user-driven web browsers, while increasing the number of applications that require HTTP support.
 
-超文本传输协议（HTTP）可能是当今 Internet 最重要的协议。Web 服务、支持网络的设备和网络计算的增长继续扩展了 HTTP 协议在用户驱动的 Web 浏览器之外的作用，同时增加了需要 HTTP 支持的应用程序的数量。`注：该译文在 Apache HttpComponents README、HttpClient Preface 第一段、HttpClient README 第一段、项目 README 均相同`
+超文本传输协议（HTTP）可能是当今 Internet 最重要的协议。Web 服务、支持网络的设备和网络计算的增长继续扩展了 HTTP 协议在用户驱动的 Web 浏览器之外的作用，同时增加了需要 HTTP 支持的应用程序的数量。`注：该译文在 Apache HttpComponents README、HttpClient Preface 第一段、HttpClient README 第一段以及本项目 README 中均相同`
 
 Although the java.net package provides basic functionality for accessing resources via HTTP, it doesn't provide the full flexibility or functionality needed by many applications. The Jakarta Commons HttpClient component seeks to fill this void by providing an efficient, up-to-date, and feature-rich package implementing the client side of the most recent HTTP standards and recommendations. See the Features page for more details on standards compliance and capabilities.
 
-虽然 java.net 包提供了通过 HTTP 访问资源的基本功能，但它没有提供大多数应用程序所需的灵活性或功能。Jakarta Commons HttpClient 组件通过提供一个高效、崭新、功能丰富的包来实现最新 HTTP 标准的客户端，从而填补这一空白。有关标准兼容性和功能的更多细节，请参见特性页面。`注：该译文在 HttpClient Preface 第一段、HttpClient README 第一段、项目 README 均相同`
+虽然 java.net 包提供了通过 HTTP 访问资源的基本功能，但它没有提供大多数应用程序所需的灵活性或功能。Jakarta Commons HttpClient 组件通过提供一个高效、崭新、功能丰富的包来实现最新 HTTP 标准的客户端，从而填补这一空白。有关标准兼容性和功能的更多细节，请参见特性页面。`注：该译文在 HttpClient Preface 第一段、HttpClient README 第一段以及本项目 README 中均相同`
 
 Designed for extension while providing robust support for the base HTTP protocol, the HttpClient component may be of interest to anyone building HTTP-aware client applications such as web browsers, web service clients, or systems that leverage or extend the HTTP protocol for distributed communication.
 
-HttpClient 组件是为功能扩展而设计的，同时为基本 HTTP 协议提供强有力的支持，任何使用 HTTP 构建的客户端应用程序（如 web 浏览器、web 服务客户端或利用、扩展 HTTP 协议进行分布式通信的系统）的人都可能对它感兴趣。`注：该译文在 Apache HttpComponents README、HttpClient Preface 第一段、HttpClient README 第一段、项目 README 均相同`
+HttpClient 组件是为功能扩展而设计的，同时为基本 HTTP 协议提供强有力的支持，任何使用 HTTP 构建的客户端应用程序（如 web 浏览器、web 服务客户端或利用、扩展 HTTP 协议进行分布式通信的系统）的人都可能对它感兴趣。`注：该译文在 Apache HttpComponents README、HttpClient Preface 第一段、HttpClient README 第一段以及本项目 README 中均相同`
 
 There are many projects that use HttpClient to provide the core HTTP functionality. Some of these are open source with project pages you can find on the web while others are closed source that you would never see or hear about. The Apache Source License provides maximum flexibility for source and binary reuse. Please see the Applications page for projects using HttpClient.
 

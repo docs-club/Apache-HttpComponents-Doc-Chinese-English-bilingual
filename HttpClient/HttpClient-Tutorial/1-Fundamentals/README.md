@@ -14,7 +14,7 @@ Here is an example of request execution process in its simplest form:
 
 下面这个例子，演示了一个请求的最简执行过程：
 
-```
+```java
 CloseableHttpClient httpclient = HttpClients.createDefault();
 HttpGet httpget = new HttpGet("http://localhost/");
 CloseableHttpResponse response = httpclient.execute(httpget);
@@ -33,13 +33,13 @@ All HTTP requests have a request line consisting a method name, a request URI an
 
 HttpClient supports out of the box all HTTP methods defined in the HTTP/1.1 specification: GET, HEAD, POST, PUT, DELETE, TRACE and OPTIONS. There is a specific class for each method type.: HttpGet, HttpHead, HttpPost, HttpPut, HttpDelete, HttpTrace, and HttpOptions.
 
-HttpClient 支持 HTTP/1.1 规范中定义的所有 HTTP 方法：GET、HEAD、POST、PUT、DELETE、TRACE 和 OPTIONS。每个方法类型都有一个特定的类：HttpGet、HttpHead、HttpPost、HttpPut、HttpDelete、HttpTrace 和 HttpOptions。
+HttpClient 支持 HTTP/1.1 规范中定义的所有 HTTP 方法：GET、HEAD、POST、PUT、DELETE、TRACE 和 OPTIONS。每个方法类型都对应一个实体类：HttpGet、HttpHead、HttpPost、HttpPut、HttpDelete、HttpTrace 和 HttpOptions。
 
 The Request-URI is a Uniform Resource Identifier that identifies the resource upon which to apply the request. HTTP request URIs consist of a protocol scheme, host name, optional port, resource path, optional query, and optional fragment.
 
 Request-URI 是统一资源标识符，它标识要请求的资源。HTTP Request-URI 由协议方案、主机名、端口（可选）、资源路径、查询条件（可选）和 fragment 标识（可选）组成。
 
-```
+```java
 HttpGet httpget = new HttpGet(
      "http://www.google.com/search?hl=en&q=httpclient&btnG=Google+Search&aq=f&oq=");
 ```
@@ -48,7 +48,7 @@ HttpClient provides URIBuilder utility class to simplify creation and modificati
 
 HttpClient 提供了 URIBuilder 实用工具类来简化 Request-URI 的创建和修改。
 
-```
+```java
 URI uri = new URIBuilder()
         .setScheme("http")
         .setHost("www.google.com")
@@ -66,7 +66,7 @@ stdout >
 
 输出如下结果：
 
-```
+```java
 http://www.google.com/search?q=httpclient&btnG=Google+Search&aq=f&oq=
 ```
 
@@ -76,7 +76,7 @@ HTTP response is a message sent by the server back to the client after having re
 
 HTTP 响应是服务器在接收并解析请求消息之后发送回客户端的消息。该消息的第一行由协议版本、数字状态代码及其相关的文本短语组成。
 
-```
+```java
 HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
 
 System.out.println(response.getProtocolVersion());
@@ -102,7 +102,7 @@ An HTTP message can contain a number of headers describing properties of the mes
 
 HTTP 消息可以包含许多消息头，它们描述了消息属性（如内容长度、内容类型等）。HttpClient 提供了检索、添加、删除和枚举消息头的方法。
 
-```
+```java
 HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
 response.addHeader("Set-Cookie", "c1=a; path=/; domain=localhost");
 response.addHeader("Set-Cookie", "c2=b; path=\"/\", c3=c; domain=\"localhost\"");
@@ -128,7 +128,7 @@ The most efficient way to obtain all headers of a given type is by using the Hea
 
 获取给定类型的所有消息头，最有效方法是使用 HeaderIterator 接口。
 
-```
+```java
 HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
 response.addHeader("Set-Cookie", "c1=a; path=/; domain=localhost");
 response.addHeader("Set-Cookie", "c2=b; path=\"/\", c3=c; domain=\"localhost\"");
@@ -153,7 +153,7 @@ It also provides convenience methods to parse HTTP messages into individual head
 
 HttpClient 还提供了便捷的方法来将 HTTP 消息解析为独立的消息头元素。
 
-```
+```java
 HttpResponse response = new BasicHttpResponse(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
 response.addHeader("Set-Cookie", "c1=a; path=/; domain=localhost");
 response.addHeader("Set-Cookie", "c2=b; path=\"/\", c3=c; domain=\"localhost\"");
@@ -188,7 +188,7 @@ domain=localhost
 
 HTTP messages can carry a content entity associated with the request or response. Entities can be found in some requests and in some responses, as they are optional. Requests that use entities are referred to as entity enclosing requests. The HTTP specification defines two entity enclosing request methods: POST and PUT. Responses are usually expected to enclose a content entity. There are exceptions to this rule such as responses to HEAD method and 204 No Content, 304 Not Modified, 205 Reset Content responses.
 
-HTTP 消息可以携带与请求或响应相关联的内容实体。实体可以在某些请求和响应中找到，因为它们是可选的。使用实体的请求称为 entity enclosing request。HTTP 规范定义了两个 entity enclosing request 的方法：POST 和 PUT。通常认为响应包含一个内容实体。这个规则也有例外，比如 HEAD 方法的响应和几种常见的响应：204 No Content、304 Not Modified、205 Reset Content。
+HTTP 消息可以携带与请求或响应相关联的内容实体。实体在某些请求和响应中能找到，因为它们是可选的。使用实体的请求称为 entity enclosing request。HTTP 规范定义了两个 entity enclosing request 的方法：POST 和 PUT。通常认为响应包含一个内容实体。这个规则也有例外，比如 HEAD 方法的响应和几种常见的响应：204 No Content、304 Not Modified、205 Reset Content。
 
 HttpClient distinguishes three kinds of entities, depending on where their content originates:
 
@@ -196,15 +196,15 @@ HttpClient 根据内容的来源将实体分为三种：
 
 - **streamed**: The content is received from a stream, or generated on the fly. In particular, this category includes entities being received from HTTP responses. Streamed entities are generally not repeatable.
 
-**streamed**：内容从流中接收，或即时生成的。尤其应注意的是，这个类别也包括从 HTTP 响应接收的实体。streamed 实体通常是不可重复的。
+**streamed**：从流中接收，或即时生成的。尤其应注意的是，这个类别也包括从 HTTP 响应接收的实体。streamed 实体通常是不可重复的。
 
 - **self-contained**: The content is in memory or obtained by means that are independent from a connection or other entity. Self-contained entities are generally repeatable. This type of entities will be mostly used for entity enclosing HTTP requests.
 
-**self-contained**：这些内容在内存中，或者 obtained by means that are independent from a connection or other entity。self-contained 实体通常是可重复的。这种类型的实体主要用于封装 HTTP 请求的实体。
+**self-contained**：在内存中，或者 obtained by means that are independent from a connection or other entity。self-contained 实体通常是可重复的。这种类型的实体主要用于封装 HTTP 请求的实体。
 
 - **wrapping**: The content is obtained from another entity.
 
-**wrapping**：内容从另一个实体获得。
+**wrapping**：从另一个实体获得。
 
 This distinction is important for connection management when streaming out content from an HTTP response. For request entities that are created by an application and only sent using HttpClient, the difference between streamed and self-contained is of little importance. In that case, it is suggested to consider non-repeatable entities as streamed, and those that are repeatable as self-contained.
 
@@ -238,7 +238,7 @@ When creating an entity for a outgoing message, this meta data has to be supplie
 
 在为传出消息创建实体时，必须由实体的创建者提供元数据。
 
-```
+```java
 StringEntity myEntity = new StringEntity("important message", ContentType.create("text/plain", "UTF-8"));
 
 System.out.println(myEntity.getContentType());
@@ -264,7 +264,7 @@ In order to ensure proper release of system resources one must close either the 
 
 为了确保系统资源正确释放，必须关闭与实体关联的内容流或响应本身。
 
-```
+```java
 CloseableHttpClient httpclient = HttpClients.createDefault();
 HttpGet httpget = new HttpGet("http://localhost/");
 CloseableHttpResponse response = httpclient.execute(httpget);
@@ -299,7 +299,7 @@ There can be situations, however, when only a small portion of the entire respon
 
 但是，当仅需要检索整个响应内容的一小部分，而且继续消费剩余内容或使连接可重用的性能代价太高，这时可以直接关闭响应来终止内容流。
 
-```
+```java
 CloseableHttpClient httpclient = HttpClients.createDefault();
 HttpGet httpget = new HttpGet("http://localhost/");
 CloseableHttpResponse response = httpclient.execute(httpget);
@@ -326,7 +326,7 @@ The recommended way to consume the content of an entity is by using its HttpEnti
 
 推荐消费实体内容的方法是使用 HttpEntity#getContent() 或 HttpEntity#writeTo(OutputStream) 方法。HttpClient 还附带了 EntityUtils 类，它公开了几个静态方法，以便更容易的从实体中读取内容或信息。可以直接使用这个类的方法在一个字符串或字节数组中检索整个内容主体，而不必读取 java.io.InputStream。但是，强烈反对使用 EntityUtils，除非响应实体来自可信的 HTTP 服务器，并且已知其长度有限。
 
-```
+```java
 CloseableHttpClient httpclient = HttpClients.createDefault();
 HttpGet httpget = new HttpGet("http://localhost/");
 CloseableHttpResponse response = httpclient.execute(httpget);
@@ -349,7 +349,7 @@ In some situations it may be necessary to be able to read entity content more th
 
 在某些情况下，可能需要多次读取实体内容。在这种情况下，实体内容必须以某种方式缓冲在内存或磁盘。最简单的方法是使用 BufferedHttpEntity 类包装原始实体。这将导致原始实体的内容被读入内存缓冲区。In all other ways the entity wrapper will be have the original one.
 
-```
+```java
 CloseableHttpResponse response = <...>
 HttpEntity entity = response.getEntity();
 if (entity != null) {
@@ -363,7 +363,7 @@ HttpClient provides several classes that can be used to efficiently stream out c
 
 HttpClient 提供了几个类用于通过 HTTP 连接高效地输出内容。这些类的实例可以与诸如 POST 和 PUT 等 entity enclosing requests 的实体相关联，以便将实体内容封装到传出 HTTP 请求中。HttpClient 为最常见的数据容器提供了几个类（如字符串、字节数组、输入流和文件）：StringEntity、ByteArrayEntity、InputStreamEntity 和 FileEntity。
 
-```
+```java
 File file = new File("somefile.txt");
 FileEntity entity = new FileEntity(file, ContentType.create("text/plain", "UTF-8"));
 
@@ -381,7 +381,7 @@ Many applications need to simulate the process of submitting an HTML form, for i
 
 许多应用程序需要模拟提交 HTML 表单的过程，以便登录到 web 应用程序或提交输入数据。HttpClient 提供了实体类 UrlEncodedFormEntity 来简化这个过程。
 
-```
+```java
 List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 formparams.add(new BasicNameValuePair("param1", "value1"));
 formparams.add(new BasicNameValuePair("param2", "value2"));
@@ -405,7 +405,7 @@ Generally it is recommended to let HttpClient choose the most appropriate transf
 
 通常情况下，建议让 HttpClient 根据要传输的 HTTP 消息的属性选择最合适的传输编码。但是，可以通过将 HttpEntity#setChunked() 设置为 true 来通知 HttpClient 首选 Chunked 编码。请注意 HttpClient 将只使用此标志作为提示。当使用不支持 Chunked 编码的 HTTP 协议版本（如 HTTP/1.0）时，此值将被忽略。
 
-```
+```java
 StringEntity entity = new StringEntity("important message", ContentType.create("plain/text", Consts.UTF_8));
 entity.setChunked(true);
 HttpPost httppost = new HttpPost("http://localhost/acrtion.do");
@@ -418,7 +418,7 @@ The simplest and the most convenient way to handle responses is by using the Res
 
 处理响应最简单和最方便的方法是使用 ResponseHandler 接口，其中包括 handleResponse(HttpResponse response) 方法。这种方法完全让用户不必担心连接管理。当使用 ResponseHandler 时，HttpClient 将确保连接释放回连接管理器，无论请求执行是否成功或导致异常。
 
-```
+```java
 CloseableHttpClient httpclient = HttpClients.createDefault();
 HttpGet httpget = new HttpGet("http://localhost/json");
 
@@ -454,7 +454,7 @@ Generally HttpClient implementations act as a facade to a number of special purp
 
 通常，HttpClient 实现充当许多专用处理程序或策略接口实现的基础，这些处理程序或策略接口实现负责处理 HTTP 协议的特定实现，比如重定向或身份验证处理，或者决定连接持久性和保持活动持续时间。这使用户能够选择定制的、特定于应用程序的实现来替换默认实现。
 
-```
+```java
 ConnectionKeepAliveStrategy keepAliveStrat = new DefaultConnectionKeepAliveStrategy() {
 
     @Override
@@ -488,7 +488,7 @@ When an instance CloseableHttpClient is no longer needed and is about to go out 
 
 当不再需要实例 CloseableHttpClient，并且超出作用域时，必须通过调用 CloseableHttpClient#close() 方法关闭与它关联的连接管理器。
 
-```
+```java
 CloseableHttpClient httpclient = HttpClients.createDefault();
 try {
     <...>
@@ -547,7 +547,7 @@ One can use HttpClientContext adaptor class to simplify interractions with the c
 
 可以使用 HttpClientContext 适配器类来简化与上下文状态的交互。
 
-```
+```java
 HttpContext context = <...>
 HttpClientContext clientContext = HttpClientContext.adapt(context);
 HttpHost target = clientContext.getTargetHost();
@@ -564,7 +564,7 @@ In the following example the request configuration set by the initial request wi
 
 在下面的示例中，初始请求设置的请求配置将保存在执行上下文中，并传播到共享相同上下文中的连续请求中。
 
-```
+```java
 CloseableHttpClient httpclient = HttpClients.createDefault();
 RequestConfig requestConfig = RequestConfig.custom()
         .setSocketTimeout(1000)
