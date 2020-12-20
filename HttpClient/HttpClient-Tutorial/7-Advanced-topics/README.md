@@ -59,13 +59,13 @@ CloseableHttpClient httpclient = HttpClients.custom()
 
 While HTTP specification assumes that session state information is always embedded in HTTP messages in the form of HTTP cookies and therefore HTTP connections are always stateless, this assumption does not always hold true in real life. There are cases when HTTP connections are created with a particular user identity or within a particular security context and therefore cannot be shared with other users and can be reused by the same user only. Examples of such stateful HTTP connections are NTLM authenticated connections and SSL connections with client certificate authentication.
 
-虽然 HTTP 规范假设会话状态信息总是以 HTTP cookie 的形式嵌入到 HTTP 消息中，因此 HTTP 连接总是无状态的，但这种假设在实际生活中并不总是成立。在某些情况下，HTTP 连接是使用特定的用户标识或在特定的安全上下文中创建的，因此不能与其他用户共享，只能由同一用户重用。这种有状态 HTTP 连接的例子有 NTLM 认证连接和客户端证书认证的 SSL 连接。
+虽然 HTTP 规范假设会话状态信息总是以 HTTP cookie 的形式嵌入到 HTTP 消息中，因此 HTTP 连接总是无状态的，但这种假设在实际生活中并不总是成立。在某些情况下，HTTP 连接是使用特定的用户标识或在特定的安全上下文中创建的，因此不能与其他用户共享，只能由同一用户复用。这种有状态 HTTP 连接的例子有 NTLM 认证连接和客户端证书认证的 SSL 连接。
 
 ### 7.2.1 User token handler
 
 HttpClient relies on UserTokenHandler interface to determine if the given execution context is user specific or not. The token object returned by this handler is expected to uniquely identify the current user if the context is user specific or to be null if the context does not contain any resources or details specific to the current user. The user token will be used to ensure that user specific resources will not be shared with or reused by other users.
 
-HttpClient 依赖 UserTokenHandler 接口来确定给定的执行上下文是否特定于用户。如果上下文是特定于用户的，则此处理程序返回的令牌对象将惟一标识当前用户；如果上下文不包含特定于当前用户的任何资源或详细信息，则该令牌对象将为 null。用户令牌将用于确保不会与其他用户共享或重用用户特定的资源。
+HttpClient 依赖 UserTokenHandler 接口来确定给定的执行上下文是否特定于用户。如果上下文是特定于用户的，则此处理程序返回的令牌对象将惟一标识当前用户；如果上下文不包含特定于当前用户的任何资源或详细信息，则该令牌对象将为 null。用户令牌将用于确保不会与其他用户共享或复用用户特定的资源。
 
 The default implementation of the UserTokenHandler interface uses an instance of Principal class to represent a state object for HTTP connections, if it can be obtained from the given execution context. DefaultUserTokenHandler will use the user principal of connection based authentication schemes such as NTLM or that of the SSL session with client authentication turned on. If both are unavailable, null token will be returned.
 
@@ -105,7 +105,7 @@ CloseableHttpClient httpclient = HttpClients.custom()
 
 Please note that a persistent connection that carries a state object can be reused only if the same state object is bound to the execution context when requests are executed. So, it is really important to ensure the either same context is reused for execution of subsequent HTTP requests by the same user or the user token is bound to the context prior to request execution.
 
-请注意，只有在执行请求时将相同的状态对象绑定到执行上下文，才能重用带有状态对象的持久连接。因此，确保同一个用户在执行后续 HTTP 请求时重用相同的上下文，或者在执行请求之前将用户令牌绑定到上下文，这一点非常重要。
+请注意，只有在执行请求时将相同的状态对象绑定到执行上下文，才能复用带有状态对象的持久连接。因此，确保同一个用户在执行后续 HTTP 请求时复用相同的上下文，或者在执行请求之前将用户令牌绑定到上下文，这一点非常重要。
 
 ```
 CloseableHttpClient httpclient = HttpClients.createDefault();

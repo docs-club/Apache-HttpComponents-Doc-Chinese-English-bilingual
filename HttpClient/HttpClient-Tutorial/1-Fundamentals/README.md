@@ -297,7 +297,7 @@ When working with streaming entities, one can use the EntityUtils#consume(HttpEn
 
 There can be situations, however, when only a small portion of the entire response content needs to be retrieved and the performance penalty for consuming the remaining content and making the connection reusable is too high, in which case one can terminate the content stream by closing the response.
 
-但是，当仅需要检索整个响应内容的一小部分，而且继续消费剩余内容或使连接可重用的性能代价太高，这时可以直接关闭响应来终止内容流。
+但是，当仅需要检索整个响应内容的一小部分，而且继续消费剩余内容或使连接可复用的性能代价太高，这时可以直接关闭响应来终止内容流。
 
 ```java
 CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -318,7 +318,7 @@ try {
 
 The connection will not be reused, but all level resources held by it will be correctly deallocated.
 
-连接将不会被重用，它所拥有的所有层级的资源都将被正确释放。
+连接将不会被复用，它所拥有的所有层级的资源都将被正确释放。
 
 ### 1.1.6 Consuming entity content
 
@@ -480,7 +480,7 @@ CloseableHttpClient httpclient = HttpClients.custom()
 
 HttpClient implementations are expected to be thread safe. It is recommended that the same instance of this class is reused for multiple request executions.
 
-HttpClient 实现应该是线程安全的。建议在多个请求执行中重用该类的同一个实例。
+HttpClient 实现应该是线程安全的。建议在多个请求执行中复用该类的同一个实例。
 
 ### 1.2.2 HttpClient resource deallocation
 
@@ -501,7 +501,7 @@ try {
 
 Originally HTTP has been designed as a stateless, response-request oriented protocol. However, real world applications often need to be able to persist state information through several logically related request-response exchanges. In order to enable applications to maintain a processing state HttpClient allows HTTP requests to be executed within a particular execution context, referred to as HTTP context. Multiple logically related requests can participate in a logical session if the same context is reused between consecutive requests. HTTP context functions similarly to a `java.util.Map<String, Object>`. It is simply a collection of arbitrary named values. An application can populate context attributes prior to request execution or examine the context after the execution has been completed.
 
-最初，HTTP 被设计为一种无状态的、面向响应请求的协议。然而，应用程序常需要能够通过几个逻辑上相关的请求响应交换来持久化状态信息。为了使应用程序能够保持处理状态，HttpClient 允许在特定的执行环境（称为 HTTP 上下文）中执行 HTTP 请求。如果在连续的请求之间重用相同的执行上下文，则多个逻辑相关的请求可以参与逻辑会话。HTTP 上下文的功能类似于 `java.util.Map<String, Object>`。它只是任意命名值的集合。应用程序可以在请求执行之前填充上下文属性，或者在执行完成后检查上下文。
+最初，HTTP 被设计为一种无状态的、面向响应请求的协议。然而，应用程序常需要能够通过几个逻辑上相关的请求响应交换来持久化状态信息。为了使应用程序能够保持处理状态，HttpClient 允许在特定的执行环境（称为 HTTP 上下文）中执行 HTTP 请求。如果在连续的请求之间复用相同的执行上下文，则多个逻辑相关的请求可以参与逻辑会话。HTTP 上下文的功能类似于 `java.util.Map<String, Object>`。它只是任意命名值的集合。应用程序可以在请求执行之前填充上下文属性，或者在执行完成后检查上下文。
 
 HttpContext can contain arbitrary objects and therefore may be unsafe to share between multiple threads. It is recommended that each thread of execution maintains its own context.
 

@@ -149,7 +149,7 @@ The default implementation of caching HttpClient stores cache entries and cached
 
 If none of those options are suitable for your application, it is possible to provide your own storage backend by implementing the HttpCacheStorage interface and then supplying that to caching HttpClient at construction time. In this case, the cache entries will be stored using your scheme but you will get to reuse all of the logic surrounding HTTP/1.1 compliance and cache handling. Generally speaking, it should be possible to create an HttpCacheStorage implementation out of anything that supports a key/value store (similar to the Java Map interface) with the ability to apply atomic updates.
 
-如果这些选项都不适合您的应用程序，则可以通过实现 HttpCacheStorage 接口来提供自己的存储后端，然后在构建时将其提供给缓存 HttpClient。在这种情况下，缓存条目将使用您的方案存储，但是您将重用围绕 HTTP/1.1 遵从性和缓存处理的所有逻辑。一般来说，应该可以用任何支持键/值存储（类似于 Java Map 接口）并能够应用原子更新的东西来创建 HttpCacheStorage 实现。
+如果这些选项都不适合您的应用程序，则可以通过实现 HttpCacheStorage 接口来提供自己的存储后端，然后在构建时将其提供给缓存 HttpClient。在这种情况下，缓存条目将使用您的方案存储，但是您将复用围绕 HTTP/1.1 遵从性和缓存处理的所有逻辑。一般来说，应该可以用任何支持键/值存储（类似于 Java Map 接口）并能够应用原子更新的东西来创建 HttpCacheStorage 实现。
 
 Finally, with some extra efforts it's entirely possible to set up a multi-tier caching hierarchy; for example, wrapping an in-memory caching HttpClient around one that stores cache entries on disk or remotely in memcached, following a pattern similar to virtual memory, L1/L2 processor caches, etc.
 

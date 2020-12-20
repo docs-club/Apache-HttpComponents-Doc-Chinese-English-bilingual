@@ -42,7 +42,7 @@ HttpCore 案例
 
 [HttpClient](/HttpClient) is a HTTP/1.1 compliant HTTP agent implementation based on HttpCore. It also provides reusable components for client-side authentication, HTTP state management, and HTTP connection management. HttpComponents Client is a successor of and replacement for Commons HttpClient 3.x. Users of Commons HttpClient are strongly encouraged to upgrade.
 
-HttpClient 是一个基于 HttpCore 并与 HTTP/1.1 兼容的 HTTP 代理实现。它还为客户端身份验证、HTTP 状态管理和 HTTP 连接管理提供了可重用组件。HttpComponents Client 是 Commons HttpClient 3.x 的继承者和替代者。强烈建议使用 Commons HttpClient 的用户进行升级。
+HttpClient 是一个基于 HttpCore 并与 HTTP/1.1 兼容的 HTTP 代理实现。它还为客户端身份验证、HTTP 状态管理和 HTTP 连接管理提供了可复用组件。HttpComponents Client 是 Commons HttpClient 3.x 的继承者和替代者。强烈建议使用 Commons HttpClient 的用户进行升级。
 
 - HttpClient Tutorial HTML / PDF
 

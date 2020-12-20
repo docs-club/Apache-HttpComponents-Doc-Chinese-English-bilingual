@@ -40,7 +40,7 @@ Request.Post("http://somehost/some-form")
 
 One can also use Executor directly in order to execute requests in a specific security context whereby authentication details are cached and re-used for subsequent requests.
 
-还可以直接使用 Executor 在特定的安全上下文中执行请求，从而缓存身份验证细节并为后续请求重用。
+还可以直接使用 Executor 在特定的安全上下文中执行请求，从而缓存身份验证细节并为后续请求复用。
 
 ```
 Executor executor = Executor.newInstance()

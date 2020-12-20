@@ -24,7 +24,7 @@ HttpClient 组件是为功能扩展而设计的，同时为基本 HTTP 协议提
 
 There are many projects that use HttpClient to provide the core HTTP functionality. Some of these are open source with project pages you can find on the web while others are closed source that you would never see or hear about. The Apache Source License provides maximum flexibility for source and binary reuse. Please see the Applications page for projects using HttpClient.
 
-有许多项目使用 HttpClient 来提供核心的 HTTP 功能。其中一些是开源的，可以在 web 上找到项目页面，而另一些是闭源的，你永远不会看到或听说过。Apache Source License 为源代码和二进制代码的重用提供了最大的灵活性。请参阅使用 HttpClient 的项目的应用程序页面。
+有许多项目使用 HttpClient 来提供核心的 HTTP 功能。其中一些是开源的，可以在 web 上找到项目页面，而另一些是闭源的，你永远不会看到或听说过。Apache Source License 为源代码和二进制代码的复用提供了最大的灵活性。请参阅使用 HttpClient 的项目的应用程序页面。
 
 ## History
 

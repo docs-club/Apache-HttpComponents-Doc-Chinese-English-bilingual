@@ -1,5 +1,7 @@
 # Chapter 3 HTTP state management
 
+**HTTP 状态管理**
+
 Originally HTTP was designed as a stateless, request / response oriented protocol that made no special provisions for stateful sessions spanning across several logically related request / response exchanges. As HTTP protocol grew in popularity and adoption more and more systems began to use it for applications it was never intended for, for instance as a transport for e-commerce applications. Thus, the support for state management became a necessity.
 
 最初，HTTP 被设计为一种无状态的、面向请求/响应的协议，它没有为跨越几个逻辑相关的请求/响应交换的有状态会话做出特殊规定。随着 HTTP 协议的流行和广泛使用，越来越多的系统开始将其用于前所未有的应用程序，例如作为电子商务应用程序的传输。因此，支持状态管理成为必要。
@@ -42,6 +44,8 @@ cookie.setAttribute(ClientCookie.DOMAIN_ATTR, ".mycompany.com");
 
 ## 3.2 Cookie specifications
 
+**Cookie 规范**
+
 The CookieSpec interface represents a cookie management specification. The cookie management specification is expected to enforce:
 
 CookieSpec 接口表示一个 cookie 管理规范。要求 cookie 管理规范强制执行：
@@ -64,11 +68,11 @@ HttpClient 附带了几个 CookieSpec 实现：
 
 - **Standard strict:** State management policy compliant with the syntax and semantics of the well-behaved profile defined by RFC 6265, section 4.
 
-Standard strict：符合 RFC 6265 第 4 节定义，并且行为良好的概要文件的语法和语义的状态管理策略。
+Standard strict：符合 RFC 6265 第四节定义，并且行为良好的概要文件的语法和语义的状态管理策略。
 
 - **Standard:** State management policy compliant with a more relaxed profile defined by RFC 6265, section 4 intended for interoperability with existing servers that do not conform to the well behaved profile.
 
-Standard：符合 RFC 6265 定义的更宽松概要文件的状态管理策略，第 4 节旨在与不符合行为良好概要文件的现有服务器进行互操作性。
+Standard：符合 RFC 6265 定义的更宽松概要文件的状态管理策略，第四节旨在与不符合行为良好概要文件的现有服务器进行互操作性。
 
 - **Netscape draft (obsolete):** This policy conforms to the original draft specification published by Netscape Communications. It should be avoided unless absolutely necessary for compatibility with legacy code.
 
@@ -99,6 +103,8 @@ It is strongly recommended to use either Standard or Standard strict policy in n
 强烈建议在新应用程序中使用 Standard 或 Standard strict 策略。过时的规范应该只用于与遗留系统兼容。对过时规范的支持将在 HttpClient 的下一个主要版本中删除。
 
 ## 3.3 Choosing cookie policy
+
+**选择 cookie 策略**
 
 Cookie policy can be set at the HTTP client and overridden on the HTTP request level if required.
 
@@ -147,6 +153,8 @@ CloseableHttpClient httpclient = HttpClients.custom()
 
 ## 3.5 Cookie persistence
 
+**Cookie 持久性**
+
 HttpClient can work with any physical representation of a persistent cookie store that implements the CookieStore interface. The default CookieStore implementation called BasicCookieStore is a simple implementation backed by a java.util.ArrayList. Cookies stored in an BasicClientCookie object are lost when the container object get garbage collected. Users can provide more complex implementations if necessary.
 
 HttpClient 可以处理实现 CookieStore 接口的持久 cookie 存储的任何物理表示。默认的 CookieStore 实现名为 BasicCookieStore，是一个由 java.util.ArrayList 支持的简单实现。当容器对象被垃圾收集时，存储在 BasicClientCookie 对象中的 cookie 将丢失。如果需要，用户可以提供更复杂的实现。
@@ -167,9 +175,11 @@ CloseableHttpClient httpclient = HttpClients.custom()
 
 ## 3.6 HTTP state management and execution context
 
+**HTTP 状态管理和执行上下文**
+
 In the course of HTTP request execution HttpClient adds the following state management related objects to the execution context:
 
-在 HTTP 请求执行过程中，HttpClient 将以下状态管理相关对象添加到执行 context 中：
+在 HTTP 请求执行过程中，HttpClient 将以下状态管理相关对象添加到执行上下文中：
 
 - Lookup instance representing the actual cookie specification registry. The value of this attribute set in the local context takes precedence over the default one.
 
@@ -185,11 +195,11 @@ CookieOrigin 实例，表示源服务器的实际细节。
 
 - CookieStore instance representing the actual cookie store. The value of this attribute set in the local context takes precedence over the default one.
 
-CookieStore 实例，表示实际的 cookie 存储。此属性集在本地 context 中的值优先于默认值。
+CookieStore 实例，表示实际的 cookie 存储。此属性集在本地上下文中的值优先于默认值。
 
 The local HttpContext object can be used to customize the HTTP state management context prior to request execution, or to examine its state after the request has been executed. One can also use separate execution contexts in order to implement per user (or per thread) state management. A cookie specification registry and cookie store defined in the local context will take precedence over the default ones set at the HTTP client level
 
-本地 HttpContext 对象可用于在请求执行前定制 HTTP 状态管理 context，或在请求执行后检查其状态。还可以使用单独的执行 context 来实现每个用户（或每个线程）的状态管理。在本地 context 中定义的 cookie 规范注册表和 cookie 存储将优先于在 HTTP 客户端级别设置的默认注册表和 cookie 存储。
+本地 HttpContext 对象可用于在请求执行前定制 HTTP 状态管理上下文，或在请求执行后检查其状态。还可以使用单独的执行上下文来实现每个用户（或每个线程）的状态管理。在本地上下文中定义的 cookie 规范注册表和 cookie 存储将优先于在 HTTP 客户端级别设置的默认注册表和 cookie 存储。
 
 ```
 CloseableHttpClient httpclient = <...>

@@ -35,7 +35,7 @@ System.out.println(metrics.getSentBytesCount());
 
 HTTP connection interfaces, both client and server, send and receive messages in two stages. The message head is transmitted first. Depending on properties of the message head, a message body may follow it. Please note it is very important to always close the underlying content stream in order to signal that the processing of the message is complete. HTTP entities that stream out their content directly from the input stream of the underlying connection must ensure they fully consume the content of the message body for that connection to be potentially re-usable.
 
-HTTP 连接接口（客户端和服务器）分两个阶段发送和接收消息。首先传输消息头。根据消息头的属性，消息正文可以跟随它。请注意，关闭底层内容流是非常重要的，表明消息处理已经完成。直接从底层连接的输入流中输出内容的 HTTP 实体必须确保它们完全使用消息体的内容，以便该连接具有潜在的可重用性。
+HTTP 连接接口（客户端和服务器）分两个阶段发送和接收消息。首先传输消息头。根据消息头的属性，消息正文可以跟随它。请注意，关闭底层内容流是非常重要的，表明消息处理已经完成。直接从底层连接的输入流中输出内容的 HTTP 实体必须确保它们完全使用消息体的内容，以便该连接具有潜在的可复用性。
 
 Over-simplified process of request execution on the client side may look like this:
 
@@ -262,13 +262,13 @@ HttpRequestExecutor 的方法在多线程中执行是安全的。只要 HttpRequ
 
 The ConnectionReuseStrategy interface is intended to determine whether the underlying connection can be re-used for processing of further messages after the transmission of the current message has been completed. The default connection re-use strategy attempts to keep connections alive whenever possible. Firstly, it examines the version of the HTTP protocol used to transmit the message. HTTP/1.1 connections are persistent by default, while HTTP/1.0 connections are not. Secondly, it examines the value of the Connection header. The peer can indicate whether it intends to re-use the connection on the opposite side by sending Keep-Alive or Close values in the Connection header. Thirdly, the strategy makes the decision whether the connection is safe to re-use based on the properties of the enclosed entity, if available.
 
-ConnectionReuseStrategy 接口用于确定在完成当前消息的传输之后，是否可以重用底层连接来处理进一步的消息。默认的连接重用策略尝试尽可能保持连接处于活动状态。首先，它检查用于传输消息的 HTTP 协议的版本。HTTP/1.1 连接在默认情况下是持久的，而 HTTP/1.0 连接则不是。其次，它检查连接头的值。对等方可以通过在连接头中发送 Keep-Alive 或 Close 值来指示它是否打算重用另一端的连接。第三，该策略根据封闭实体的属性（如果可用）来决定连接是否可以安全重用。
+ConnectionReuseStrategy 接口用于确定在完成当前消息的传输之后，是否可以复用底层连接来处理进一步的消息。默认的连接复用策略尝试尽可能保持连接处于活动状态。首先，它检查用于传输消息的 HTTP 协议的版本。HTTP/1.1 连接在默认情况下是持久的，而 HTTP/1.0 连接则不是。其次，它检查连接头的值。对等方可以通过在连接头中发送 Keep-Alive 或 Close 值来指示它是否打算复用另一端的连接。第三，该策略根据封闭实体的属性（如果可用）来决定连接是否可以安全复用。
 
 ## 2.4. Connection pools
 
 Efficient client-side HTTP transports often requires effective re-use of persistent connections. HttpCore facilitates the process of connection re-use by providing support for managing pools of persistent HTTP connections. Connection pool implementations are thread-safe and can be used concurrently by multiple consumers.
 
-高效的客户端 HTTP 传输通常需要有效地重用持久连接。通过提供对管理持久 HTTP 连接池的支持，HttpCore 简化了连接重用的过程。连接池实现是线程安全的，可以由多个使用者并发使用。
+高效的客户端 HTTP 传输通常需要有效地复用持久连接。通过提供对管理持久 HTTP 连接池的支持，HttpCore 简化了连接复用的过程。连接池实现是线程安全的，可以由多个使用者并发使用。
 
 By default the pool allows only 20 concurrent connections in total and two concurrent connections per a unique route. The two connection limit is due to the requirements of the HTTP specification. However, in practical terms this can often be too restrictive. One can change the pool configuration at runtime to allow for more concurrent connections depending on a particular application context.
 
@@ -287,7 +287,7 @@ HttpClientConnection conn = poolEntry.getConnection();
 
 Please note that the connection pool has no way of knowing whether or not a leased connection is still being used. It is the responsibility of the connection pool user to ensure that the connection is released back to the pool once it is not longer needed, even if the connection is not reusable.
 
-请注意，连接池无法知道已租用的连接是否仍在使用。连接池用户有责任确保在不再需要连接时将其释放回池中，即使该连接不是可重用的。
+请注意，连接池无法知道已租用的连接是否仍在使用。连接池用户有责任确保在不再需要连接时将其释放回池中，即使该连接不是可复用的。
 
 ```
 BasicConnPool connpool = <...>
